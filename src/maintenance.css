@@ -1,0 +1,8 @@
+.Settings-logo {
+    animation: Settings-icon-spin infinite 15s linear;
+}
+
+@keyframes Settings-icon-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
