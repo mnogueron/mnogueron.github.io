@@ -34,7 +34,7 @@ class App extends Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="absolute">
           <Toolbar>
             <Typography variant="title" color="inherit" className={classes.flex}>
               mnogueron.github.io
