@@ -2,7 +2,7 @@
   "name": "mnogueron.github.io",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://mnogueron.github.io",
+  "homepage": "https://mnogueron.github.io",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
