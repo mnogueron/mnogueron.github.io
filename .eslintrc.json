@@ -47,9 +47,9 @@
     "react/jsx-closing-tag-location": "error",
     "react/no-string-refs": "error",
     "react/jsx-wrap-multilines": [ "error", {
-      "declaration": "parens-new-line",
-      "assignment": "parens-new-line",
-      "return": "parens-new-line"
+      "declaration": true,
+      "assignment": true,
+      "return": true
     } ],
     "react/self-closing-comp": "error",
     "react/jsx-no-bind": [ "error", { "ignoreRefs": true } ],
