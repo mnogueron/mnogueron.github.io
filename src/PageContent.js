@@ -5,7 +5,7 @@ import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
 import Settings from '@material-ui/icons/Settings'
 
-const styles = () => ({
+const styles = theme => ({
   container: {
     paddingTop: 32,
     paddingBottom: 32,
@@ -26,8 +26,10 @@ const styles = () => ({
     textAlign: 'center',
   },
   maintenanceContainer: {
-    marginTop: 50,
-    marginBottom: 50,
+    [theme.breakpoints.up('md')]: {
+      marginTop: 50,
+      marginBottom: 50,
+    },
     paddingTop: 32,
     paddingBottom: 32,
     paddingLeft: 42,
