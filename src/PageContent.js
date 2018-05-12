@@ -15,10 +15,8 @@ const styles = theme => ({
     backgroundColor: '#fff',
   },
   maintenanceContainer: {
-    [theme.breakpoints.up('md')]: {
-      marginTop: 50,
-      marginBottom: 50,
-    },
+    marginTop: 50,
+    marginBottom: 50,
     paddingTop: 32,
     paddingBottom: 32,
     paddingLeft: 42,

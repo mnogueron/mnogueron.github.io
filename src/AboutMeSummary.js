@@ -18,6 +18,9 @@ const styles = theme => ({
     paddingLeft: 42,
     paddingRight: 42,
     backgroundColor: '#fff',
+    [theme.breakpoints.only('sm')]: {
+      padding: 22,
+    },
   },
   avatar: {
     width: 200,
