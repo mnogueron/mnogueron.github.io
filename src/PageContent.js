@@ -4,6 +4,7 @@ import Grid from 'material-ui/Grid'
 import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
 import Settings from '@material-ui/icons/Settings'
+import AboutMeCard from './AboutMeCard'
 
 const styles = theme => ({
   container: {
@@ -12,18 +13,6 @@ const styles = theme => ({
     paddingLeft: 42,
     paddingRight: 42,
     backgroundColor: '#fff',
-  },
-  avatar: {
-    width: 200,
-    height: 200,
-  },
-  name: {
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  position: {
-    marginBottom: 16,
-    textAlign: 'center',
   },
   maintenanceContainer: {
     [theme.breakpoints.up('md')]: {
@@ -44,6 +33,7 @@ class PageContent extends Component {
     const { classes } = this.props
     return (
       <Grid container direction={ 'column' }>
+        <AboutMeCard/>
         <Paper className={ classes.maintenanceContainer }>
           <Typography variant="title" style={{ marginBottom: 16 }}>
             Under construction
