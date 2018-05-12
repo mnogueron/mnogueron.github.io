@@ -23,12 +23,25 @@ const styles = () => ({
     width: 200,
     height: 200,
   },
+  name: {
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  position: {
+    marginBottom: 16,
+    textAlign: 'center',
+  },
 })
 
 class AboutMe extends Component {
 
+  _openNewTab = (url) => {
+    let win = window.open(url, '_blank')
+    win.focus()
+  }
+
   _openGitHub = () => {
-    window.location = 'https://github.com/mnogueron'
+    this._openNewTab('https://github.com/mnogueron')
   }
 
   _openEmail = () => {
@@ -36,11 +49,11 @@ class AboutMe extends Component {
   }
 
   _openLinkedIn = () => {
-    window.location = 'https://www.linkedin.com/in/matthieu-nogueron/'
+    this._openNewTab('https://www.linkedin.com/in/matthieu-nogueron/')
   }
 
   _openFacebook = () => {
-    window.location = 'https://www.facebook.com/matthieu.nogueron'
+    this._openNewTab('https://www.facebook.com/matthieu.nogueron')
   }
 
   render() {
@@ -57,11 +70,11 @@ class AboutMe extends Component {
             src={ ProfilePicture }
             style={{ marginBottom: 32 }}
           />
-          <Typography variant="headline" style={{ marginBottom: 16 }}>
+          <Typography variant="headline" className={classes.name}>
             Matthieu Nogueron
           </Typography>
 
-          <Typography variant="subheading" style={{ marginBottom: 16 }}>
+          <Typography variant="subheading" className={classes.position}>
             Software engineer | Fullstack programmer
           </Typography>
 
