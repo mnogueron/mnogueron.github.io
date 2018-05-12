@@ -13,7 +13,13 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       paddingTop: 84,
     },
+    [theme.breakpoints.up('md')]: {
+      paddingTop: 94,
+    },
     backgroundColor: '#FAFAFA',
+  },
+  contentContainer: {
+    marginBottom: 0,
   },
   paddingOverride: {
     [theme.breakpoints.between('sm', 'md')]: {
@@ -31,7 +37,7 @@ class Content extends Component {
     const { classes } = this.props
     return (
       <Grid container className={classes.root} justify={'center'}>
-        <Grid container xs={12} sm={12} md={11} lg={10} xl={9} spacing={40}>
+        <Grid container xs={12} sm={12} md={11} lg={10} xl={9} spacing={40} className={classes.contentContainer}>
           <Grid item xs={12} sm={4} className={classes.paddingOverride}>
             <AboutMe/>
           </Grid>
