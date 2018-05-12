@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
-import AboutMe from './AboutMe'
+import AboutMe from './AboutMeSummary'
 import PageContent from './PageContent'
 import './maintenance.css'
 
@@ -15,6 +15,11 @@ const styles = theme => ({
     },
     backgroundColor: '#FAFAFA',
   },
+  paddingOverride: {
+    [theme.breakpoints.between('sm', 'md')]: {
+      paddingRight: '0 !important',
+    },
+  },
 })
 
 class Content extends Component {
@@ -23,11 +28,11 @@ class Content extends Component {
     const { classes } = this.props
     return (
       <Grid container className={classes.root} justify={'center'}>
-        <Grid container xs={12} md={9} spacing={40}>
-          <Grid item xs={12} md={4}>
+        <Grid container xs={12} sm={12} md={11} lg={10} xl={9} spacing={40}>
+          <Grid item xs={12} sm={4} className={classes.paddingOverride}>
             <AboutMe/>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} sm={8}>
             <PageContent/>
           </Grid>
         </Grid>

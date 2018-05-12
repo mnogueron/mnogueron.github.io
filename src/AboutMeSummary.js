@@ -11,7 +11,7 @@ import GitHubIcon from './assets/GitHubIcon'
 import FacebookIcon from './assets/FacebookIcon'
 import MailIcon from '@material-ui/icons/Mail'
 
-const styles = () => ({
+const styles = theme => ({
   container: {
     paddingTop: 32,
     paddingBottom: 32,
@@ -22,6 +22,18 @@ const styles = () => ({
   avatar: {
     width: 200,
     height: 200,
+    [theme.breakpoints.only('md')]: {
+      width: 150,
+      height: 150,
+    },
+    [theme.breakpoints.only('sm')]: {
+      width: 120,
+      height: 120,
+    },
+    [theme.breakpoints.only('xs')]: {
+      width: 150,
+      height: 150,
+    },
   },
   name: {
     marginBottom: 16,
@@ -39,22 +51,10 @@ class AboutMe extends Component {
     let win = window.open(url, '_blank')
     win.focus()
   }
-
-  _openGitHub = () => {
-    this._openNewTab('https://github.com/mnogueron')
-  }
-
-  _openEmail = () => {
-    window.location = 'mailto:matthieu.nogueron@gmail.com'
-  }
-
-  _openLinkedIn = () => {
-    this._openNewTab('https://www.linkedin.com/in/matthieu-nogueron/')
-  }
-
-  _openFacebook = () => {
-    this._openNewTab('https://www.facebook.com/matthieu.nogueron')
-  }
+  _openGitHub = () => this._openNewTab('https://github.com/mnogueron')
+  _openEmail = () => window.location = 'mailto:matthieu.nogueron@gmail.com'
+  _openLinkedIn = () => this._openNewTab('https://www.linkedin.com/in/matthieu-nogueron/')
+  _openFacebook = () => this._openNewTab('https://www.facebook.com/matthieu.nogueron')
 
   render() {
     const { classes } = this.props
