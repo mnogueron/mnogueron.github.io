@@ -19,6 +19,9 @@ const styles = theme => ({
     [theme.breakpoints.between('sm', 'md')]: {
       paddingRight: '0 !important',
     },
+    [theme.breakpoints.only('xs')]: {
+      paddingBottom: '0 !important',
+    },
   },
 })
 
