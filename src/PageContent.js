@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
-import Avatar from 'material-ui/Avatar'
 import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
-import IconButton from 'material-ui/IconButton'
-import ProfilePicture from './assets/matthieu.jpeg'
-import LinkedInIcon from './assets/LinkedInIcon'
-import GitHubIcon from './assets/GitHubIcon'
-import FacebookIcon from './assets/FacebookIcon'
-import MailIcon from '@material-ui/icons/Mail'
 import Settings from '@material-ui/icons/Settings'
 
 const styles = () => ({

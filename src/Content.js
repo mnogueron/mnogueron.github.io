@@ -5,18 +5,15 @@ import AboutMe from './AboutMe'
 import PageContent from './PageContent'
 import './maintenance.css'
 
-const styles = () => ({
+const styles = theme => ({
   root: {
     flexGrow: 1,
     minHeight: '100vh',
-    paddingTop: 114,
-    padding: 50,
+    paddingTop: 76,
+    [theme.breakpoints.up('sm')]: {
+      paddingTop: 84,
+    },
     backgroundColor: '#FAFAFA',
-  },
-  maintenanceContainer: {
-    marginTop: 50,
-    marginBottom: 50,
-    textAlign: 'center',
   },
 })
 
@@ -26,19 +23,12 @@ class Content extends Component {
     const { classes } = this.props
     return (
       <Grid container className={classes.root} justify={'center'}>
-        <Grid container xs={12} sm={9} spacing={40}>
-          <Grid item xs={12} sm={4}>
+        <Grid container xs={12} md={9} spacing={40}>
+          <Grid item xs={12} md={4}>
             <AboutMe/>
           </Grid>
-          <Grid item xs={12} sm={8}>
-            <Grid
-              container
-              direction={ 'column' }
-              alignItems={ 'center' }
-              justify={ 'center' }
-            >
-              <PageContent/>
-            </Grid>
+          <Grid item xs={12} md={8}>
+            <PageContent/>
           </Grid>
         </Grid>
       </Grid>
