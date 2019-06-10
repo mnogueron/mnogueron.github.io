@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { withStyles } from 'material-ui/styles'
-import Grid from 'material-ui/Grid'
-import Avatar from 'material-ui/Avatar'
-import Paper from 'material-ui/Paper'
-import Typography from 'material-ui/Typography'
-import IconButton from 'material-ui/IconButton'
+import { withStyles } from '@material-ui/styles'
+import Grid from '@material-ui/core/Grid'
+import Avatar from '@material-ui/core/Avatar'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+
 import ProfilePicture from './assets/matthieu.jpeg'
 import LinkedInIcon from './assets/LinkedInIcon'
 import GitHubIcon from './assets/GitHubIcon'
@@ -73,11 +74,11 @@ class AboutMe extends Component {
             src={ ProfilePicture }
             style={{ marginBottom: 32 }}
           />
-          <Typography variant="headline" className={classes.name}>
+          <Typography variant="h5" className={classes.name}>
             Matthieu Nogueron
           </Typography>
 
-          <Typography variant="subheading" className={classes.position}>
+          <Typography variant="subtitle1" className={classes.position}>
             Software engineer | Fullstack programmer
           </Typography>
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { withStyles } from 'material-ui/styles'
-import Grid from 'material-ui/Grid'
-import Paper from 'material-ui/Paper'
-import Typography from 'material-ui/Typography'
+import { withStyles } from '@material-ui/styles'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
   container: {
@@ -21,7 +21,7 @@ class AboutMeCard extends Component {
     return (
       <Grid container direction={ 'column' }>
         <Paper className={ classes.container }>
-          <Typography variant="display1" style={{ marginBottom: 16 }}>
+          <Typography variant="h4" style={{ marginBottom: 16 }}>
             About me
           </Typography>
           <Typography>

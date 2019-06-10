@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
+import { ThemeProvider } from '@material-ui/styles'
+import { createMuiTheme } from '@material-ui/core'
 
 const theme = createMuiTheme({
   palette: {
@@ -24,9 +25,9 @@ const theme = createMuiTheme({
 
 function WrappedApp () {
   return (
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <App/>
-    </MuiThemeProvider>
+    </ThemeProvider>
   )
 }
 
