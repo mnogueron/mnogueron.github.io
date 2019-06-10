@@ -21,7 +21,7 @@ class AboutMeCard extends Component {
     return (
       <Grid container direction={ 'column' }>
         <Paper className={ classes.container }>
-          <Typography variant="display1" style={{ marginBottom: 16 }}>
+          <Typography variant="h4" style={{ marginBottom: 16 }}>
             About me
           </Typography>
           <Typography>

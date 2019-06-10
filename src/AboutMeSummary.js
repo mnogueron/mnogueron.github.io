@@ -74,11 +74,11 @@ class AboutMe extends Component {
             src={ ProfilePicture }
             style={{ marginBottom: 32 }}
           />
-          <Typography variant="headline" className={classes.name}>
+          <Typography variant="h5" className={classes.name}>
             Matthieu Nogueron
           </Typography>
 
-          <Typography variant="subheading" className={classes.position}>
+          <Typography variant="subtitle1" className={classes.position}>
             Software engineer | Fullstack programmer
           </Typography>
 

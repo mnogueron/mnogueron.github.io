@@ -37,12 +37,14 @@ class Content extends Component {
     const { classes } = this.props
     return (
       <Grid container className={classes.root} justify={'center'}>
-        <Grid container xs={12} sm={12} md={11} lg={10} xl={9} spacing={40} className={classes.contentContainer}>
-          <Grid item xs={12} sm={4} className={classes.paddingOverride}>
-            <AboutMe/>
-          </Grid>
-          <Grid item xs={12} sm={8}>
-            <PageContent/>
+        <Grid item xs={12} sm={12} md={11} lg={10} xl={9} className={classes.contentContainer}>
+          <Grid container spacing={5}>
+            <Grid item xs={12} sm={4} className={classes.paddingOverride}>
+              <AboutMe/>
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              <PageContent/>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

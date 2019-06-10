@@ -33,7 +33,7 @@ class PageContent extends Component {
       <Grid container direction={ 'column' }>
         <AboutMeCard/>
         <Paper className={ classes.maintenanceContainer }>
-          <Typography variant="title" style={{ marginBottom: 16 }}>
+          <Typography variant="h6" style={{ marginBottom: 16 }}>
             Under construction
           </Typography>
           <Settings className="Settings-logo" style={{ fontSize: 40 }}/>

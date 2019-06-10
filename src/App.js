@@ -28,7 +28,7 @@ class App extends Component {
       <div className={classes.root}>
         <AppBar position="absolute">
           <Toolbar>
-            <Typography variant="title" color="inherit" className={classes.flex}>
+            <Typography variant="h6" color="inherit" className={classes.flex}>
               mnogueron.github.io
             </Typography>
 
