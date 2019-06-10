@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { withStyles } from 'material-ui/styles'
-import Grid from 'material-ui/Grid'
-import Paper from 'material-ui/Paper'
-import Typography from 'material-ui/Typography'
+import { withStyles } from '@material-ui/styles'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
   container: {

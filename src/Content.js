@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { withStyles } from 'material-ui/styles'
-import Grid from 'material-ui/Grid'
+import { withStyles } from '@material-ui/styles'
+import Grid from '@material-ui/core/Grid'
 import AboutMe from './AboutMeSummary'
 import PageContent from './PageContent'
 import './maintenance.css'
