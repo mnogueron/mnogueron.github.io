@@ -1,13 +1,13 @@
 import React, { useRef } from 'react'
 import { makeStyles } from '@material-ui/styles'
-import AppBar from '@material-ui/core/AppBar'
+import Header from './components/Header'
+import PageContent from './components/PageContent'
+/*import AppBar from '@material-ui/core/AppBar'
+import Content from './Content'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import GitHubIcon from './assets/GitHubIcon'
-import Content from './Content'
-import Header from './components/Header'
-import PageContent from './components/PageContent'
+import GitHubIcon from './assets/GitHubIcon'*/
 
 const useStyles = makeStyles({
   root: {
@@ -52,7 +52,7 @@ const App = (props) => {
 
       </AppBar>*/}
 
-      <Content/>
+      {/*<Content/>*/}
     </div>
   )
 
