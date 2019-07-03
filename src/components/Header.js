@@ -13,6 +13,8 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     position: 'relative',
     boxShadow: theme.shadows[3],
+    paddingLeft: 30,
+    paddingRight: 30,
   },
   backgroundContainer: {
     width: '100%',

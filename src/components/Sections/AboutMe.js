@@ -1,22 +1,16 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import ImageGrenoble from '../../assets/grenoble.jpg'
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    padding: 60,
-  },
-  leftPanel: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  textContainer: {
+  rightPanel: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    marginBottom: theme.spacing(5),
   },
   title: {
     color: theme.palette.text.primary,
@@ -24,36 +18,43 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(2),
   },
   text: {
-    fontSize: 16,
+    fontWeight: 300,
+    whiteSpace: 'pre-wrap',
   },
   image: {
     width: '90%',
     borderRadius: 2,
     boxShadow: theme.shadows[3],
-    marginBottom: theme.spacing(4),
+    marginBottom: 4,
   },
 }))
 
 const AboutMe = (props) => {
   const classes = useStyles(props)
   return (
-    <Paper className={classes.root}>
-      <Grid container spacing={4}>
-        <Grid item xs={12} sm={5} className={classes.leftPanel}>
-          <img src={ImageGrenoble} alt={'city of Grenoble'} className={classes.image} />
-        </Grid>
+    <Grid container spacing={4}>
+      <Grid item xs={12} sm={7} className={classes.textContainer}>
+        <Typography variant={'h4'} className={classes.title}>
+          ABOUT ME
+        </Typography>
 
-        <Grid item xs={12} sm={7} className={classes.textContainer}>
-          <Typography variant={'h4'} className={classes.title}>
-            About me
-          </Typography>
-
-          <Typography variant={'body1'} className={classes.text}>
-            Originally from Grenoble, nicknamed the <b>Gate to the Alps</b>, the mountains are part of my DNA and so does sustainability issues.
-          </Typography>
-        </Grid>
+        <Typography variant={'h5'} className={classes.text}>
+          {'Originally from Grenoble, nicknamed the '}
+          <b>{'Gate to the Alps'}</b>
+          {', the mountains are part of my DNA and so does sustainability issues.'}
+          {'\n\nAs a software engineer, I pursue the goal of using my knowledge to make the world a better place for all living being.'}
+          {'\n\nFrom helping people to integrate to a new country, to helping disable people to use common transportation or providing easy access to public transportation schedules,\n'}
+          <b>{'I am driven by impactful roles.'}</b>
+        </Typography>
       </Grid>
-    </Paper>
+
+      <Grid item xs={12} sm={5} className={classes.rightPanel}>
+        <img src={ImageGrenoble} alt={'city of Grenoble'} className={classes.image} />
+        <Typography variant={'caption'}>
+          Grenoble, Gate to the Alps
+        </Typography>
+      </Grid>
+    </Grid>
   )
 }
 
