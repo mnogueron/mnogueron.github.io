@@ -36,16 +36,39 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     top: 0,
   },
+  name: {
+    fontSize: 60,
+    marginBottom: theme.spacing(3),
+  },
+  description: {
+    fontWeight: 300,
+    fontSize: 20,
+    lineHeight: 1.5,
+    maxWidth: 550,
+
+    '& b': {
+      fontSize: 24,
+      fontWeight: 500,
+    },
+  },
   introduction: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     textAlign: 'center',
     color: 'rgba(255, 255, 255, 0.85)',
   },
   expandButton: {
+    animation: '$bounce 0.50s ease infinite alternate',
     position: 'absolute',
     bottom: theme.spacing(2),
   },
   expandButtonIcon: {
     color: 'rgba(255, 255, 255, 0.85)',
+  },
+  '@keyframes bounce': {
+    '0%' : { transform: 'translateY(0)' },
+    '100%': { transform: 'translateY(-20px)' },
   },
 }))
 
@@ -60,11 +83,12 @@ const Header = (props) => {
       </div>
 
       <div className={classes.introduction}>
-        <Typography variant={'h1'}>
+        <Typography variant={'h1'} className={classes.name}>
           Matthieu Nogueron
         </Typography>
-        <Typography variant={'h2'}>
-          Software Engineer
+        <Typography variant={'h5'} className={classes.description}>
+          <b>I am a software engineer</b>
+          {' from France living in Stockholm where I work as React tutor and full time sustainability advocate.'}
         </Typography>
       </div>
 

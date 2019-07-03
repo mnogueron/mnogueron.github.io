@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton'
 import GitHubIcon from './assets/GitHubIcon'
 import Content from './Content'
 import Header from './components/Header'
+import PageContent from './components/PageContent'
 
 const useStyles = makeStyles({
   root: {
@@ -34,7 +35,7 @@ const App = (props) => {
   return (
     <div className={classes.root}>
       <Header onExpandClick={onExpandClick} />
-      <div ref={contentRef}></div>
+      <PageContent ref={contentRef} />
       {/*<AppBar position="absolute">
         <Toolbar>
           <Typography variant="h6" color="inherit" className={classes.flex}>
