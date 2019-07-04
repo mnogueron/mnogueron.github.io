@@ -28,6 +28,9 @@ const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[3],
     marginBottom: 4,
   },
+  caption: {
+    marginRight: theme.spacing(1),
+  },
 }))
 
 const AboutMe = (props) => {
@@ -40,8 +43,8 @@ const AboutMe = (props) => {
         </Typography>
 
         <Typography variant={'h5'} className={classes.text}>
-          {'Originally from Grenoble, nicknamed the '}
-          <b>{'Gate to the Alps'}</b>
+          {'Originally from Grenoble, located near the '}
+          <b>{'French Alps'}</b>
           {', the mountains are part of my DNA and so does sustainability issues.'}
           {'\n\nAs a software engineer, I pursue the goal of using my knowledge to make the world a better place for all living being.'}
           {'\n\nFrom helping people to integrate to a new country, to helping disable people to use common transportation or providing easy access to public transportation schedules,\n'}
@@ -51,7 +54,7 @@ const AboutMe = (props) => {
 
       <Grid item xs={12} sm={5} className={classes.rightPanel}>
         <img src={ImageGrenoble} alt={'city of Grenoble'} className={classes.image} />
-        <Typography variant={'caption'}>
+        <Typography variant={'caption'} className={classes.caption}>
           Grenoble, Gate to the Alps
         </Typography>
       </Grid>
