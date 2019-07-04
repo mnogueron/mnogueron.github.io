@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.text.primary,
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
+    textTransform: 'uppercase',
   },
   text: {
     fontWeight: 300,
@@ -39,7 +40,7 @@ const AboutMe = (props) => {
     <Grid container spacing={4}>
       <Grid item xs={12} sm={7} className={classes.textContainer}>
         <Typography variant={'h4'} className={classes.title}>
-          ABOUT ME
+          {'About me'}
         </Typography>
 
         <Typography variant={'h5'} className={classes.text}>

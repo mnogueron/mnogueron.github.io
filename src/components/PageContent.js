@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import AboutMe from './Sections/AboutMe'
 import Contact from './Sections/Contact'
+import Projects from './Sections/Projects'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -54,6 +55,16 @@ const PageContent = (props) => {
       >
         <Grid item xs={12} sm={12} md={8} lg={6}>
           <AboutMe />
+        </Grid>
+      </Grid>
+
+      <Grid
+        container
+        className={classes.gridRoot}
+        justify={'center'}
+      >
+        <Grid item xs={12} sm={12} md={8} lg={6}>
+          <Projects />
         </Grid>
       </Grid>
 
