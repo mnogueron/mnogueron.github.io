@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
   text: {
     fontWeight: 300,
     whiteSpace: 'pre-wrap',
+    fontSize: '1.4rem',
     marginBottom: theme.spacing(2),
   },
 }))

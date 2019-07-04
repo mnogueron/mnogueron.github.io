@@ -31,7 +31,7 @@
     "react/prop-types": [ 0 ],
     "indent": [ "error", 2, { "SwitchCase": 1 } ],
     "object-curly-spacing": [ "error", "always" ],
-    "array-bracket-spacing": [ "error", "always" ],
+    "array-bracket-spacing": [ "error", "never" ],
     "comma-dangle": [ "error", "always-multiline" ],
     "no-console": "off",
     "semi": [ "error", "never" ],
