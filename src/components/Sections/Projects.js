@@ -90,8 +90,6 @@ const Projects = (props) => {
           />
         </Grid>
       </Grid>
-
-      {/* TODO add projects */}
     </div>
   )
 }
