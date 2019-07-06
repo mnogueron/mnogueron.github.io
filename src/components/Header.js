@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { EmailButton, GithubButton, LinkedInButton } from './ContactButton'
 import Grid from '@material-ui/core/Grid'
+import BuildRibbon from './BuildRibbon'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,6 +18,8 @@ const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[3],
     paddingLeft: 30,
     paddingRight: 30,
+
+    overflow: 'hidden',
   },
   backgroundContainer: {
     width: '100%',
@@ -81,7 +84,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2),
 
     '& > :not(:first-child)': {
-      marginLeft: theme.spacing(1)
+      marginLeft: theme.spacing(1),
     },
   },
   contactIcon: {
@@ -139,6 +142,7 @@ const Header = (props) => {
         <ExpandMoreIcon fontSize={'large'} className={classes.expandButtonIcon} />
       </IconButton>
 
+      <BuildRibbon />
     </header>
   )
 }

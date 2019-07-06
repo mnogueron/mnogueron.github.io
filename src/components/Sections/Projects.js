@@ -6,8 +6,24 @@ import ProjectCard from '../ProjectCard'
 import PanZoom from 'react-easy-panzoom'
 import SimpleTagImage from '../../assets/simpletag.png'
 import NpmImage from '../../assets/npm.png'
+import grey from '@material-ui/core/colors/grey'
+import blueGrey from '@material-ui/core/colors/blueGrey'
+import Section from './Section'
 
 const useStyles = makeStyles(theme => ({
+  gridRoot: {
+    flexGrow: 1,
+    paddingTop: 76,
+    [theme.breakpoints.up('sm')]: {
+      paddingTop: 84,
+    },
+    [theme.breakpoints.up('md')]: {
+      paddingTop: 94,
+    },
+    paddingLeft: 40,
+    paddingRight: 40,
+    backgroundColor: grey['200'],
+  },
   title: {
     color: theme.palette.text.primary,
     marginTop: theme.spacing(2),
@@ -30,67 +46,69 @@ const useStyles = makeStyles(theme => ({
 const Projects = (props) => {
   const classes = useStyles(props)
   return (
-    <div>
-      <Typography variant={'h4'} className={classes.title}>
-        {'My projects'}
-      </Typography>
+    <Section backgroundColor={blueGrey['50']}>
+      <div>
+        <Typography variant={'h4'} className={classes.title}>
+          {'My projects'}
+        </Typography>
 
-      <Grid container spacing={4}>
-        <Grid item xs={12} sm={6}>
-          <ProjectCard
-            title={'SimpleTag'}
-            backgroundImage={SimpleTagImage}
-            description={(
-              <div style={{ whiteSpace: 'pre-wrap' }}>
-                {'SimpleTag is an application to get live schedule for public transportation in Grenoble.'}
-                {'\nMore information is available on the Google Play Store page:'}
-                <div style={{ marginTop: 16, textAlign: 'center' }}>
-                  <a
-                    href={'https://play.google.com/store/apps/details?id=com.mnogueron.simpletag'}
-                    target={'_blank'}
-                    rel={'noopener noreferrer'}
-                  >
-                    {'SimpleTag'}
-                  </a>
+        <Grid container spacing={4}>
+          <Grid item xs={12} sm={6}>
+            <ProjectCard
+              title={'SimpleTag'}
+              backgroundImage={SimpleTagImage}
+              description={(
+                <div style={{ whiteSpace: 'pre-wrap' }}>
+                  {'SimpleTag is an application to get live schedule for public transportation in Grenoble.'}
+                  {'\nMore information is available on the Google Play Store page:'}
+                  <div style={{ marginTop: 16, textAlign: 'center' }}>
+                    <a
+                      href={'https://play.google.com/store/apps/details?id=com.mnogueron.simpletag'}
+                      target={'_blank'}
+                      rel={'noopener noreferrer'}
+                    >
+                      {'SimpleTag'}
+                    </a>
+                  </div>
                 </div>
-              </div>
-            )}
-          />
-        </Grid>
+              )}
+            />
+          </Grid>
 
-        <Grid item xs={12} sm={6}>
-          <ProjectCard
-            title={'react-easy-panzoom'}
-            backgroundImage={NpmImage}
-            description={(
-              <div>
-                <div style={{ marginBottom: 24 }}>
-                  <b>{'react-easy-panzoom'}</b>
-                  {' is a React library to enable pan and zoom feature on any react component. This project is open source and can be found at this url: '}
-                  <a
-                    href={'https://github.com/mnogueron/react-easy-panzoom'}
-                    target={'_blank'}
-                    rel={'noopener noreferrer'}
+          <Grid item xs={12} sm={6}>
+            <ProjectCard
+              title={'react-easy-panzoom'}
+              backgroundImage={NpmImage}
+              description={(
+                <div>
+                  <div style={{ marginBottom: 24 }}>
+                    <b>{'react-easy-panzoom'}</b>
+                    {' is a React library to enable pan and zoom feature on any react component. This project is open source and can be found at this url: '}
+                    <a
+                      href={'https://github.com/mnogueron/react-easy-panzoom'}
+                      target={'_blank'}
+                      rel={'noopener noreferrer'}
+                    >
+                      {'github.comm/mnogueron/react-easy-panzoom'}
+                    </a>
+                  </div>
+                  <PanZoom
+                    className={classes.panZoomContainer}
+                    maxZoom={2}
+                    minZoom={0.3}
+                    autoCenter
+                    enableBoundingBox
+                    realPinch
                   >
-                    {'github.comm/mnogueron/react-easy-panzoom'}
-                  </a>
+                    <div>You can pan and zoom this text</div>
+                  </PanZoom>
                 </div>
-                <PanZoom
-                  className={classes.panZoomContainer}
-                  maxZoom={2}
-                  minZoom={0.3}
-                  autoCenter
-                  enableBoundingBox
-                  realPinch
-                >
-                  <div>You can pan and zoom this text</div>
-                </PanZoom>
-              </div>
-            )}
-          />
+              )}
+            />
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </Section>
   )
 }
 
