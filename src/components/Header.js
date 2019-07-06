@@ -31,6 +31,7 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     filter: 'blur(1px)',
+    transform: 'scale(1.01)',
   },
   overlay: {
     position: 'absolute',

@@ -35,7 +35,6 @@ const PageContent = (props) => {
   const classes = useStyles(props)
   return (
     <div ref={innerRef} className={classes.root}>
-
       <Grid
         container
         className={classes.gridRoot}
