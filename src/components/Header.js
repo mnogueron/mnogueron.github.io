@@ -23,6 +23,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     position: 'absolute',
     zIndex: -1,
+    overflow: 'hidden',
   },
   background: {
     height: '100%',
@@ -78,6 +79,10 @@ const useStyles = makeStyles(theme => ({
   },
   contactButtonContainer: {
     marginTop: theme.spacing(2),
+
+    '& > :not(:first-child)': {
+      marginLeft: theme.spacing(1)
+    },
   },
   contactIcon: {
     color: 'rgba(255, 255, 255, 0.5)',
