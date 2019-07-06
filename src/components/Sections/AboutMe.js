@@ -12,7 +12,6 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    marginBottom: theme.spacing(5),
   },
   title: {
     marginTop: theme.spacing(2),
@@ -30,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: '1.8rem',
     backgroundColor: grey['900'],
 
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       transform: 'translate(-30%)',
     },
   },
@@ -56,7 +55,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: 60,
     marginBottom: 4,
 
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       marginTop: 0,
       width: '100%',
     },
@@ -72,7 +71,7 @@ const AboutMe = (props) => {
   return (
     <Section>
       <Grid container spacing={4}>
-        <Grid item xs={12} md={7} className={classes.textContainer}>
+        <Grid item xs={12} md={7}>
           <Typography variant={'h4'} className={classes.title}>
             {'Who am I'}
           </Typography>
