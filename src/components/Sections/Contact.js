@@ -1,12 +1,8 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
 import Grid from '@material-ui/core/Grid'
-import LinkedInIcon from '../../assets/LinkedInIcon'
-import GitHubIcon from '../../assets/GitHubIcon'
-import FacebookIcon from '../../assets/FacebookIcon'
-import MailIcon from '@material-ui/icons/Mail'
+import { GithubButton, EmailButton, FacebookButton, LinkedInButton } from '../ContactButton'
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -24,15 +20,6 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const openNewTab = (url) => {
-  const win = window.open(url, '_blank')
-  win.focus()
-}
-const openGitHub = () => openNewTab('https://github.com/mnogueron')
-const openEmail = () => window.location = 'mailto:matthieu.nogueron@gmail.com'
-const openLinkedIn = () => openNewTab('https://www.linkedin.com/in/matthieu-nogueron/')
-const openFacebook = () => openNewTab('https://www.facebook.com/matthieu.nogueron')
-
 const Contact = (props) => {
   const classes = useStyles(props)
   return (
@@ -46,22 +33,10 @@ const Contact = (props) => {
       </Typography>
 
       <Grid container justify={'center'} alignItems={'center'}>
-
-        <IconButton onClick={openGitHub}>
-          <GitHubIcon fontSize={'large'} />
-        </IconButton>
-
-        <IconButton onClick={openLinkedIn}>
-          <LinkedInIcon fontSize={'large'} />
-        </IconButton>
-
-        <IconButton onClick={openEmail}>
-          <MailIcon fontSize={'large'} />
-        </IconButton>
-
-        <IconButton onClick={openFacebook}>
-          <FacebookIcon fontSize={'large'} />
-        </IconButton>
+        <GithubButton />
+        <LinkedInButton />
+        <EmailButton />
+        <FacebookButton />
       </Grid>
     </div>
   )

@@ -4,6 +4,8 @@ import Typography from '@material-ui/core/Typography'
 import BackgroundImage from '../assets/philippe-toupet-unsplash.jpg'
 import IconButton from '@material-ui/core/IconButton'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { EmailButton, GithubButton, LinkedInButton } from './ContactButton'
+import Grid from '@material-ui/core/Grid'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -72,6 +74,17 @@ const useStyles = makeStyles(theme => ({
     '0%' : { transform: 'translateY(0)' },
     '100%': { transform: 'translateY(-20px)' },
   },
+  contactButtonContainer: {
+    marginTop: theme.spacing(2),
+  },
+  contactIcon: {
+    color: 'rgba(255, 255, 255, 0.5)',
+  },
+  contactButton: {
+    '&:hover': {
+      backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    },
+  },
 }))
 
 const Header = (props) => {
@@ -92,6 +105,24 @@ const Header = (props) => {
           <b>I am a software engineer</b>
           {' from France living in Stockholm where I work as React tutor and full time sustainability advocate.'}
         </Typography>
+
+        <Grid container justify={'center'} alignItems={'center'} className={classes.contactButtonContainer}>
+          <GithubButton
+            fontSize={'default'}
+            buttonClassname={classes.contactButton}
+            iconClassname={classes.contactIcon}
+          />
+          <LinkedInButton
+            fontSize={'default'}
+            buttonClassname={classes.contactButton}
+            iconClassname={classes.contactIcon}
+          />
+          <EmailButton
+            fontSize={'default'}
+            buttonClassname={classes.contactButton}
+            iconClassname={classes.contactIcon}
+          />
+        </Grid>
       </div>
 
       <IconButton
