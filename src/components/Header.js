@@ -43,6 +43,7 @@ const useStyles = makeStyles(theme => ({
   name: {
     fontSize: 60,
     marginBottom: theme.spacing(3),
+    fontWeight: 500,
   },
   description: {
     fontWeight: 300,
