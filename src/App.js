@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import Header from './components/Header'
 import PageContent from './components/PageContent'
+import Footer from './components/Footer'
 
 const useStyles = makeStyles({
   root: {
@@ -26,6 +27,7 @@ const App = (props) => {
     <div className={classes.root}>
       <Header onExpandClick={onExpandClick} />
       <PageContent ref={contentRef} />
+      <Footer />
     </div>
   )
 

@@ -68,7 +68,7 @@ const Projects = (props) => {
       </div>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={6}>
           <ProjectCard
             title={'SimpleTag'}
             subtitle={'Get Grenoble\'s public transport live schedule on your Android'}
@@ -91,7 +91,7 @@ const Projects = (props) => {
           />
         </Grid>
 
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={6}>
           <ProjectCard
             title={'react-easy-panzoom'}
             subtitle={'React library for pan/zoom support for any kind of component'}

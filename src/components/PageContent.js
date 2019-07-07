@@ -8,7 +8,6 @@ const useStyles = makeStyles({
   root: {
     backgroundColor: '#FAFAFA',
     minHeight: '100vh',
-    paddingBottom: 120,
   },
 })
 

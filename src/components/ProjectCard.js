@@ -34,6 +34,10 @@ const useStyles = makeStyles(theme => ({
         filter: 'blur(2px)',
       },
     },
+
+    [theme.breakpoints.down('sm')]: {
+      minHeight: 400,
+    },
   },
   backgroundContainer: {
     width: '100%',
