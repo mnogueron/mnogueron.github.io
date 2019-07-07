@@ -67,10 +67,11 @@ const Projects = (props) => {
         <div className={classes.divider} />
       </div>
 
-      <Grid container spacing={4}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <ProjectCard
             title={'SimpleTag'}
+            subtitle={'Get Grenoble\'s public transport live schedule on your Android'}
             backgroundImage={SimpleTagImage}
             description={(
               <div style={{ whiteSpace: 'pre-wrap' }}>
@@ -93,6 +94,7 @@ const Projects = (props) => {
         <Grid item xs={12} sm={6}>
           <ProjectCard
             title={'react-easy-panzoom'}
+            subtitle={'React library for pan/zoom support for any kind of component'}
             backgroundImage={NpmImage}
             description={(
               <div>
