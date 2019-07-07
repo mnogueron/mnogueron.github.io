@@ -1,26 +1,37 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
-import Paper from '@material-ui/core/Paper'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: 20,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
     overflow: 'hidden',
-    minHeight: 300,
+    minHeight: 600,
     cursor: 'pointer',
-    borderRadius: 10,
+
+    border: '10px solid rgba(255, 255, 255, 0.85)',
 
     '&:hover': {
+
+      border: '10px solid rgba(255, 255, 255, 0.5)',
+
+      '& $contentContainer': {
+        opacity: 1,
+      },
+
       '& $title': {
         textDecoration: 'underline',
+        transform: 'translateY(0)',
+      },
+
+      '& $background': {
+        filter: 'blur(2px)',
       },
     },
   },
@@ -35,22 +46,29 @@ const useStyles = makeStyles(theme => ({
     backgroundImage: props => `url('${props.backgroundImage}')`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    filter: 'blur(4px)',
-  },
-  overlay: {
-    position: 'absolute',
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
-    background: 'radial-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7))',
-    height: '100%',
-    width: '100%',
-    top: 0,
+    transition: 'filter 200ms',
   },
   contentContainer: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    /*background: 'radial-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7))',*/
+    height: '100%',
+    width: '100%',
+    flex: 1,
     zIndex: 1,
+
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     color: 'rgba(255, 255, 255, 0.85)',
+
+    transition: 'opacity 200ms',
+    opacity: 0,
   },
   title: {
     fontSize: 32,
+    transform: 'translateY(50%)',
+    transition: 'transform 200ms',
   },
   description: {
     fontSize: 16,
@@ -72,16 +90,15 @@ const ProjectCard = (props) => {
 
   return (
     <React.Fragment>
-      <Paper className={classes.root} elevation={4} onClick={openDialog}>
+      <div className={classes.root} onClick={openDialog}>
         <div className={classes.backgroundContainer}>
           <div className={classes.background} />
-          <div className={classes.overlay} />
         </div>
 
         <div className={classes.contentContainer}>
           <div className={classes.title}>{title}</div>
         </div>
-      </Paper>
+      </div>
 
       <Dialog
         open={dialogOpen}
