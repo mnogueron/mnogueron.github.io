@@ -64,7 +64,7 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'row',
       justifyContent: 'center',
-      marginTop: theme.spacing(2),
+      marginTop: 0,
       paddingRight: 0,
 
       '& > :not(:first-child)': {
