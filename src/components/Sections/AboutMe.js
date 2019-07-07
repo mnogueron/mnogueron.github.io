@@ -14,7 +14,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'flex-end',
   },
   title: {
-    marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
     textTransform: 'uppercase',
     fontWeight: theme.typography.fontWeightLight,
