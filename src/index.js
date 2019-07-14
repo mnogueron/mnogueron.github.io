@@ -5,6 +5,7 @@ import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core'
+import * as ReactGA from 'react-ga'
 
 const theme = createMuiTheme({
   palette: {
@@ -22,6 +23,11 @@ const theme = createMuiTheme({
     },
   },
 })
+
+if (process.env.NODE_ENV === 'production') {
+  ReactGA.initialize('UA-143826195-1')
+  ReactGA.pageview('Homepage')
+}
 
 function WrappedApp () {
   return (

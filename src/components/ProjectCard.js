@@ -4,6 +4,7 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Typography from '@material-ui/core/Typography'
+import * as ReactGA from 'react-ga'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -104,6 +105,10 @@ const ProjectCard = (props) => {
   const classes = useStyles(props)
 
   function openDialog() {
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.pageview(`Project: ${title}`)
+    }
+
     setOpenDialog(true)
   }
 

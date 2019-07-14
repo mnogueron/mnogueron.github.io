@@ -9,6 +9,7 @@ import NpmImage from '../../assets/npm.png'
 import grey from '@material-ui/core/colors/grey'
 import blueGrey from '@material-ui/core/colors/blueGrey'
 import Section from './Section'
+import * as ReactGA from 'react-ga'
 
 const useStyles = makeStyles(theme => ({
   gridRoot: {
@@ -55,6 +56,50 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const GitHubLink = () => {
+  function onClick() {
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.event({
+        category: 'Navigation',
+        action: 'Open GitHub react-easy-panzoom',
+      })
+    }
+  }
+
+  return (
+    <a
+      href={'https://github.com/mnogueron/react-easy-panzoom'}
+      target={'_blank'}
+      rel={'noopener noreferrer'}
+      onClick={onClick}
+    >
+      {'github.comm/mnogueron/react-easy-panzoom'}
+    </a>
+  )
+}
+
+const SimpleTagLink = () => {
+  function onClick() {
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.event({
+        category: 'Navigation',
+        action: 'Open SimpleTag play store',
+      })
+    }
+  }
+
+  return (
+    <a
+      href={'https://play.google.com/store/apps/details?id=com.mnogueron.simpletag'}
+      target={'_blank'}
+      rel={'noopener noreferrer'}
+      onClick={onClick}
+    >
+      {'SimpleTag'}
+    </a>
+  )
+}
+
 const Projects = (props) => {
   const classes = useStyles(props)
   return (
@@ -78,13 +123,7 @@ const Projects = (props) => {
                 {'SimpleTag is an application to get live schedule for public transportation in Grenoble.'}
                 {'\nMore information is available on the Google Play Store page:'}
                 <div style={{ marginTop: 16, textAlign: 'center' }}>
-                  <a
-                    href={'https://play.google.com/store/apps/details?id=com.mnogueron.simpletag'}
-                    target={'_blank'}
-                    rel={'noopener noreferrer'}
-                  >
-                    {'SimpleTag'}
-                  </a>
+                  <SimpleTagLink />
                 </div>
               </div>
             )}
@@ -101,13 +140,7 @@ const Projects = (props) => {
                 <div style={{ marginBottom: 24 }}>
                   <b>{'react-easy-panzoom'}</b>
                   {' is a React library to enable pan and zoom feature on any react component. This project is open source and can be found at this url: '}
-                  <a
-                    href={'https://github.com/mnogueron/react-easy-panzoom'}
-                    target={'_blank'}
-                    rel={'noopener noreferrer'}
-                  >
-                    {'github.comm/mnogueron/react-easy-panzoom'}
-                  </a>
+                  <GitHubLink />
                 </div>
                 <PanZoom
                   className={classes.panZoomContainer}

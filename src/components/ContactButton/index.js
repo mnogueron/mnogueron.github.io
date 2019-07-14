@@ -4,6 +4,7 @@ import GitHubIcon from '../../assets/GitHubIcon'
 import LinkedInIcon from '../../assets/LinkedInIcon'
 import MailIcon from '@material-ui/icons/Mail'
 import FacebookIcon from '../../assets/FacebookIcon'
+import * as ReactGA from 'react-ga'
 
 const openNewTab = (url) => {
   const win = window.open(url, '_blank')
@@ -36,8 +37,19 @@ const ButtonsAttributes = {
 export const ContactButton = (props) => {
   const { type, buttonProps, iconProps, buttonClassname, iconClassname, fontSize } = props
   const { onClick, iconComponent: IconComponent } = ButtonsAttributes[type]
+
+  function _onClick() {
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.event({
+        category: 'Navigation',
+        action: `Open ${type}`,
+      })
+    }
+    return onClick()
+  }
+
   return (
-    <IconButton onClick={onClick} {...buttonProps} className={buttonClassname}>
+    <IconButton onClick={_onClick} {...buttonProps} className={buttonClassname}>
       <IconComponent fontSize={fontSize || 'large'} {...iconProps} className={iconClassname}/>
     </IconButton>
   )
