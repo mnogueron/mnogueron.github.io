@@ -1,3 +1,6 @@
+import 'es5-shim'
+import 'es6-shim'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
