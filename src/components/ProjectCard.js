@@ -5,6 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Typography from '@material-ui/core/Typography'
 import * as ReactGA from 'react-ga'
+import * as ReactDom from 'react-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -99,6 +100,20 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const usePortalStyles = makeStyles({
+  root: {
+    position: 'absolute',
+    top: -1000,
+    left: -1000,
+  },
+})
+
+const ProjectSeoDescriptionPortal = (props) => {
+  const { children } = props
+  const classes = usePortalStyles(props)
+  return ReactDom.createPortal(<div className={classes.root}>{children}</div>, document.body)
+}
+
 const ProjectCard = (props) => {
   const { title, description, subtitle } = props
   const [dialogOpen, setOpenDialog] = useState(false)
@@ -133,6 +148,10 @@ const ProjectCard = (props) => {
           </div>
         </div>
       </div>
+
+      <ProjectSeoDescriptionPortal>
+        {description}
+      </ProjectSeoDescriptionPortal>
 
       <Dialog
         open={dialogOpen}
