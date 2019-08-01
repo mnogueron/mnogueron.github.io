@@ -17,7 +17,7 @@ const Footer = (props) => {
   const classes = useStyles(props)
   return (
     <div className={classes.root}>
-      Copyright © {year} All rights reserved | Portfolio designed and implemented by Matthieu Nogueron
+      Copyright © {year} All rights reserved | Portfolio designed and implemented by Matthieu Nogueron with React and Material-UI
     </div>
   )
 }
