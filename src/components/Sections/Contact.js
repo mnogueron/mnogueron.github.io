@@ -100,7 +100,9 @@ const Contact = (props) => {
           </Typography>
 
           <Typography variant={'h5'} className={classes.text}>
-            {'If you are interested in my profile, want to discuss about sustainable development, French culture or just want to offer me a coffee, you can contact me by email or on these platforms.'}
+            {'If you are interested in my professional profile, want to discuss about sustainable development, French culture or just want to have a chat with some good coffee (or tea), you can contact me by email or on these platforms.\n\n'}
+            {'If you are a company working with sustainable development and are in need of a fullstack engineer: '}
+            <b>{'wait no more and send an email!'}</b>
           </Typography>
         </Grid>
       </Grid>
