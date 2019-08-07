@@ -44,6 +44,15 @@ const useStyles = makeStyles(theme => ({
     fontSize: '1.2rem',
     color: grey[700],
   },
+  highlightText: {
+    fontWeight: 300,
+    whiteSpace: 'pre-wrap',
+    color: grey[700],
+
+    fontSize: '1.3rem',
+    textAlign: 'center',
+    marginTop: theme.spacing(2),
+  },
   image: {
     height: 500,
     width: '85%',
@@ -83,11 +92,13 @@ const AboutMe = (props) => {
           </Typography>
 
           <Typography variant={'body1'} className={classes.text}>
-            {'Originally from Grenoble, located near the '}
+            {'Originally from Grenoble, near the '}
             <b>{'French Alps'}</b>
-            {', the mountains are part of my DNA and so does sustainability issues.'}
-            {'\n\nAs a software engineer, I pursue the goal of using my knowledge to make the world a better place for all living being.'}
-            {'\n\nFrom helping people to integrate to a new country, to helping disable people to use common transportation or providing easy access to public transportation schedules,\n'}
+            {', the mountains are part of my DNA and so does sustainability matters.'}
+            {'\n\nAs a software engineer, I pursue the goal of using my expertise to make the world a better place for all living beings.'}
+            {'\n\nProviding better integration methods for refugees when coming to a new country, helping disabled people to use public transportation or simplifying access to bus and tramway schedules, all reveal the same trait: '}
+          </Typography>
+          <Typography className={classes.highlightText}>
             <b>{'I am driven by impactful roles.'}</b>
           </Typography>
         </Grid>
