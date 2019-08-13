@@ -16,6 +16,7 @@ jobs:
     - stage: build
       script: yarn build
     - stage: deploy
+      script: echo "skip tests before deployment"
       deploy:
         provider: pages
         skip_cleanup: true
