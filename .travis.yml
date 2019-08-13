@@ -8,15 +8,14 @@ cache:
     - node_modules
 
 stages:
-  - build
   - deploy
 
 jobs:
   include:
-    - stage: build
-      script: yarn build
     - stage: deploy
-      script: echo "skip tests before deployment"
+      script: skip
+      before_deploy:
+        - yarn build
       deploy:
         provider: pages
         skip_cleanup: true
