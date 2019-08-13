@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - "stable"
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
+stages:
+  - build
+  - name: deploy
+    if: tag IS present
+
+jobs:
+  include:
+    - stage: build
+      script: yarn build
+    - stage: deploy
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        github_token: $GITHUB_TOKEN
+        keep_history: true
+        local_dir: build
+        on:
+          branch: master
