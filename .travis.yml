@@ -9,8 +9,7 @@ cache:
 
 stages:
   - build
-  - name: deploy
-    if: tag IS present
+  - deploy
 
 jobs:
   include:
@@ -22,6 +21,7 @@ jobs:
         skip_cleanup: true
         github_token: $GITHUB_TOKEN
         keep_history: true
+        target_branch: master
         local_dir: build
         on:
-          branch: master
+          branch: source
