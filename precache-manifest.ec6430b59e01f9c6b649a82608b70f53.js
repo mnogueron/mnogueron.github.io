@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a625b1a1c148efdc1d63cd441d2bf16f",
+    "revision": "17090d739af196a7729dc02e8f14263c",
     "url": "/index.html"
   },
   {
-    "revision": "5ea824b486967fe55e7b",
+    "revision": "b4c0281173aa74bc586f",
     "url": "/static/css/main.ce22991c.chunk.css"
   },
   {
-    "revision": "c6f3c5f0f4e9f350fdd7",
-    "url": "/static/js/2.7b07c775.chunk.js"
+    "revision": "8f9be1eb44c2e99159c2",
+    "url": "/static/js/2.0b080b92.chunk.js"
   },
   {
-    "revision": "5ea824b486967fe55e7b",
-    "url": "/static/js/main.20817fb5.chunk.js"
+    "revision": "b4c0281173aa74bc586f",
+    "url": "/static/js/main.a2f36a28.chunk.js"
   },
   {
     "revision": "42ac5946195a7306e2a5",
@@ -22,6 +22,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "f9c2339d0eff692c266ae759649c9419",
     "url": "/static/media/philippe-toupet-unsplash.f9c2339d.jpg"
+  },
+  {
+    "revision": "61e68e7583753d487d1f8a93e6261c05",
+    "url": "/static/media/portfolio.61e68e75.png"
   },
   {
     "revision": "b75af53183e42b187a83c8b800b67511",
