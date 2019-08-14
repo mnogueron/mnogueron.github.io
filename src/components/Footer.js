@@ -8,6 +8,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: grey['800'],
     padding: 40,
     fontSize: 16,
+    lineHeight: 1.4,
     color: theme.palette.common.white,
     textAlign: 'center',
   },
@@ -18,7 +19,7 @@ const Footer = (props) => {
   const classes = useStyles(props)
   return (
     <div className={classes.root}>
-      {`Copyright © ${year} All rights reserved | Portfolio designed and implemented by Matthieu Nogueron with `}
+      {`Copyright © ${year} All Rights Reserved | Portfolio designed and implemented by Matthieu Nogueron with `}
       <Link
         href={'https://reactjs.org'}
         target="_blank"

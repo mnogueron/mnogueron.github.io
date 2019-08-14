@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     position: 'relative',
     overflow: 'hidden',
-    minHeight: 600,
+    minHeight: 400,
     cursor: 'pointer',
 
     border: '10px solid rgba(255, 255, 255, 0.85)',

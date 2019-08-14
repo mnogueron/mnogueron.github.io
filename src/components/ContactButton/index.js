@@ -5,11 +5,8 @@ import LinkedInIcon from '../../assets/LinkedInIcon'
 import MailIcon from '@material-ui/icons/Mail'
 import FacebookIcon from '../../assets/FacebookIcon'
 import * as ReactGA from 'react-ga'
+import { openNewTab } from '../../utils'
 
-const openNewTab = (url) => {
-  const win = window.open(url, '_blank')
-  win.focus()
-}
 const openGitHub = () => openNewTab('https://github.com/mnogueron')
 const openEmail = () => window.location = 'mailto:matthieu.nogueron@gmail.com'
 const openLinkedIn = () => openNewTab('https://www.linkedin.com/in/matthieu-nogueron/')
