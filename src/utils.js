@@ -11,3 +11,14 @@ export const openNewTab = (url, gaAction) => {
   const win = window.open(url, '_blank')
   win.focus()
 }
+
+export const GA = {
+  navigateTo: (action) => {
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.event({
+        category: 'Navigation',
+        action,
+      })
+    }
+  },
+}

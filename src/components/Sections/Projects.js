@@ -12,7 +12,8 @@ import blueGrey from '@material-ui/core/colors/blueGrey'
 import Section from './Section'
 import * as ReactGA from 'react-ga'
 import IconButton from '@material-ui/core/IconButton'
-import { openNewTab } from '../../utils'
+import Link from '@material-ui/core/Link'
+import { GA } from '../../utils'
 
 import GitHubIcon from 'mdi-material-ui/GithubCircle'
 import NpmIcon from 'mdi-material-ui/NpmVariantOutline'
@@ -139,6 +140,8 @@ const SimpleTagLink = () => {
   )
 }
 
+const sendGaNavigation = (action) => () => GA.navigateTo(action)
+
 const SimpleTagModalContent = () => {
   return (
     <div style={{ whiteSpace: 'pre-wrap' }}>
@@ -197,7 +200,11 @@ const Projects = (props) => {
         (
           <IconButton
             key={'simpletag-store-link'}
-            onClick={openLink('https://play.google.com/store/apps/details?id=com.mnogueron.simpletag', 'Open SimpleTag play store')}
+            component={Link}
+            href={'https://play.google.com/store/apps/details?id=com.mnogueron.simpletag'}
+            target={'_blank'}
+            rel={'noopener noreferrer'}
+            onClick={sendGaNavigation('Open SimpleTag play store')}
           >
             <GooglePlayIcon />
           </IconButton>
@@ -213,7 +220,11 @@ const Projects = (props) => {
         (
           <IconButton
             key={'react-easy-panzoom-github-link'}
-            onClick={openLink('https://github.com/mnogueron/react-easy-panzoom', 'Open GitHub react-easy-panzoom')}
+            component={Link}
+            href={'https://github.com/mnogueron/react-easy-panzoom'}
+            target={'_blank'}
+            rel={'noopener noreferrer'}
+            onClick={sendGaNavigation('Open GitHub react-easy-panzoom')}
           >
             <GitHubIcon />
           </IconButton>
@@ -221,7 +232,11 @@ const Projects = (props) => {
         (
           <IconButton
             key={'react-easy-panzoom-npm-link'}
-            onClick={openLink('https://www.npmjs.com/package/react-easy-panzoom', 'Open NPM react-easy-panzoom')}
+            component={Link}
+            href={'https://www.npmjs.com/package/react-easy-panzoom'}
+            target={'_blank'}
+            rel={'noopener noreferrer'}
+            onClick={sendGaNavigation('Open NPM react-easy-panzoom')}
           >
             <NpmIcon />
           </IconButton>
@@ -229,7 +244,11 @@ const Projects = (props) => {
         (
           <IconButton
             key={'react-easy-panzoom-storybook-link'}
-            onClick={openLink('/react-easy-panzoom', 'Open Storybook react-easy-panzoom')}
+            component={Link}
+            href={'/react-easy-panzoom'}
+            target={'_blank'}
+            rel={'noopener noreferrer'}
+            onClick={sendGaNavigation('Open Storybook react-easy-panzoom')}
           >
             <StorybookIcon />
           </IconButton>
@@ -245,7 +264,11 @@ const Projects = (props) => {
         (
           <IconButton
             key={'portfolio-github-link'}
-            onClick={openLink('https://github.com/mnogueron/mnogueron.github.io', 'Open GitHub mnogueron.github.io')}
+            component={Link}
+            href={'https://github.com/mnogueron/mnogueron.github.io'}
+            target={'_blank'}
+            rel={'noopener noreferrer'}
+            onClick={sendGaNavigation('Open GitHub mnogueron.github.io')}
           >
             <GitHubIcon />
           </IconButton>
@@ -253,14 +276,6 @@ const Projects = (props) => {
       ],
     },
   ]
-
-  function openLink(link, gaAction) {
-    return () => {
-      if (link) {
-        openNewTab(link, gaAction)
-      }
-    }
-  }
 
   return (
     <Section backgroundColor={blueGrey['50']}>

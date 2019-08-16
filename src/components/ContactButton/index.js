@@ -4,49 +4,48 @@ import GitHubIcon from '../../assets/GitHubIcon'
 import LinkedInIcon from '../../assets/LinkedInIcon'
 import MailIcon from '@material-ui/icons/Mail'
 import FacebookIcon from '../../assets/FacebookIcon'
-import * as ReactGA from 'react-ga'
-import { openNewTab } from '../../utils'
-
-const openGitHub = () => openNewTab('https://github.com/mnogueron')
-const openEmail = () => window.location = 'mailto:matthieu.nogueron@gmail.com'
-const openLinkedIn = () => openNewTab('https://www.linkedin.com/in/matthieu-nogueron/')
-const openFacebook = () => openNewTab('https://www.facebook.com/matthieu.nogueron')
+import Link from '@material-ui/core/Link'
+import { GA } from '../../utils'
 
 const ButtonsAttributes = {
   'GitHub': {
     iconComponent: GitHubIcon,
-    onClick: openGitHub,
+    url: 'https://github.com/mnogueron',
   },
   'LinkedIn': {
     iconComponent: LinkedInIcon,
-    onClick: openLinkedIn,
+    url: 'https://www.linkedin.com/in/matthieu-nogueron/',
   },
   'email': {
     iconComponent: MailIcon,
-    onClick: openEmail,
+    url: 'mailto:matthieu.nogueron@gmail.com',
   },
   'Facebook': {
     iconComponent: FacebookIcon,
-    onClick: openFacebook,
+    url: 'https://www.facebook.com/matthieu.nogueron',
   },
 }
 
 export const ContactButton = (props) => {
   const { type, buttonProps, iconProps, buttonClassname, iconClassname, fontSize } = props
-  const { onClick, iconComponent: IconComponent } = ButtonsAttributes[type]
+  const { iconComponent: IconComponent, url } = ButtonsAttributes[type]
+
+  const shouldOpenTab = type !== 'email'
 
   function _onClick() {
-    if (process.env.NODE_ENV === 'production') {
-      ReactGA.event({
-        category: 'Navigation',
-        action: `Open ${type}`,
-      })
-    }
-    return onClick()
+    GA.navigateTo(`Open ${type}`)
   }
 
   return (
-    <IconButton onClick={_onClick} {...buttonProps} className={buttonClassname}>
+    <IconButton
+      component={Link}
+      {...buttonProps}
+      onClick={_onClick}
+      href={url}
+      target={shouldOpenTab && '_blank'}
+      rel={shouldOpenTab && 'noopener noreferrer'}
+      className={buttonClassname}
+    >
       <IconComponent fontSize={fontSize || 'large'} {...iconProps} className={iconClassname}/>
     </IconButton>
   )
