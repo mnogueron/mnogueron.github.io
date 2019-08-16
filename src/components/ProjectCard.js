@@ -7,96 +7,38 @@ import Typography from '@material-ui/core/Typography'
 import * as ReactGA from 'react-ga'
 import * as ReactDom from 'react-dom'
 
+import Card from '@material-ui/core/Card'
+import CardActionArea from '@material-ui/core/CardActionArea'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import Button from '@material-ui/core/Button'
+
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-    overflow: 'hidden',
-    minHeight: 400,
-    cursor: 'pointer',
 
-    border: '10px solid rgba(255, 255, 255, 0.85)',
-
-    '&:hover': {
-
-      border: '10px solid rgba(255, 255, 255, 0.5)',
-
-      '& $contentContainer': {
-        opacity: 1,
-      },
-
-      '& $content': {
-        transform: 'translateY(0)',
-      },
-
-      '& $background': {
-        filter: 'blur(2px)',
-      },
-    },
-
-    [theme.breakpoints.down('sm')]: {
-      minHeight: 400,
-    },
-  },
   backgroundContainer: {
     width: '100%',
+    paddingTop: '80%', /* 0.8:1 Aspect Ratio */
+    position: 'relative',
+
+    [theme.breakpoints.up('lg')]: {
+      paddingTop: '90%',
+    },
+  },
+
+  media: {
     height: '100%',
+    width: '100%',
+
     position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
-  background: {
-    height: '100%',
-    width: '100%',
-    backgroundImage: props => `url('${props.backgroundImage}')`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    transition: 'filter 200ms',
-  },
-  contentContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    /*background: 'radial-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7))',*/
-    height: '100%',
-    width: '100%',
-    display: 'flex',
-    flex: 1,
-    zIndex: 1,
-    color: 'rgba(255, 255, 255, 0.90)',
 
-    transition: 'opacity 200ms',
-    opacity: 0,
-  },
-  content: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingLeft: 80,
-    paddingRight: 80,
-
-    transform: 'translateY(5%)',
-    transition: 'transform 200ms',
-    textAlign: 'center',
-  },
-  divider: {
-    height: 6,
-    width: 70,
-    backgroundColor: 'rgba(255, 255, 255, 0.90)',
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-  title: {
-    fontSize: 36,
-  },
-  subtitle: {
-    fontSize: 20,
-    fontWeight: theme.typography.fontWeightLight,
-    //marginTop: theme.spacing(2),
-  },
-  description: {
-    fontSize: 16,
+  readMore: {
+    marginLeft: 'auto',
   },
 }))
 
@@ -115,7 +57,7 @@ const ProjectSeoDescriptionPortal = (props) => {
 }
 
 const ProjectCard = (props) => {
-  const { title, description, subtitle } = props
+  const { title, description, subtitle, backgroundImage, actionButtons = [] } = props
   const [dialogOpen, setOpenDialog] = useState(false)
   const classes = useStyles(props)
 
@@ -133,21 +75,43 @@ const ProjectCard = (props) => {
 
   return (
     <React.Fragment>
-      <div className={classes.root} onClick={openDialog}>
-        <div className={classes.backgroundContainer}>
-          <div className={classes.background} />
-        </div>
+      <Card className={classes.card}>
+        <CardActionArea onClick={openDialog}>
+          <div className={classes.backgroundContainer}>
+            <CardMedia
+              className={classes.media}
+              image={backgroundImage}
+              title={title}
+            />
+          </div>
 
-        <div className={classes.contentContainer}>
-          <div className={classes.content}>
-            <div className={classes.title}>{title}</div>
-            <div className={classes.divider} />
-            <Typography variant={'h6'} className={classes.subtitle}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {title}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
               {subtitle}
             </Typography>
-          </div>
-        </div>
-      </div>
+          </CardContent>
+        </CardActionArea>
+
+        <CardActions disableSpacing>
+
+          {
+            actionButtons
+          }
+
+          <Button
+            size="small"
+            color="primary"
+            className={classes.readMore}
+            onClick={openDialog}
+            aria-label="read more"
+          >
+            Read More
+          </Button>
+        </CardActions>
+      </Card>
 
       <ProjectSeoDescriptionPortal>
         {description}
