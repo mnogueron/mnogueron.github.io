@@ -120,6 +120,8 @@ const ProjectCard = (props) => {
       <Dialog
         open={dialogOpen}
         onClose={closeDialog}
+        maxWidth={'md'}
+        fullWidth
       >
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>

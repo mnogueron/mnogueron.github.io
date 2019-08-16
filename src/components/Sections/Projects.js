@@ -140,8 +140,6 @@ const SimpleTagLink = () => {
   )
 }
 
-const sendGaNavigation = (action) => () => GA.navigateTo(action)
-
 const SimpleTagModalContent = () => {
   return (
     <div style={{ whiteSpace: 'pre-wrap' }}>
@@ -187,95 +185,97 @@ const PortfolioModalContent = () => {
   )
 }
 
+const sendGaNavigation = (action) => () => GA.navigateTo(action)
+
+const projectList = [
+  {
+    title: 'SimpleTag',
+    subtitle: 'Get Grenoble\'s public transport live schedule on your Android',
+    description: <SimpleTagModalContent/>,
+    backgroundImage: SimpleTagImage,
+    actionButtons: [
+      (
+        <IconButton
+          key={'simpletag-store-link'}
+          component={Link}
+          href={'https://play.google.com/store/apps/details?id=com.mnogueron.simpletag'}
+          target={'_blank'}
+          rel={'noopener noreferrer'}
+          onClick={sendGaNavigation('Open SimpleTag play store')}
+        >
+          <GooglePlayIcon />
+        </IconButton>
+      ),
+    ],
+  },
+  {
+    title: 'react-easy-panzoom',
+    subtitle: 'React library for pan/zoom support for any kind of component',
+    description: <ReactEasyPanzoomModalContent />,
+    backgroundImage: NpmImage,
+    actionButtons: [
+      (
+        <IconButton
+          key={'react-easy-panzoom-github-link'}
+          component={Link}
+          href={'https://github.com/mnogueron/react-easy-panzoom'}
+          target={'_blank'}
+          rel={'noopener noreferrer'}
+          onClick={sendGaNavigation('Open GitHub react-easy-panzoom')}
+        >
+          <GitHubIcon />
+        </IconButton>
+      ),
+      (
+        <IconButton
+          key={'react-easy-panzoom-npm-link'}
+          component={Link}
+          href={'https://www.npmjs.com/package/react-easy-panzoom'}
+          target={'_blank'}
+          rel={'noopener noreferrer'}
+          onClick={sendGaNavigation('Open NPM react-easy-panzoom')}
+        >
+          <NpmIcon />
+        </IconButton>
+      ),
+      (
+        <IconButton
+          key={'react-easy-panzoom-storybook-link'}
+          component={Link}
+          href={'/react-easy-panzoom'}
+          target={'_blank'}
+          rel={'noopener noreferrer'}
+          onClick={sendGaNavigation('Open Storybook react-easy-panzoom')}
+        >
+          <StorybookIcon />
+        </IconButton>
+      ),
+    ],
+  },
+  {
+    title: 'Portfolio',
+    subtitle: 'Personal portfolio designed and implemented from scratch using React and Material-UI',
+    description: <PortfolioModalContent />,
+    backgroundImage: PortfolioImage,
+    actionButtons: [
+      (
+        <IconButton
+          key={'portfolio-github-link'}
+          component={Link}
+          href={'https://github.com/mnogueron/mnogueron.github.io'}
+          target={'_blank'}
+          rel={'noopener noreferrer'}
+          onClick={sendGaNavigation('Open GitHub mnogueron.github.io')}
+        >
+          <GitHubIcon />
+        </IconButton>
+      ),
+    ],
+  },
+]
+
 const Projects = (props) => {
   const classes = useStyles(props)
-
-  const projects = [
-    {
-      title: 'SimpleTag',
-      subtitle: 'Get Grenoble\'s public transport live schedule on your Android',
-      description: <SimpleTagModalContent/>,
-      backgroundImage: SimpleTagImage,
-      actionButtons: [
-        (
-          <IconButton
-            key={'simpletag-store-link'}
-            component={Link}
-            href={'https://play.google.com/store/apps/details?id=com.mnogueron.simpletag'}
-            target={'_blank'}
-            rel={'noopener noreferrer'}
-            onClick={sendGaNavigation('Open SimpleTag play store')}
-          >
-            <GooglePlayIcon />
-          </IconButton>
-        ),
-      ],
-    },
-    {
-      title: 'react-easy-panzoom',
-      subtitle: 'React library for pan/zoom support for any kind of component',
-      description: <ReactEasyPanzoomModalContent />,
-      backgroundImage: NpmImage,
-      actionButtons: [
-        (
-          <IconButton
-            key={'react-easy-panzoom-github-link'}
-            component={Link}
-            href={'https://github.com/mnogueron/react-easy-panzoom'}
-            target={'_blank'}
-            rel={'noopener noreferrer'}
-            onClick={sendGaNavigation('Open GitHub react-easy-panzoom')}
-          >
-            <GitHubIcon />
-          </IconButton>
-        ),
-        (
-          <IconButton
-            key={'react-easy-panzoom-npm-link'}
-            component={Link}
-            href={'https://www.npmjs.com/package/react-easy-panzoom'}
-            target={'_blank'}
-            rel={'noopener noreferrer'}
-            onClick={sendGaNavigation('Open NPM react-easy-panzoom')}
-          >
-            <NpmIcon />
-          </IconButton>
-        ),
-        (
-          <IconButton
-            key={'react-easy-panzoom-storybook-link'}
-            component={Link}
-            href={'/react-easy-panzoom'}
-            target={'_blank'}
-            rel={'noopener noreferrer'}
-            onClick={sendGaNavigation('Open Storybook react-easy-panzoom')}
-          >
-            <StorybookIcon />
-          </IconButton>
-        ),
-      ],
-    },
-    {
-      title: 'Portfolio',
-      subtitle: 'Personal portfolio designed and implemented from scratch using React and Material-UI',
-      description: <PortfolioModalContent />,
-      backgroundImage: PortfolioImage,
-      actionButtons: [
-        (
-          <IconButton
-            key={'portfolio-github-link'}
-            component={Link}
-            href={'https://github.com/mnogueron/mnogueron.github.io'}
-            target={'_blank'}
-            rel={'noopener noreferrer'}
-            onClick={sendGaNavigation('Open GitHub mnogueron.github.io')}
-          >
-            <GitHubIcon />
-          </IconButton>
-        ),
-      ],
-    },
-  ]
 
   return (
     <Section backgroundColor={blueGrey['50']}>
@@ -289,7 +289,7 @@ const Projects = (props) => {
 
       <Grid container spacing={2}>
         {
-          projects.map(project => (
+          projectList.map(project => (
             <Grid key={project.title} item xs={12} sm={6} lg={4}>
               <ProjectCard {...project} />
             </Grid>
