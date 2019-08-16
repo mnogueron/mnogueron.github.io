@@ -64,6 +64,15 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const useModalStyles = makeStyles({
+  panZoomContainer: {
+    height: '30vh',
+    border: `1px solid grey`,
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+})
+
 const PortfolioSourceLink = () => {
   function onClick() {
     if (process.env.NODE_ENV === 'production') {
@@ -130,13 +139,125 @@ const SimpleTagLink = () => {
   )
 }
 
+const SimpleTagModalContent = () => {
+  return (
+    <div style={{ whiteSpace: 'pre-wrap' }}>
+      {'SimpleTag is an application to get live schedule for public transportation in Grenoble.'}
+      {'\nMore information is available on the Google Play Store page:'}
+      <div style={{ marginTop: 16, textAlign: 'center' }}>
+        <SimpleTagLink />
+      </div>
+    </div>
+  )
+}
+
+const ReactEasyPanzoomModalContent = (props) => {
+  const classes = useModalStyles(props)
+  return (
+    <div>
+      <div style={{ marginBottom: 24 }}>
+        <b>{'react-easy-panzoom'}</b>
+        {' is a React library to enable pan and zoom feature on any react component. This project is open source and can be found at this url: '}
+        <ReactEasyPanZoomLink />
+      </div>
+      <PanZoom
+        className={classes.panZoomContainer}
+        maxZoom={2}
+        minZoom={0.3}
+        autoCenter
+        enableBoundingBox
+        realPinch
+      >
+        <div>You can pan and zoom this text</div>
+      </PanZoom>
+    </div>
+  )
+}
+
+const PortfolioModalContent = () => {
+  return (
+    <div>
+      <b>{'Personal portfolio'}</b>
+      {' is a React library to enable pan and zoom feature on any react component. This project is open source and can be found at this url: '}
+      <PortfolioSourceLink />
+    </div>
+  )
+}
+
 const Projects = (props) => {
   const classes = useStyles(props)
 
-  function openLink(link) {
+  const projects = [
+    {
+      title: 'SimpleTag',
+      subtitle: 'Get Grenoble\'s public transport live schedule on your Android',
+      description: <SimpleTagModalContent/>,
+      backgroundImage: SimpleTagImage,
+      actionButtons: [
+        (
+          <IconButton
+            key={'simpletag-store-link'}
+            onClick={openLink('https://play.google.com/store/apps/details?id=com.mnogueron.simpletag', 'Open SimpleTag play store')}
+          >
+            <GooglePlayIcon />
+          </IconButton>
+        ),
+      ],
+    },
+    {
+      title: 'react-easy-panzoom',
+      subtitle: 'React library for pan/zoom support for any kind of component',
+      description: <ReactEasyPanzoomModalContent />,
+      backgroundImage: NpmImage,
+      actionButtons: [
+        (
+          <IconButton
+            key={'react-easy-panzoom-github-link'}
+            onClick={openLink('https://github.com/mnogueron/react-easy-panzoom', 'Open GitHub react-easy-panzoom')}
+          >
+            <GitHubIcon />
+          </IconButton>
+        ),
+        (
+          <IconButton
+            key={'react-easy-panzoom-npm-link'}
+            onClick={openLink('https://www.npmjs.com/package/react-easy-panzoom', 'Open NPM react-easy-panzoom')}
+          >
+            <NpmIcon />
+          </IconButton>
+        ),
+        (
+          <IconButton
+            key={'react-easy-panzoom-storybook-link'}
+            onClick={openLink('/react-easy-panzoom', 'Open Storybook react-easy-panzoom')}
+          >
+            <StorybookIcon />
+          </IconButton>
+        ),
+      ],
+    },
+    {
+      title: 'Portfolio',
+      subtitle: 'Personal portfolio designed and implemented from scratch using React and Material-UI',
+      description: <PortfolioModalContent />,
+      backgroundImage: PortfolioImage,
+      actionButtons: [
+        (
+          <IconButton
+            key={'portfolio-github-link'}
+            onClick={openLink('https://github.com/mnogueron/mnogueron.github.io', 'Open GitHub mnogueron.github.io')}
+          >
+            <GitHubIcon />
+          </IconButton>
+        ),
+      ],
+    },
+  ]
+
+  function openLink(link, gaAction) {
     return () => {
       if (link) {
-        openNewTab(link)
+        openNewTab(link, gaAction)
       }
     }
   }
@@ -152,95 +273,13 @@ const Projects = (props) => {
       </div>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} lg={4}>
-          <ProjectCard
-            title={'SimpleTag'}
-            subtitle={'Get Grenoble\'s public transport live schedule on your Android'}
-            backgroundImage={SimpleTagImage}
-            actionButtons={[
-              (
-                <IconButton key={'simpletag-store-link'} onClick={openLink('https://play.google.com/store/apps/details?id=com.mnogueron.simpletag')}>
-                  <GooglePlayIcon />
-                </IconButton>
-              ),
-            ]}
-            description={(
-              <div style={{ whiteSpace: 'pre-wrap' }}>
-                {'SimpleTag is an application to get live schedule for public transportation in Grenoble.'}
-                {'\nMore information is available on the Google Play Store page:'}
-                <div style={{ marginTop: 16, textAlign: 'center' }}>
-                  <SimpleTagLink />
-                </div>
-              </div>
-            )}
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6} lg={4}>
-          <ProjectCard
-            title={'react-easy-panzoom'}
-            subtitle={'React library for pan/zoom support for any kind of component'}
-            backgroundImage={NpmImage}
-            actionButtons={[
-              (
-                <IconButton key={'react-easy-panzoom-github-link'} onClick={openLink('https://github.com/mnogueron/react-easy-panzoom')}>
-                  <GitHubIcon />
-                </IconButton>
-              ),
-              (
-                <IconButton key={'react-easy-panzoom-npm-link'} onClick={openLink('https://www.npmjs.com/package/react-easy-panzoom')}>
-                  <NpmIcon />
-                </IconButton>
-              ),
-              (
-                <IconButton key={'react-easy-panzoom-storybook-link'} onClick={openLink('/react-easy-panzoom')}>
-                  <StorybookIcon />
-                </IconButton>
-              ),
-            ]}
-            description={(
-              <div>
-                <div style={{ marginBottom: 24 }}>
-                  <b>{'react-easy-panzoom'}</b>
-                  {' is a React library to enable pan and zoom feature on any react component. This project is open source and can be found at this url: '}
-                  <ReactEasyPanZoomLink />
-                </div>
-                <PanZoom
-                  className={classes.panZoomContainer}
-                  maxZoom={2}
-                  minZoom={0.3}
-                  autoCenter
-                  enableBoundingBox
-                  realPinch
-                >
-                  <div>You can pan and zoom this text</div>
-                </PanZoom>
-              </div>
-            )}
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6} lg={4}>
-          <ProjectCard
-            title={'Portfolio'}
-            subtitle={'Personal portfolio designed and implemented from scratch using React and Material-UI'}
-            backgroundImage={PortfolioImage}
-            actionButtons={[
-              (
-                <IconButton key={'portfolio-github-link'} onClick={openLink('https://github.com/mnogueron/mnogueron.github.io')}>
-                  <GitHubIcon />
-                </IconButton>
-              ),
-            ]}
-            description={(
-              <div>
-                <b>{'Personal portfolio'}</b>
-                {' is a React library to enable pan and zoom feature on any react component. This project is open source and can be found at this url: '}
-                <PortfolioSourceLink />
-              </div>
-            )}
-          />
-        </Grid>
+        {
+          projects.map(project => (
+            <Grid key={project.title} item xs={12} sm={6} lg={4}>
+              <ProjectCard {...project} />
+            </Grid>
+          ))
+        }
       </Grid>
     </Section>
   )
