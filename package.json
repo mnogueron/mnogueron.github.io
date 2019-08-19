@@ -12,7 +12,7 @@
     "deploy": "gh-pages -b master -d build"
   },
   "dependencies": {
-    "@material-ui/core": "^4.1.0",
+    "@material-ui/core": "^4.3.2",
     "@material-ui/icons": "^4.1.0",
     "@material-ui/styles": "^4.1.0",
     "es5-shim": "^4.5.13",
