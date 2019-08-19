@@ -17,7 +17,7 @@
     "@material-ui/styles": "^4.1.0",
     "es5-shim": "^4.5.13",
     "es6-shim": "^0.35.5",
-    "mdi-material-ui": "^6.4.0",
+    "mdi-material-ui": "^6.4.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-easy-panzoom": "^0.4.0",
