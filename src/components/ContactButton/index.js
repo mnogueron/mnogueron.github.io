@@ -48,8 +48,8 @@ export const ContactButton = (props) => {
       {...buttonProps}
       onClick={_onClick}
       href={url}
-      target={shouldOpenTab && '_blank'}
-      rel={shouldOpenTab && 'noopener noreferrer'}
+      target={shouldOpenTab ? '_blank' : null}
+      rel={shouldOpenTab ? 'noopener noreferrer' : null}
       className={classname}
     >
       <IconComponent fontSize={fontSize || 'large'} {...iconProps} className={iconClassname}/>

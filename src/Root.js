@@ -32,7 +32,7 @@ const Root = () => {
     if (!userLocale) {
       dispatch(setLocale(getUserLocale()))
     }
-  }, [userLocale])
+  }, [dispatch, userLocale])
 
   const locale = userLocale || getUserLocale()
 
