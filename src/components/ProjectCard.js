@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
+import { FormattedMessage } from 'react-intl'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
@@ -94,8 +95,7 @@ const ProjectCard = (props) => {
             onClick={openDialog}
             aria-label="read more"
           >
-            {/* TODO translate */}
-            Read More
+            <FormattedMessage id={'general.readMore'} />
           </Button>
         </CardActions>
       </Card>

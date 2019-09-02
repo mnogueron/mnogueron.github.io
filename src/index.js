@@ -8,7 +8,9 @@ import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core'
+import { IntlProvider } from 'react-intl'
 import * as ReactGA from 'react-ga'
+import { getUserLocale, getMessages } from './i18n'
 
 const theme = createMuiTheme({
   palette: {
@@ -32,10 +34,18 @@ if (process.env.NODE_ENV === 'production') {
   ReactGA.pageview('Homepage')
 }
 
+const locale = getUserLocale()
+
 function WrappedApp () {
   return (
     <ThemeProvider theme={theme}>
-      <App/>
+      <IntlProvider
+        key={locale}
+        locale={locale}
+        messages={getMessages(locale)}
+      >
+        <App/>
+      </IntlProvider>
     </ThemeProvider>
   )
 }
