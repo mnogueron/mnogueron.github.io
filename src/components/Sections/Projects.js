@@ -1,4 +1,5 @@
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
@@ -282,7 +283,7 @@ const Projects = (props) => {
 
       <div className={classes.titleContainer}>
         <Typography variant={'h4'} className={classes.title}>
-          {'My personal projects'}
+          <FormattedMessage id={'section.projects.title'} />
         </Typography>
         <div className={classes.divider} />
       </div>

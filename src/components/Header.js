@@ -1,5 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
+import { FormattedMessage } from 'react-intl'
 import Typography from '@material-ui/core/Typography'
 import BackgroundImage from '../assets/philippe-toupet-unsplash.jpg'
 import IconButton from '@material-ui/core/IconButton'
@@ -112,8 +113,12 @@ const Header = (props) => {
           Matthieu Nogueron
         </Typography>
         <Typography variant={'h5'} className={classes.description}>
-          <b>I am a software engineer</b>
-          {' from France living in Stockholm where I work as React tutor and full time sustainability advocate.'}
+          <FormattedMessage
+            id={'header.title'}
+            values={{
+              b: msg => <b>{msg}</b>,
+            }}
+          />
         </Typography>
 
         <Grid container justify={'center'} alignItems={'center'} className={classes.contactButtonContainer}>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
+import { FormattedMessage } from 'react-intl'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import { GithubButton, EmailButton, FacebookButton, LinkedInButton } from '../ContactButton'
@@ -90,19 +91,22 @@ const Contact = (props) => {
 
         <Grid item xs={12} md={7} className={classes.rightPanel}>
           <Typography variant={'h4'} className={classes.title}>
-            {'Contact'}
+            <FormattedMessage id={'section.contact.title'} />
           </Typography>
 
           <div className={classes.divider} />
 
           <Typography variant={'h5'} className={classes.subtitle}>
-            {'Want to grab a coffee and chat?'}
+            <FormattedMessage id={'section.contact.subtitle'} />
           </Typography>
 
           <Typography variant={'h5'} className={classes.text}>
-            {'If you are interested in my professional profile, want to discuss about sustainable development, French culture or just want to have a chat with some good coffee (or tea), you can contact me by email or on these platforms.\n\n'}
-            {'If you are a company working with sustainable development and are in need of a fullstack engineer: '}
-            <b>{'wait no more and send an email!'}</b>
+            <FormattedMessage
+              id={'section.contact.body'}
+              values={{
+                b: msg => <b>{msg}</b>,
+              }}
+            />
           </Typography>
         </Grid>
       </Grid>

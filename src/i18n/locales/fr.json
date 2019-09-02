@@ -1,5 +1,25 @@
 {
   "general": {
     "readMore": "En savoir plus"
+  },
+  "header": {
+    "title": "<b>Ingénieur informaticien</b> vivant à Stockholm, actuellement tuteur et développeur React et militant des questions écologiques et de développement durable."
+  },
+  "section": {
+    "aboutMe": {
+      "title": "Qui suis-je",
+      "subtitle": "Ingénieur informaticien, montagnard et militant pour un monde durable",
+      "body": "Originaire de Grenoble, au <b>portes des Alpes</b>, les montagnes font parties de mon ADN et comme la fonte des glaciers n'est plus à remettre en questions, le développement durable en fait aussi parti.\n\nEn tant qu'ingénieur logiciel, j'ai comme objectif d'utiliser mes capacités pour participer à la création d'un monde meilleur pour l'ensemble des êtres vivants.\n\nCréer de nouvelles méthodes d'intégration pour des réfugiés arrivant dans un nouveau pays, aider des personnes à mobilité réduite à utiliser les transports en communs ou bien même simplifier l'accés aux horaires de bus et de tramway, tout ces éléments révèlent un même trait de ma personnalité : ",
+      "highlight": "Les rôles à impact me passionnent et me motivent",
+      "caption": "Dans la brume - Vanoise, France"
+    },
+    "projects":{
+      "title": "Mes projets personnels"
+    },
+    "contact": {
+      "title": "Me contacter",
+      "subtitle": "Thé ? Café ? Avec viennoiseries ?",
+      "body": "Si vous êtes intéressé par mon profil professionnel, voulez discuter de développement durable, ou voulez simplement apprécier un café (ou thé) et converser, vous pouvez me contacter sur ces différentes plateformes.\n\nSi vous représentez une entreprise qui travaille sur un sujet relatif au développement durable et que vous avez besoin d'un ingénieur fullstack: <b>n'attendez plus et envoyez moi un mail !</b>"
+    }
   }
 }

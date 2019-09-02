@@ -1,5 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
+import { FormattedMessage } from 'react-intl'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import TheMistImage from '../../assets/the-mist.jpg'
@@ -82,32 +83,32 @@ const AboutMe = (props) => {
       <Grid container spacing={4}>
         <Grid item xs={12} md={7}>
           <Typography variant={'h4'} className={classes.title}>
-            {'Who am I'}
+            <FormattedMessage id={'section.aboutMe.title'}/>
           </Typography>
 
           <div className={classes.divider} />
 
           <Typography variant={'h5'} className={classes.subtitle}>
-            {'French software engineer, hiker and sustainability advocate'}
+            <FormattedMessage id={'section.aboutMe.subtitle'}/>
           </Typography>
 
           <Typography variant={'body1'} className={classes.text}>
-            {'Originally from Grenoble, near the '}
-            <b>{'French Alps'}</b>
-            {', the mountains are part of my DNA and so does sustainability matters.'}
-            {'\n\nAs a software engineer, I pursue the goal of using my expertise to make the world a better place for all living beings.'}
-            {'\n\nProviding better integration methods for refugees when coming to a new country, helping disabled people to use public transportation or simplifying access to bus and tramway schedules, all reveal the same trait: '}
+            <FormattedMessage
+              id={'section.aboutMe.body'}
+              values={{
+                b: msg => <b>{msg}</b>,
+              }}
+            />
           </Typography>
           <Typography className={classes.highlightText}>
-            <b>{'I am driven by impactful roles.'}</b>
+            <b><FormattedMessage id={'section.aboutMe.highlight'}/></b>
           </Typography>
         </Grid>
 
         <Grid item xs={12} md={5} className={classes.rightPanel}>
           <div className={classes.image} />
-          {/*<img src={ImageGrenoble} alt={'city of Grenoble'} className={classes.image} />*/}
           <Typography variant={'caption'} className={classes.caption}>
-            <i>In the mist - Vanoise, France</i>
+            <i><FormattedMessage id={'section.aboutMe.caption'}/></i>
           </Typography>
         </Grid>
       </Grid>

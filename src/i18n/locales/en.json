@@ -1,5 +1,25 @@
 {
   "general": {
     "readMore": "Read more"
+  },
+  "header": {
+    "title": "<b>I am a software engineer</b> from France living in Stockholm where I work as React tutor and full time sustainability advocate."
+  },
+  "section": {
+    "aboutMe": {
+      "title": "Who am I",
+      "subtitle": "French software engineer, hiker and sustainability advocate",
+      "body": "Originally from Grenoble, near the <b>French Alps</b>, the mountains are part of my DNA and so does sustainability matters.\n\nAs a software engineer, I pursue the goal of using my expertise to make the world a better place for all living beings.\n\nProviding better integration methods for refugees when coming to a new country, helping disabled people to use public transportation or simplifying access to bus and tramway schedules, all reveal the same trait: ",
+      "highlight": "I am driven by impactful roles",
+      "caption": "In the mist - Vanoise, France"
+    },
+    "projects":{
+      "title": "My personal projects"
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "Want to grab a coffee and chat?",
+      "body": "If you are interested in my professional profile, want to discuss about sustainable development, French culture or just want to have a chat with some good coffee (or tea), you can contact me by email or on these platforms.\n\nIf you are a company working with sustainable development and are in need of a fullstack engineer: <b>wait no more and send an email!</b>"
+    }
   }
 }
