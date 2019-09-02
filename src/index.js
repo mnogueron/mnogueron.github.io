@@ -4,49 +4,24 @@ import 'es6-shim'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import App from './App'
 import registerServiceWorker from './registerServiceWorker'
-import { ThemeProvider } from '@material-ui/styles'
-import { createMuiTheme } from '@material-ui/core'
-import { IntlProvider } from 'react-intl'
+import { Provider } from 'react-redux'
 import * as ReactGA from 'react-ga'
-import { getUserLocale, getMessages } from './i18n'
+import { initStore } from './store'
+import Root from './Root'
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: '#B2DFDB',
-      main: '#009688',
-      dark: '#00796B',
-      contrastText: '#fff',
-    },
-    secondary: {
-      light: '#FFECB3',
-      main: '#FFC107',
-      dark: '#FFA000',
-      contrastText: '#212121',
-    },
-  },
-})
+const store = initStore()
 
 if (process.env.NODE_ENV === 'production') {
   ReactGA.initialize('UA-143826195-1')
   ReactGA.pageview('Homepage')
 }
 
-const locale = getUserLocale()
-
 function WrappedApp () {
   return (
-    <ThemeProvider theme={theme}>
-      <IntlProvider
-        key={locale}
-        locale={locale}
-        messages={getMessages(locale)}
-      >
-        <App/>
-      </IntlProvider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <Root/>
+    </Provider>
   )
 }
 

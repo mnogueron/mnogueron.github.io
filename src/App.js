@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles'
 import Header from './components/Header'
 import PageContent from './components/PageContent'
 import Footer from './components/Footer'
+import TranslateButton from './components/TranslateButton'
 
 const useStyles = makeStyles({
   root: {
@@ -28,6 +29,7 @@ const App = (props) => {
       <Header onExpandClick={onExpandClick} />
       <PageContent ref={contentRef} />
       <Footer />
+      <TranslateButton />
     </div>
   )
 
