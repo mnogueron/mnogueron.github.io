@@ -5,7 +5,6 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Typography from '@material-ui/core/Typography'
 import * as ReactGA from 'react-ga'
-import * as ReactDom from 'react-dom'
 
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
@@ -13,6 +12,7 @@ import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
+import SEOPortal from './SEOPortal'
 
 const useStyles = makeStyles(theme => ({
 
@@ -42,20 +42,6 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const usePortalStyles = makeStyles({
-  root: {
-    position: 'absolute',
-    top: -1000,
-    left: -1000,
-  },
-})
-
-const ProjectSeoDescriptionPortal = (props) => {
-  const { children } = props
-  const classes = usePortalStyles(props)
-  return ReactDom.createPortal(<div className={classes.root}>{children}</div>, document.body)
-}
-
 const ProjectCard = (props) => {
   const { title, description, subtitle, backgroundImage, actionButtons = [] } = props
   const [dialogOpen, setOpenDialog] = useState(false)
@@ -75,7 +61,7 @@ const ProjectCard = (props) => {
 
   return (
     <React.Fragment>
-      <Card className={classes.card}>
+      <Card>
         <CardActionArea onClick={openDialog}>
           <div className={classes.backgroundContainer}>
             <CardMedia
@@ -108,14 +94,15 @@ const ProjectCard = (props) => {
             onClick={openDialog}
             aria-label="read more"
           >
+            {/* TODO translate */}
             Read More
           </Button>
         </CardActions>
       </Card>
 
-      <ProjectSeoDescriptionPortal>
+      <SEOPortal>
         {description}
-      </ProjectSeoDescriptionPortal>
+      </SEOPortal>
 
       <Dialog
         open={dialogOpen}

@@ -27,8 +27,14 @@ const ButtonsAttributes = {
 }
 
 export const ContactButton = (props) => {
-  const { type, buttonProps, iconProps, buttonClassname, iconClassname, fontSize } = props
-  const { iconComponent: IconComponent, url } = ButtonsAttributes[type]
+  const { type, buttonProps, iconProps, classname, iconClassname, fontSize } = props
+  const buttonAttributes = ButtonsAttributes[type]
+
+  if (!buttonAttributes) {
+    return null
+  }
+
+  const { iconComponent: IconComponent, url } = buttonAttributes
 
   const shouldOpenTab = type !== 'email'
 
@@ -44,7 +50,7 @@ export const ContactButton = (props) => {
       href={url}
       target={shouldOpenTab && '_blank'}
       rel={shouldOpenTab && 'noopener noreferrer'}
-      className={buttonClassname}
+      className={classname}
     >
       <IconComponent fontSize={fontSize || 'large'} {...iconProps} className={iconClassname}/>
     </IconButton>

@@ -119,17 +119,17 @@ const Header = (props) => {
         <Grid container justify={'center'} alignItems={'center'} className={classes.contactButtonContainer}>
           <GithubButton
             fontSize={'default'}
-            buttonClassname={classes.contactButton}
+            classname={classes.contactButton}
             iconClassname={classes.contactIcon}
           />
           <LinkedInButton
             fontSize={'default'}
-            buttonClassname={classes.contactButton}
+            classname={classes.contactButton}
             iconClassname={classes.contactIcon}
           />
           <EmailButton
             fontSize={'default'}
-            buttonClassname={classes.contactButton}
+            classname={classes.contactButton}
             iconClassname={classes.contactIcon}
           />
         </Grid>
