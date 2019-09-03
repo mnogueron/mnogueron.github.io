@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { FormattedMessage } from 'react-intl'
 import Dialog from '@material-ui/core/Dialog'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import Typography from '@material-ui/core/Typography'
 import * as ReactGA from 'react-ga'
 
@@ -13,6 +11,7 @@ import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
 import SEOPortal from './SEOPortal'
 
 const useStyles = makeStyles(theme => ({
@@ -41,10 +40,60 @@ const useStyles = makeStyles(theme => ({
   readMore: {
     marginLeft: 'auto',
   },
+
+  modalContent: {
+    maxHeight: 600,
+    height: 600,
+
+    [theme.breakpoints.down('sm')]: {
+      height: 'initial',
+    },
+  },
+
+  modalLeftSection: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
+  modalBackground: {
+    backgroundImage: props => `url('${props.backgroundImage}')`,
+    height: '100%',
+    width: '100%',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
+
+  modalRightSection: {
+    display: 'flex',
+    flexDirection: 'column',
+    paddingTop: theme.spacing(4),
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    height: '100%',
+    boxSizing: 'border-box',
+  },
+  modalDescription: {
+    flex: 1,
+    color: theme.palette.text.secondary,
+    marginTop: theme.spacing(3),
+    paddingRight: theme.spacing(2),
+    lineHeight: 1.4,
+    overflowY: 'auto',
+    height: '100%',
+    boxSizing: 'border-box',
+    whiteSpace: 'pre-wrap',
+    wordBreak: 'break-word',
+    textAlign: 'justify',
+  },
+  modalButton: {
+    marginTop: theme.spacing(1),
+    marginLeft: 'auto',
+  },
 }))
 
 const ProjectCard = (props) => {
-  const { title, description, subtitle, backgroundImage, actionButtons = [] } = props
+  const { title, description, subtitle, backgroundImage, actionButtons = [], modalLeftSection } = props
   const [dialogOpen, setOpenDialog] = useState(false)
   const classes = useStyles(props)
 
@@ -110,10 +159,26 @@ const ProjectCard = (props) => {
         maxWidth={'md'}
         fullWidth
       >
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
-          {description}
-        </DialogContent>
+        <Grid container spacing={0} className={classes.modalContent}>
+          <Grid item sm={12} md={8} className={classes.modalLeftSection}>
+            {
+              modalLeftSection || <div className={classes.modalBackground} />
+            }
+          </Grid>
+          <Grid item sm={12} md={4} className={classes.modalRightSection}>
+            <Typography component="h2" variant="h5">
+              {title}
+            </Typography>
+
+            <div className={classes.modalDescription}>
+              {description}
+            </div>
+
+            <div className={classes.modalButton}>
+              <Button onClick={closeDialog} color={'primary'}>Close</Button>
+            </div>
+          </Grid>
+        </Grid>
       </Dialog>
     </React.Fragment>
   )

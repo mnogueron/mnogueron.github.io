@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
@@ -11,7 +11,6 @@ import PortfolioImage from '../../assets/portfolio.png'
 import grey from '@material-ui/core/colors/grey'
 import blueGrey from '@material-ui/core/colors/blueGrey'
 import Section from './Section'
-import * as ReactGA from 'react-ga'
 import IconButton from '@material-ui/core/IconButton'
 import Link from '@material-ui/core/Link'
 import { GA } from '../../utils'
@@ -20,6 +19,8 @@ import GitHubIcon from 'mdi-material-ui/GithubCircle'
 import NpmIcon from 'mdi-material-ui/NpmVariantOutline'
 import GooglePlayIcon from 'mdi-material-ui/GooglePlay'
 import StorybookIcon from 'mdi-material-ui/TestTube'
+import { useDispatch } from 'react-redux'
+import { fetchGithubReactEasyPanzoomData } from '../../actions/appThunk'
 
 const useStyles = makeStyles(theme => ({
   gridRoot: {
@@ -66,102 +67,60 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const useModalStyles = makeStyles({
+const useModalStyles = makeStyles(theme => ({
+  container: {
+    padding: theme.spacing(1),
+    height: '100%',
+    boxSizing: 'border-box',
+  },
   panZoomContainer: {
-    height: '30vh',
+    height: '100%',
     border: `1px solid grey`,
-    borderRadius: 4,
     overflow: 'hidden',
   },
-})
+}))
 
-const PortfolioSourceLink = () => {
-  function onClick() {
-    if (process.env.NODE_ENV === 'production') {
-      ReactGA.event({
-        category: 'Navigation',
-        action: 'Open GitHub mnogueron.github.io',
-      })
-    }
-  }
+const SimpleTagStoreURL = 'https://play.google.com/store/apps/details?id=com.mnogueron.simpletag'
+const EasyPanzoomGithubURL = 'https://github.com/mnogueron/react-easy-panzoom'
+const PortfolioGithubURL = 'https://github.com/mnogueron/mnogueron.github.io'
 
-  return (
-    <a
-      href={'https://github.com/mnogueron/mnogueron.github.io'}
-      target={'_blank'}
-      rel={'noopener noreferrer'}
-      onClick={onClick}
-    >
-      {'github.comm/mnogueron/mnogueron.github.io'}
-    </a>
-  )
-}
+const ReactEasyPanZoomLink = () => (
+  <Link
+    href={EasyPanzoomGithubURL}
+    target={'_blank'}
+    rel={'noopener noreferrer'}
+    onClick={sendGaNavigation('Open GitHub react-easy-panzoom')}
+  >
+    {'github.com/mnogueron/react-easy-panzoom'}
+  </Link>
+)
 
-const ReactEasyPanZoomLink = () => {
-  function onClick() {
-    if (process.env.NODE_ENV === 'production') {
-      ReactGA.event({
-        category: 'Navigation',
-        action: 'Open GitHub react-easy-panzoom',
-      })
-    }
-  }
+const SimpleTagLink = () => (
+  <Link
+    href={SimpleTagStoreURL}
+    target={'_blank'}
+    rel={'noopener noreferrer'}
+    onClick={sendGaNavigation('Open SimpleTag play store')}
+  >
+    {'SimpleTag - Google Play'}
+  </Link>
+)
 
-  return (
-    <a
-      href={'https://github.com/mnogueron/react-easy-panzoom'}
-      target={'_blank'}
-      rel={'noopener noreferrer'}
-      onClick={onClick}
-    >
-      {'github.comm/mnogueron/react-easy-panzoom'}
-    </a>
-  )
-}
-
-const SimpleTagLink = () => {
-  function onClick() {
-    if (process.env.NODE_ENV === 'production') {
-      ReactGA.event({
-        category: 'Navigation',
-        action: 'Open SimpleTag play store',
-      })
-    }
-  }
-
-  return (
-    <a
-      href={'https://play.google.com/store/apps/details?id=com.mnogueron.simpletag'}
-      target={'_blank'}
-      rel={'noopener noreferrer'}
-      onClick={onClick}
-    >
-      {'SimpleTag'}
-    </a>
-  )
-}
-
-const SimpleTagModalContent = () => {
-  return (
-    <div style={{ whiteSpace: 'pre-wrap' }}>
-      {'SimpleTag is an application to get live schedule for public transportation in Grenoble.'}
-      {'\nMore information is available on the Google Play Store page:'}
-      <div style={{ marginTop: 16, textAlign: 'center' }}>
-        <SimpleTagLink />
-      </div>
-    </div>
-  )
-}
+const PortfolioLink = () => (
+  <Link
+    href={PortfolioGithubURL}
+    target={'_blank'}
+    rel={'noopener noreferrer'}
+    onClick={sendGaNavigation('Open GitHub mnogueron.github.io')}
+  >
+    {'github.com/mnogueron/mnogueron.github.io'}
+  </Link>
+)
 
 const ReactEasyPanzoomModalContent = (props) => {
   const classes = useModalStyles(props)
   return (
-    <div>
-      <div style={{ marginBottom: 24 }}>
-        <b>{'react-easy-panzoom'}</b>
-        {' is a React library to enable pan and zoom feature on any react component. This project is open source and can be found at this url: '}
-        <ReactEasyPanZoomLink />
-      </div>
+    <div className={classes.container}>
       <PanZoom
         className={classes.panZoomContainer}
         maxZoom={2}
@@ -176,30 +135,32 @@ const ReactEasyPanzoomModalContent = (props) => {
   )
 }
 
-const PortfolioModalContent = () => {
-  return (
-    <div>
-      <b>{'Personal portfolio'}</b>
-      {' is a React library to enable pan and zoom feature on any react component. This project is open source and can be found at this url: '}
-      <PortfolioSourceLink />
-    </div>
-  )
-}
-
 const sendGaNavigation = (action) => () => GA.navigateTo(action)
 
 const projectList = [
   {
-    title: 'SimpleTag',
-    subtitle: 'Get Grenoble\'s public transport live schedule on your Android',
-    description: <SimpleTagModalContent/>,
+    key: 'simpleTag',
+    title: <FormattedMessage id={'section.projects.simpleTag.title'} />,
+    subtitle: <FormattedMessage id={'section.projects.simpleTag.subtitle'} />,
+    description: (
+      <FormattedMessage
+        id={'section.projects.simpleTag.description'}
+        values={{
+          a: () => (
+            <div style={{ marginTop: 16, textAlign: 'center' }}>
+              <SimpleTagLink />
+            </div>
+          ),
+        }}
+      />
+    ),
     backgroundImage: SimpleTagImage,
     actionButtons: [
       (
         <IconButton
           key={'simpletag-store-link'}
           component={Link}
-          href={'https://play.google.com/store/apps/details?id=com.mnogueron.simpletag'}
+          href={SimpleTagStoreURL}
           target={'_blank'}
           rel={'noopener noreferrer'}
           onClick={sendGaNavigation('Open SimpleTag play store')}
@@ -210,16 +171,30 @@ const projectList = [
     ],
   },
   {
-    title: 'react-easy-panzoom',
-    subtitle: 'React library for pan/zoom support for any kind of component',
-    description: <ReactEasyPanzoomModalContent />,
+    key: 'react-easy-panzoom',
+    title: <FormattedMessage id={'section.projects.react-easy-panzoom.title'} />,
+    subtitle: <FormattedMessage id={'section.projects.react-easy-panzoom.subtitle'} />,
+    description: (
+      <FormattedMessage
+        id={'section.projects.react-easy-panzoom.description'}
+        values={{
+          a: () => (
+            <div style={{ marginTop: 16, textAlign: 'center' }}>
+              <ReactEasyPanZoomLink />
+            </div>
+          ),
+          b: msg => <b>{msg}</b>,
+        }}
+      />
+    ),
+    modalLeftSection: <ReactEasyPanzoomModalContent />,
     backgroundImage: NpmImage,
     actionButtons: [
       (
         <IconButton
           key={'react-easy-panzoom-github-link'}
           component={Link}
-          href={'https://github.com/mnogueron/react-easy-panzoom'}
+          href={EasyPanzoomGithubURL}
           target={'_blank'}
           rel={'noopener noreferrer'}
           onClick={sendGaNavigation('Open GitHub react-easy-panzoom')}
@@ -254,16 +229,29 @@ const projectList = [
     ],
   },
   {
-    title: 'Portfolio',
-    subtitle: 'Personal portfolio designed and implemented from scratch using React and Material-UI',
-    description: <PortfolioModalContent />,
+    key: 'portfolio',
+    title: <FormattedMessage id={'section.projects.portfolio.title'} />,
+    subtitle: <FormattedMessage id={'section.projects.portfolio.subtitle'} />,
+    description: (
+      <FormattedMessage
+        id={'section.projects.portfolio.description'}
+        values={{
+          b: msg => <b>{msg}</b>,
+          a: () => (
+            <div style={{ marginTop: 16, textAlign: 'center' }}>
+              <PortfolioLink />
+            </div>
+          ),
+        }}
+      />
+    ),
     backgroundImage: PortfolioImage,
     actionButtons: [
       (
         <IconButton
           key={'portfolio-github-link'}
           component={Link}
-          href={'https://github.com/mnogueron/mnogueron.github.io'}
+          href={PortfolioGithubURL}
           target={'_blank'}
           rel={'noopener noreferrer'}
           onClick={sendGaNavigation('Open GitHub mnogueron.github.io')}
@@ -276,7 +264,12 @@ const projectList = [
 ]
 
 const Projects = (props) => {
+  const dispatch = useDispatch()
   const classes = useStyles(props)
+
+  useEffect(() => {
+    dispatch(fetchGithubReactEasyPanzoomData())
+  }, [dispatch])
 
   return (
     <Section backgroundColor={blueGrey['50']}>
@@ -291,7 +284,7 @@ const Projects = (props) => {
       <Grid container spacing={2}>
         {
           projectList.map(project => (
-            <Grid key={project.title} item xs={12} sm={6} lg={4}>
+            <Grid key={project.key} item xs={12} sm={6} lg={4}>
               <ProjectCard {...project} />
             </Grid>
           ))

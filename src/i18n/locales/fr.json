@@ -14,12 +14,27 @@
       "caption": "Dans la brume - Vanoise, France"
     },
     "projects":{
-      "title": "Mes projets personnels"
+      "title": "Mes projets personnels",
+      "simpleTag": {
+        "title": "SimpleTag",
+        "subtitle": "Get Grenoble's public transport live schedule on your Android",
+        "description": "SimpleTag is an Android application that aims to simplify transportation within Grenoble and its area.\n\nIt allows you to get live schedule for all transports on the SemiTag network - busses and tramways - in a easy and comprehensible way. \n\nMore information is available on the Google Play Store page: <a></a>"
+      },
+      "react-easy-panzoom": {
+        "title": "react-easy-panzoom",
+        "subtitle": "React library for pan/zoom support for any kind of component",
+        "description": "<b>react-easy-panzoom</b> is a React library to enable pan and zoom feature on any react component.\n\nThis project is open source and can be found on Github: <a></a>"
+      },
+      "portfolio": {
+        "title": "Portfolio",
+        "subtitle": "Personal portfolio designed and implemented from scratch using React and Material-UI",
+        "description": "This portfolio aims at showing who I am, my values and my projects.\n\nThis single page application has been created from scratch using <b>React</b>, bootstrapped with <b>create-react-app</b>, deployed with <b>gh-pages</b> and uses <b>Material-UI</b> awesome component kit.\n\nAll the code is open source and can be found on my Github: <a></a>"
+      }
     },
     "contact": {
       "title": "Me contacter",
       "subtitle": "Thé ? Café ? Avec viennoiseries ?",
-      "body": "Si vous êtes intéressé par mon profil professionnel, voulez discuter de développement durable, ou voulez simplement apprécier un café (ou thé) et converser, vous pouvez me contacter sur ces différentes plateformes.\n\nSi vous représentez une entreprise qui travaille sur un sujet relatif au développement durable et que vous avez besoin d'un ingénieur fullstack: <b>n'attendez plus et envoyez moi un mail !</b>"
+      "body": "Si vous êtes intéressé par mon profil professionnel, voulez discuter de développement durable, ou simplement apprécier un café (ou thé) et converser, vous pouvez me contacter sur ces différentes plateformes.\n\nSi vous représentez une entreprise qui travaille sur un sujet relatif au développement durable et que vous avez besoin d'un ingénieur fullstack: <b>n'attendez plus et envoyez moi un mail !</b>"
     }
   }
 }
