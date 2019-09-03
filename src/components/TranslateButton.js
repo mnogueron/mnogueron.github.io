@@ -5,7 +5,7 @@ import Fab from '@material-ui/core/Fab'
 import TranslateIcon from '@material-ui/icons/Translate'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import {setLocale} from '../actions/appActions'
+import { setLocale } from '../actions/appActions'
 
 const useStyles = makeStyles({
   root: {

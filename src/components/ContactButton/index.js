@@ -27,7 +27,7 @@ const ButtonsAttributes = {
 }
 
 export const ContactButton = (props) => {
-  const { type, buttonProps, iconProps, classname, iconClassname, fontSize } = props
+  const { type, buttonProps, iconProps, className, iconClassname, fontSize } = props
   const buttonAttributes = ButtonsAttributes[type]
 
   if (!buttonAttributes) {
@@ -50,7 +50,7 @@ export const ContactButton = (props) => {
       href={url}
       target={shouldOpenTab ? '_blank' : null}
       rel={shouldOpenTab ? 'noopener noreferrer' : null}
-      className={classname}
+      className={className}
     >
       <IconComponent fontSize={fontSize || 'large'} {...iconProps} className={iconClassname}/>
     </IconButton>
