@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
@@ -6,10 +6,8 @@ import Grid from '@material-ui/core/Grid'
 import grey from '@material-ui/core/colors/grey'
 import blueGrey from '@material-ui/core/colors/blueGrey'
 import Section from './Section'
-import { useDispatch } from 'react-redux'
-import { fetchGithubReactEasyPanzoomData } from '../../actions/appThunk'
 
-import { ProjectCards } from '../Projects'
+import { ProjectCards } from '../Project'
 
 const useStyles = makeStyles(theme => ({
   gridRoot: {
@@ -57,12 +55,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Projects = (props) => {
-  const dispatch = useDispatch()
   const classes = useStyles(props)
-
-  useEffect(() => {
-    dispatch(fetchGithubReactEasyPanzoomData())
-  }, [dispatch])
 
   return (
     <Section backgroundColor={blueGrey['50']}>

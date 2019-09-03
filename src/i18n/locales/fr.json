@@ -1,6 +1,7 @@
 {
   "general": {
-    "readMore": "En savoir plus"
+    "readMore": "En savoir plus",
+    "latestVersion": "Latest version:"
   },
   "header": {
     "title": "<b>Ingénieur informaticien</b> vivant à Stockholm, actuellement tuteur et développeur React et militant des questions écologiques et de développement durable."

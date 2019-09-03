@@ -4,6 +4,7 @@ import ProjectCard from './ProjectCard'
 import NewTabLink from './NewTabLink'
 import NewTabIconButton from './NewTabIconButton'
 import ReactEasyPanzoomModalContent from './ReactEasyPanzoomModalContent'
+import ReactEasyPanZoomModalDescription from './ReactEasyPanZoomModalDescription'
 
 import SimpleTagImage from '../../assets/simpletag.png'
 import NpmImage from '../../assets/npm.png'
@@ -56,23 +57,7 @@ const projects = {
   'react-easy-panzoom': {
     title: <FormattedMessage id={'section.projects.react-easy-panzoom.title'} />,
     subtitle: <FormattedMessage id={'section.projects.react-easy-panzoom.subtitle'} />,
-    description: (
-      <FormattedMessage
-        id={'section.projects.react-easy-panzoom.description'}
-        values={{
-          a: () => (
-            <div style={{ marginTop: 16, textAlign: 'center' }}>
-              <NewTabLink
-                href={EasyPanzoomGithubURL}
-                gaAction={'Open GitHub react-easy-panzoom'}
-                text={'github.com/mnogueron/react-easy-panzoom'}
-              />
-            </div>
-          ),
-          b: msg => <b>{msg}</b>,
-        }}
-      />
-    ),
+    description: <ReactEasyPanZoomModalDescription />,
     modalLeftSection: <ReactEasyPanzoomModalContent />,
     backgroundImage: NpmImage,
     actionButtons: [

@@ -1,6 +1,7 @@
 {
   "general": {
-    "readMore": "Read more"
+    "readMore": "Read more",
+    "latestVersion": "Latest version:"
   },
   "header": {
     "title": "<b>I am a software engineer</b> from France living in Stockholm where I work as React tutor and full time sustainability advocate."
