@@ -10,7 +10,10 @@ const useStyles = makeStyles({
   },
 })
 
-// Simple hack to add invisible content to the page for SEO purpose
+/**
+ * Simple hack to add invisible content to the page for SEO purpose
+ * @param props
+ */
 const SEOPortal = (props) => {
   const { children } = props
   const classes = useStyles(props)

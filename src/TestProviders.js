@@ -5,6 +5,11 @@ import { IntlProvider } from 'react-intl'
 import theme from './theme'
 import { getMessages } from './i18n'
 
+/**
+ * This component is only to be used for test purpose.
+ * It allows a component to be wrapped inside all the needed providers.
+ * TODO In the future, this could be used to wrap the whole application as well.
+ */
 const TestProviders = (props) => {
   const { store, locale, children } = props
   return (

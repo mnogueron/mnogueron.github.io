@@ -19,8 +19,10 @@ const SimpleTagStoreURL = 'https://play.google.com/store/apps/details?id=com.mno
 const EasyPanzoomGithubURL = 'https://github.com/mnogueron/react-easy-panzoom'
 const PortfolioGithubURL = 'https://github.com/mnogueron/mnogueron.github.io'
 
-// This object contains all the different projects displayed on the portfolio
-// to add one, just add a new attribute with the correct content
+/**
+ * This object contains all the different projects displayed on the portfolio
+ * to add one, just add a new attribute with the correct content
+ */
 const projects = {
   simpleTag: {
     title: <FormattedMessage id={'section.projects.simpleTag.title'} />,
@@ -125,6 +127,11 @@ const projects = {
   },
 }
 
+/**
+ * Export a list of object that contains a key and the component to render
+ * for each project.
+ * @type {{ProjectComponent: (function(*): *), key: string}[]}
+ */
 export const ProjectCards = Object.keys(projects).map(key => ({
   key,
   ProjectComponent: (props) => (
