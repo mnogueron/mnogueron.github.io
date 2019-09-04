@@ -46,9 +46,10 @@ const getIconFromName = (name) => {
 export const ProjectCards = Projects.map(project => ({
   key: project.key,
   ProjectComponent: (props) => {
-    const { title, subtitle, description, modalLeftSection, backgroundImage, buttons } = project
+    const { key, title, subtitle, description, modalLeftSection, backgroundImage, buttons } = project
     return (
       <ProjectCard
+        projectName={key}
         title={<FormattedMessage id={title} /> }
         subtitle={<FormattedMessage id={subtitle} /> }
         description={

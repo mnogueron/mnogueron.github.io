@@ -93,13 +93,13 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const ProjectCard = (props) => {
-  const { title, description, subtitle, backgroundImage, actionButtons = [], modalLeftSection } = props
+  const { projectName, title, description, subtitle, backgroundImage, actionButtons = [], modalLeftSection } = props
   const [dialogOpen, setOpenDialog] = useState(false)
   const classes = useStyles(props)
 
   function openDialog() {
     if (process.env.NODE_ENV === 'production') {
-      ReactGA.pageview(`Project: ${title}`)
+      ReactGA.pageview(`Project: ${projectName}`)
     }
 
     setOpenDialog(true)
