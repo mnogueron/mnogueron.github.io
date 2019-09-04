@@ -1,6 +1,3 @@
-import ReactEasyPanZoomModalDescription from './ReactEasyPanZoomModalDescription'
-import ReactEasyPanzoomModalContent from './ReactEasyPanzoomModalContent'
-
 import SimpleTagImage from '../../assets/simpletag.png'
 import NpmImage from '../../assets/npm.png'
 import PortfolioImage from '../../assets/portfolio.png'
@@ -37,10 +34,11 @@ export default [
     title: 'section.projects.react-easy-panzoom.title',
     subtitle: 'section.projects.react-easy-panzoom.subtitle',
     description: {
-      isComponent: true,
-      Component: ReactEasyPanZoomModalDescription,
+      useComponent: 'ReactEasyPanZoomModalDescription',
     },
-    ModalLeftSectionComponent: ReactEasyPanzoomModalContent,
+    modalLeftSection: {
+      useComponent: 'ReactEasyPanzoomModalContent',
+    },
     backgroundImage: NpmImage,
     buttons: [
       {
