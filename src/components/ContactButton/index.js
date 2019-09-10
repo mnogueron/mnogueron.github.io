@@ -44,8 +44,8 @@ export const ContactButton = (props) => {
 
   return (
     <IconButton
-      component={Link}
       {...buttonProps}
+      component={Link}
       onClick={_onClick}
       href={url}
       target={shouldOpenTab ? '_blank' : null}
