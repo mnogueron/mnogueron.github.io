@@ -20,7 +20,7 @@
     "es6-shim": "^0.35.5",
     "mdi-material-ui": "^6.6.0",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react-dom": "^17.0.1",
     "react-easy-panzoom": "^0.4.3",
     "react-ga": "^2.6.0",
     "react-intl": "^3.1.13",
