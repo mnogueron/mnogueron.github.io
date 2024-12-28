@@ -112,7 +112,7 @@ const ProjectCard = (props) => {
   return (
     <React.Fragment>
       <Card>
-        {/*<CardActionArea onClick={openDialog}>
+        <CardActionArea onClick={openDialog}>
           <div className={classes.backgroundContainer}>
             <CardMedia
               className={classes.media}
@@ -129,9 +129,9 @@ const ProjectCard = (props) => {
               {subtitle}
             </Typography>
           </CardContent>
-        </CardActionArea>*/}
+        </CardActionArea>
 
-        {/*<CardActions disableSpacing>
+        <CardActions disableSpacing>
 
           {
             actionButtons
@@ -146,7 +146,7 @@ const ProjectCard = (props) => {
           >
             <FormattedMessage id={'general.readMore'} />
           </Button>
-        </CardActions>*/}
+        </CardActions>
       </Card>
 
       <SEOPortal>
@@ -174,9 +174,9 @@ const ProjectCard = (props) => {
               {description}
             </div>
 
-            {/*<div className={classes.modalButton}>
+            <div className={classes.modalButton}>
               <Button onClick={closeDialog} color={'primary'}>Close</Button>
-            </div>*/}
+            </div>
           </Grid>
         </Grid>
       </Dialog>

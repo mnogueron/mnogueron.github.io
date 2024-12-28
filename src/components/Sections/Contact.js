@@ -82,10 +82,10 @@ const Contact = (props) => {
       <Grid container spacing={4} className={classes.root}>
         <Grid item xs={12} md={5}>
           <div className={classes.buttonContainer}>
-            {/*<GithubButton />
+            <GithubButton />
             <LinkedInButton />
             <EmailButton />
-            <FacebookButton />*/}
+            <FacebookButton />
           </div>
         </Grid>
 
