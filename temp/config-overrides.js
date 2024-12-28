@@ -1,4 +1,4 @@
-/* config-overrides.js */
+w/* config-overrides.js */
 const ImageminPlugin = require('imagemin-webpack-plugin').default
 const imageminMozjpeg = require('imagemin-mozjpeg')
 

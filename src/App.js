@@ -27,7 +27,7 @@ const App = (props) => {
   return (
     <div className={classes.root}>
       <Header onExpandClick={onExpandClick} />
-      <PageContent ref={contentRef} />
+      {/*<PageContent ref={contentRef} />*/}
       <Footer />
       <TranslateButton />
     </div>

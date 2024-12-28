@@ -33,7 +33,7 @@ const BuildRibbon = (props) => {
     <div className={classes.container}>
       <div className={classes.root}>
         <div className={classes.innerRibbon}>
-          Under construction
+          Under reconstruction
         </div>
       </div>
     </div>

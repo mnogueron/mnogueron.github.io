@@ -2,9 +2,8 @@ import 'es5-shim'
 import 'es6-shim'
 
 import React from 'react'
-import ReactDOM from 'react-dom'
-import './index.css'
-import registerServiceWorker from './registerServiceWorker'
+//import ReactDOM from 'react-dom'
+//import registerServiceWorker from './registerServiceWorker'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import * as ReactGA from 'react-ga'
@@ -28,5 +27,7 @@ function WrappedApp () {
   )
 }
 
-ReactDOM.render(<WrappedApp/>, document.getElementById('root'))
-registerServiceWorker()
+export default WrappedApp;
+
+//ReactDOM.render(<WrappedApp/>, document.getElementById('root'))
+//registerServiceWorker()

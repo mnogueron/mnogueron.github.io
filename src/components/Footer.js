@@ -19,8 +19,9 @@ const Footer = (props) => {
   const classes = useStyles(props)
   return (
     <div className={classes.root}>
-      {`Copyright © ${year} All Rights Reserved | Portfolio designed and implemented by Matthieu Nogueron with `}
-      <Link
+      {`Copyright © ${year} All Rights Reserved | Portfolio designed and implemented by Matthieu Nogueron`}
+      {/*{`Copyright © ${year} All Rights Reserved | Portfolio designed and implemented by Matthieu Nogueron with `}*/}
+      {/*<Link
         href={'https://reactjs.org'}
         target="_blank"
         rel="noopener noreferrer"
@@ -28,9 +29,9 @@ const Footer = (props) => {
         color="inherit"
       >
         {'React'}
-      </Link>
-      {' and '}
-      <Link
+      </Link>*/}
+      {/*{' and '}*/}
+      {/*<Link
         href={'https://material-ui.com'}
         target="_blank"
         rel="noopener noreferrer"
@@ -38,7 +39,7 @@ const Footer = (props) => {
         color="inherit"
       >
         {'Material-UI'}
-      </Link>
+      </Link>*/}
     </div>
   )
 }

@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   background: {
     height: '100%',
     width: '100%',
-    backgroundImage: `url('${BackgroundImage}')`,
+    backgroundImage: `url('/images/background.jpg')`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     filter: 'blur(1px)',
@@ -56,6 +56,8 @@ const useStyles = makeStyles(theme => ({
     fontSize: 20,
     lineHeight: 1.5,
     maxWidth: 550,
+
+    whiteSpace: 'pre-wrap',
 
     '& b': {
       fontSize: 24,
@@ -122,30 +124,30 @@ const Header = (props) => {
         </Typography>
 
         <Grid container justify={'center'} alignItems={'center'} className={classes.contactButtonContainer}>
-          <GithubButton
+          {/*<GithubButton
             fontSize={'default'}
             className={classes.contactButton}
             iconClassname={classes.contactIcon}
-          />
-          <LinkedInButton
+          />*/}
+          {/*<LinkedInButton
             fontSize={'default'}
             className={classes.contactButton}
             iconClassname={classes.contactIcon}
-          />
-          <EmailButton
+          />*/}
+          {/*<EmailButton
             fontSize={'default'}
             className={classes.contactButton}
             iconClassname={classes.contactIcon}
-          />
+          />*/}
         </Grid>
       </div>
 
-      <IconButton
+      {/*<IconButton
         className={classes.expandButton}
         onClick={onExpandClick}
       >
         <ExpandMoreIcon fontSize={'large'} className={classes.expandButtonIcon} />
-      </IconButton>
+      </IconButton>*/}
 
       <BuildRibbon />
     </header>

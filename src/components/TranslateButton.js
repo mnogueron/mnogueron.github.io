@@ -38,11 +38,11 @@ const TranslateButton = (props) => {
 
   return (
     <React.Fragment>
-      <Fab size={'medium'} color={'primary'} className={classes.root} onClick={handleClick}>
+      {/*<Fab size={'medium'} color={'primary'} className={classes.root} onClick={handleClick}>
         <TranslateIcon />
-      </Fab>
+      </Fab>*/}
 
-      <Menu
+      {/*<Menu
         id="language-selection"
         anchorEl={anchorEl}
         keepMounted
@@ -61,7 +61,7 @@ const TranslateButton = (props) => {
         >
           {'🇫🇷  Français'}
         </MenuItem>
-      </Menu>
+      </Menu>*/}
     </React.Fragment>
   )
 }

@@ -4,7 +4,8 @@
     "latestVersion": "Latest version:"
   },
   "header": {
-    "title": "<b>Ingénieur informaticien</b> vivant à Stockholm, actuellement tuteur et développeur React et militant des questions écologiques et de développement durable."
+    "title_old": "<b>Ingénieur informaticien</b> vivant à Stockholm, actuellement tuteur et développeur React et militant des questions écologiques et de développement durable.",
+    "title": "<b>Frontend technical lead with 8 years in the industry</b> and 4 years international experience in Sweden.\n\n I love mentoring junior and more advanced developers to help them reach their potential and lead big scale technical / architectural decisions.\n\n<b>As of December 2024, this website is undergoing an entire redo with NextJS and ChakraUI.</b>"
   },
   "section": {
     "aboutMe": {
