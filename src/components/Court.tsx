@@ -7,10 +7,9 @@ type CourtProps = {
 } & Partial<HTMLChakraProps<'svg'>>;
 
 const Court = ({...props}: CourtProps) => {
-
   const handleProject = () => {
     // TODO handle project
-  }
+  };
 
   return (
     <chakra.svg height="1220" viewBox="0 0 2680 1220" fill="white" {...props}>

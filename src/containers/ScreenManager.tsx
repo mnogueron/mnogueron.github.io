@@ -7,6 +7,7 @@ import Menu from '@/components/Menu';
 import Net from '@/components/Net';
 import Timeline from '@/components/Timeline';
 import Court from '@/components/Court';
+import Racket from '@/components/Racket';
 
 const ScreenManager = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null!);
@@ -51,6 +52,10 @@ const ScreenManager = () => {
   // TODO pop history until reaching the last '/'
   const handleMenuShuttleClick = () => {
     router.push('/');
+  };
+
+  const handleCourtClick = () => {
+    // TODO handle court click
   };
 
   return (
@@ -115,7 +120,24 @@ const ScreenManager = () => {
       </Box>
 
       <Box display={screen === ScreenType.PROJECTS ? 'block' : 'none'}>
-        <Court />
+        <Court
+          onCourtClick={handleCourtClick}
+          height="60vh"
+          position="absolute"
+          top="50%"
+          left={32}
+          transform="translateY(-50%)"
+          // TODO better align on multiple devices
+        />
+      </Box>
+
+      <Box
+        display={screen === ScreenType.ABOUT_ME ? 'block' : 'none'}
+        height="100%"
+      >
+        <Flex alignItems="flex-end" justifyContent="center" height="100%">
+          <Racket height="80vh" />
+        </Flex>
       </Box>
 
       <Menu
