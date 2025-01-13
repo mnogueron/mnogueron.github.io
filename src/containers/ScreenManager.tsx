@@ -1,13 +1,15 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {ScreenType} from '@/containers/types';
 import {useRouter} from 'next/router';
-import {Box, Flex} from '@chakra-ui/react';
+import {Box, Flex, HStack} from '@chakra-ui/react';
 import Shuttle from '@/components/Shuttle';
 import Menu from '@/components/Menu';
 import Net from '@/components/Net';
 import Timeline from '@/components/Timeline';
 import Court from '@/components/Court';
 import Racket from '@/components/Racket';
+import ExperienceCard from '@/components/ExperienceCard';
+import {EXPERIENCES} from '@/constants/data';
 
 const ScreenManager = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null!);
@@ -103,18 +105,33 @@ const ScreenManager = () => {
           width="100%"
           overflowX="scroll"
         >
-          <Net
-            position="absolute"
-            top="50%"
-            transform="translateY(-50%)"
-            width="3840px"
-          />
+          <Box position="absolute" top="50%" transform="translateY(-50%)">
+            <Flex position="relative" overflow="hidden" height="40vh">
+              <Net
+                height="40vh"
+                position="absolute"
+                top="50%"
+                transform="translateY(-50%)"
+                zIndex={-1}
+              />
+              <HStack px={32} gap={32} width="100%">
+                {EXPERIENCES.map(({id, dateLabel, title, content}) => (
+                  <ExperienceCard
+                    key={id}
+                    dateLabel={dateLabel}
+                    title={title}
+                    content={content}
+                  />
+                ))}
+              </HStack>
+            </Flex>
+          </Box>
         </Box>
         <Timeline
           position="absolute"
           right={8}
           left={8}
-          top="30%"
+          top="20%"
           scrollRef={scrollContainerRef}
         />
       </Box>

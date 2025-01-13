@@ -1,0 +1,29 @@
+export const EXPERIENCES = [
+  {
+    id: 'welcome',
+    dateLabel: 'April 2017 - September 2018',
+    title: 'Software Engineer - Welcome',
+    content: `Fullstack engineer and lead developer on a React Native cross platform mobile application, Java / Spring Boot backend (B2C) and React for internal management platform (backoffice).
+
+I worked at Welcome as the main developer for the company's mobile application, involved in the process of developing new features in the app, both equally on the frontend and on the backend side. As the company grew, I worked on designing and implementing a completely new backoffice designed for our customer support in React.
+
+Context: small startup (~10), close relation with the product, the design and the founders.
+Stack: React, React Native, Java and Spring Boot, MongoDB`,
+  },
+  {
+    id: 'worldfavor',
+    dateLabel: 'September 2018 - August 2019',
+    title: 'Software Engineer - Worldfavor - The Sustainability Platform',
+    content: `Responsible for the company's transition towards React and new bundling system using Webpack.
+React tutor, migration facilitator, for both technical and management aspects, and React lead engineer for the new system.`,
+  },
+  {
+    id: 'epidemic-sound',
+    dateLabel: 'November 2019 - June 2021',
+    title: 'Software Engineer - Epidemic Sound',
+    content: `Development and maintenance of the internal platform for music ingestion, library and legal contract management, with Kotlin and React.
+Team's frontend lead and cross-team mentor for architecture and technical design of our React application.
+Involvement into the creation and improvement of the company's Design System.
+Collaboration to the rebranding effort as React expert.`,
+  },
+];

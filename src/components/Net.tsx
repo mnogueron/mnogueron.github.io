@@ -5,7 +5,7 @@ type NetProps = Partial<HTMLChakraProps<'svg'>>;
 
 const Net = (props: NetProps) => {
   return (
-    <chakra.svg width="3840px" viewBox="0 0 3840 326" fill="white" {...props}>
+    <chakra.svg viewBox="0 0 3840 326" fill="white" {...props}>
       <rect x="17" y="24" width="0.7" height="300" />
       <rect x="34.7002" y="24" width="0.7" height="300" />
       <rect x="52.4004" y="24" width="0.7" height="300" />
