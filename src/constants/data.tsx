@@ -26,4 +26,15 @@ Team's frontend lead and cross-team mentor for architecture and technical design
 Involvement into the creation and improvement of the company's Design System.
 Collaboration to the rebranding effort as React expert.`,
   },
+  {
+    id: 'deezer',
+    dateLabel: 'January 2022 - October 2024',
+    title: 'Lead Frontend Engineer - Deezer',
+    content: `In charge of the technical roadmap and leadership of the frontend developers in the Industry startup at Deezer. Mainly dedicated to the technical improvement of the Deezer for Creators (B2B), from architectural changes to decrease code complexity, improve maintainability and speed up implementation phases, I also worked on product feature in collaboration with the design team.
+
+My goal as a tech lead, was to improve the tech stack, and mentor frontend developers to help them develop and hone their technical skills in React and other frontend frameworks.
+
+Context: Handling developers from many scopes within the Industry startup and working in a dedicated team to D4C
+Stack: React, NextJS, Cypress`,
+  },
 ];
