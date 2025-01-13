@@ -26,13 +26,31 @@ html {
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  /*background: var(--background);*/
+  background: #29282B;
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
     margin: 0;
     padding: 0;
+}
+
+/* TODO improve handling of global styling */
+html {
+  background: #29282B;
+}
+
+html:has(body[data-screen='about_me']) {
+  background: #334858;
+}
+
+html:has(body[data-screen='experiences']) {
+  background: #E97D30;
+}
+
+html:has(body[data-screen='projects']) {
+  background: #0C9B8A;
 }
 
 * {

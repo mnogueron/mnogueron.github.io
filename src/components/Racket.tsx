@@ -1,9 +1,77 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {chakra, HTMLChakraProps} from '@chakra-ui/react';
 
-type RacketProps = Partial<HTMLChakraProps<'svg'>>;
+type RacketProps = {
+  dots: {
+    id: string;
+    variant: 'light' | 'medium' | 'full';
+    cx: number;
+    cy: number;
+  }[];
+  onDotClick: (id: string) => void;
+} & Partial<HTMLChakraProps<'svg'>>;
+type DotProps = {
+  variant: 'light' | 'medium' | 'full';
+  onClick: (id: string) => void;
+} & Partial<Omit<HTMLChakraProps<'path'>, 'onClick'>>;
 
-const Racket = (props: RacketProps) => {
+// TODO propagate original event to keep track of the location on screen
+const Dot = ({variant, onClick, ...props}: DotProps) => {
+  const handleClick = () => {
+    if (onClick && props.id) {
+      onClick(props.id);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleClick();
+    }
+  };
+
+  const variantProps = useMemo(() => {
+    switch (variant) {
+      case 'light':
+        return {
+          stroke: '#D3D3D3',
+          strokeWidth: '1.71',
+          _hover: {
+            strokeWidth: '3',
+            opacity: 1,
+          },
+        };
+      case 'medium':
+        return {
+          stroke: '#D3D3D3',
+          strokeWidth: '4.28',
+          _hover: {
+            strokeWidth: '6',
+            opacity: 1,
+          },
+        };
+      case 'full':
+        return {
+          _hover: {
+            opacity: 1,
+          },
+        };
+    }
+  }, [variant]);
+  return (
+    <chakra.circle
+      fill="white"
+      opacity="0.8"
+      cursor="pointer"
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      {...variantProps}
+      {...props}
+      r="25"
+    />
+  );
+};
+
+const Racket = ({dots, onDotClick, ...props}: RacketProps) => {
   return (
     <chakra.svg
       width="440"
@@ -115,32 +183,17 @@ const Racket = (props: RacketProps) => {
         d="M310.109 516.312C283.682 529.671 254.367 536.447 222.977 536.447C188.47 536.447 156.909 529.261 129.169 515.088C103.944 502.2 81.9559 483.624 63.8159 459.876C30.9959 416.91 13.494 358.109 13.494 298.549C13.494 233.665 27.2999 175.28 57.1319 117.204C66.6759 98.6246 76.5639 83.2196 87.364 70.1076C98.3159 56.8116 109.918 46.2206 122.834 37.7286C148.89 20.5977 180.676 12.2706 220.009 12.2706C258.678 12.2706 288.714 19.8776 314.534 36.2096C327.593 44.4706 339.498 54.9106 350.927 68.1296C362.375 81.3696 373.104 97.1126 383.728 116.259C398.026 142.028 408.977 170.998 416.277 202.365C423.96 235.387 426.537 268.2 426.537 307.703C426.537 364.479 408.303 421.348 374.21 463.728C356.057 486.294 334.49 503.986 310.109 516.312ZM439.736 311.663C439.736 228.76 423.238 162.979 394.117 110.496C350.801 32.4336 300.183 0.390625 220.009 0.390625C135.991 0.390625 85.3049 36.3577 46.5639 111.776C20.4809 162.553 0.293945 226.291 0.293945 302.508C0.293945 411.716 61.9039 535.868 195.622 550.792C205.401 551.884 212.822 560.102 212.822 569.942V870.121H227.862V570.34C227.862 560.443 235.366 552.169 245.214 551.177C370.209 538.585 439.736 420.462 439.736 311.663Z"
         fill="white"
       />
-      <path
-        opacity="0.8"
-        d="M330 286C343.807 286 355 274.807 355 261C355 247.193 343.807 236 330 236C316.193 236 305 247.193 305 261C305 274.807 316.193 286 330 286Z"
-        fill="white"
-      />
-      <path
-        opacity="0.8"
-        d="M266 393.86C278.604 393.86 288.86 383.603 288.86 371.001C288.86 358.397 278.604 348.14 266 348.14C253.396 348.14 243.14 358.397 243.14 371.001C243.14 383.603 253.396 393.86 266 393.86Z"
-        fill="white"
-        stroke="#D3D3D3"
-        stroke-width="4.28"
-      />
-      <path
-        opacity="0.8"
-        d="M141 304.145C154.313 304.145 165.145 293.313 165.145 280C165.145 266.687 154.313 255.855 141 255.855C127.687 255.855 116.855 266.687 116.855 280C116.855 293.313 127.687 304.145 141 304.145Z"
-        fill="white"
-        stroke="#D3D3D3"
-        stroke-width="1.71"
-      />
-      <path
-        opacity="0.8"
-        d="M121 183.145C134.313 183.145 145.145 172.313 145.145 159C145.145 145.687 134.313 134.855 121 134.855C107.687 134.855 96.855 145.687 96.855 159C96.855 172.313 107.687 183.145 121 183.145Z"
-        fill="white"
-        stroke="#D3D3D3"
-        stroke-width="1.71"
-      />
+      {dots.map(({id, cx, cy, variant}) => (
+        <Dot
+          tabIndex={0}
+          key={id}
+          id={id}
+          onClick={onDotClick}
+          variant={variant}
+          cx={cx}
+          cy={cy}
+        />
+      ))}
     </chakra.svg>
   );
 };

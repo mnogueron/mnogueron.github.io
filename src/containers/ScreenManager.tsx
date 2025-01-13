@@ -9,7 +9,7 @@ import Timeline from '@/components/Timeline';
 import Court from '@/components/Court';
 import Racket from '@/components/Racket';
 import ExperienceCard from '@/components/ExperienceCard';
-import {EXPERIENCES} from '@/constants/data';
+import {ABOUT_ME_DOTS, EXPERIENCES} from '@/constants/data';
 
 const ScreenManager = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null!);
@@ -30,6 +30,10 @@ const ScreenManager = () => {
       case ScreenType.ABOUT_ME:
         return '#334858';
     }
+  }, [screen]);
+
+  useEffect(() => {
+    document.body.setAttribute('data-screen', screen);
   }, [screen]);
 
   useEffect(() => {
@@ -152,8 +156,13 @@ const ScreenManager = () => {
         display={screen === ScreenType.ABOUT_ME ? 'block' : 'none'}
         height="100%"
       >
+        {/* TODO bring the racket down */}
         <Flex alignItems="flex-end" justifyContent="center" height="100%">
-          <Racket height="80vh" />
+          <Racket
+            height="90vh"
+            dots={ABOUT_ME_DOTS}
+            onDotClick={id => console.log(id)}
+          />
         </Flex>
       </Box>
 

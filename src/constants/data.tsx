@@ -38,3 +38,15 @@ Context: Handling developers from many scopes within the Industry startup and wo
 Stack: React, NextJS, Cypress`,
   },
 ];
+
+export const ABOUT_ME_DOTS: {
+  id: string;
+  variant: 'light' | 'medium' | 'full';
+  cx: number;
+  cy: number;
+}[] = [
+  {id: 'test_1', variant: 'light', cx: 121, cy: 159},
+  {id: 'test_2', variant: 'light', cx: 141, cy: 280},
+  {id: 'test_3', variant: 'medium', cx: 266, cy: 371},
+  {id: 'test_4', variant: 'full', cx: 330, cy: 261},
+];
