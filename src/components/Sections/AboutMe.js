@@ -1,11 +1,11 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/styles'
-import { FormattedMessage } from 'react-intl'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import TheMistImage from '../../assets/the-mist.jpg'
-import Section from './Section'
-import grey from '@material-ui/core/colors/grey'
+import React from 'react';
+import {makeStyles} from '@material-ui/styles';
+import {FormattedMessage} from 'react-intl';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import TheMistImage from '../../assets/the-mist.jpg';
+import Section from './Section';
+import grey from '@material-ui/core/colors/grey';
 
 const useStyles = makeStyles(theme => ({
   rightPanel: {
@@ -74,22 +74,22 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1),
     color: theme.palette.text.secondary,
   },
-}))
+}));
 
-const AboutMe = (props) => {
-  const classes = useStyles(props)
+const AboutMe = props => {
+  const classes = useStyles(props);
   return (
     <Section>
       <Grid container spacing={4}>
         <Grid item xs={12} md={7}>
           <Typography variant={'h4'} className={classes.title}>
-            <FormattedMessage id={'section.aboutMe.title'}/>
+            <FormattedMessage id={'section.aboutMe.title'} />
           </Typography>
 
           <div className={classes.divider} />
 
           <Typography variant={'h5'} className={classes.subtitle}>
-            <FormattedMessage id={'section.aboutMe.subtitle'}/>
+            <FormattedMessage id={'section.aboutMe.subtitle'} />
           </Typography>
 
           <Typography variant={'body1'} className={classes.text}>
@@ -101,19 +101,23 @@ const AboutMe = (props) => {
             />
           </Typography>
           <Typography className={classes.highlightText}>
-            <b><FormattedMessage id={'section.aboutMe.highlight'}/></b>
+            <b>
+              <FormattedMessage id={'section.aboutMe.highlight'} />
+            </b>
           </Typography>
         </Grid>
 
         <Grid item xs={12} md={5} className={classes.rightPanel}>
           <div className={classes.image} />
           <Typography variant={'caption'} className={classes.caption}>
-            <i><FormattedMessage id={'section.aboutMe.caption'}/></i>
+            <i>
+              <FormattedMessage id={'section.aboutMe.caption'} />
+            </i>
           </Typography>
         </Grid>
       </Grid>
     </Section>
-  )
-}
+  );
+};
 
-export default AboutMe
+export default AboutMe;

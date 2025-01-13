@@ -1,8 +1,10 @@
-import Head from "next/head";
+import React from 'react';
+import Head from 'next/head';
 /*import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 //import styles from "@/styles/Home.module.css";*/
-import WrappedApp from "@/index";
+import WrappedApp from '@/index';
+/*import Footer from '@/components/Sections/Footer';*/
 
 /*const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,40 +20,62 @@ export default function Home() {
   return (
     <>
       <Head>
-          {/** <!-- Primary Meta Tags --> **/}
-          <title>Matthieu Nogueron - Portfolio</title>
-          <meta name="title" content="Matthieu Nogueron - Portfolio" />
-              <meta name="description" content="Matthieu Nogueron - French software engineer living in Stockholm - React tutor and full time sustainability advocate" />
+        {/** <!-- Primary Meta Tags --> **/}
+        <title>Matthieu Nogueron - Portfolio</title>
+        <meta name="title" content="Matthieu Nogueron - Portfolio" />
+        <meta
+          name="description"
+          content="Matthieu Nogueron - French software engineer living in Stockholm - React tutor and full time sustainability advocate"
+        />
 
-          {/** <!-- Open Graph / Facebook --> **/}
-                  <meta property="og:type" content="website" />
-                      <meta property="og:url" content="https://mnogueron.github.io/" />
-                          <meta property="og:title" content="Matthieu Nogueron - Portfolio" />
-                              <meta property="og:description" content="Matthieu Nogueron - French software engineer living in Stockholm - React tutor and full time sustainability advocate" />
-                                  <meta property="og:image" content="https://mnogueron.github.io/image.jpg" />
+        {/** <!-- Open Graph / Facebook --> **/}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://mnogueron.github.io/" />
+        <meta property="og:title" content="Matthieu Nogueron - Portfolio" />
+        <meta
+          property="og:description"
+          content="Matthieu Nogueron - French software engineer living in Stockholm - React tutor and full time sustainability advocate"
+        />
+        <meta
+          property="og:image"
+          content="https://mnogueron.github.io/image.jpg"
+        />
 
-          {/** <!-- Twitter --> **/}
-                                      <meta property="twitter:card" content="summary_large_image" />
-                                          <meta property="twitter:url" content="https://mnogueron.github.io/" />
-                                              <meta property="twitter:title" content="Matthieu Nogueron - Portfolio" />
-                                                  <meta property="twitter:description" content="Matthieu Nogueron - French software engineer living in Stockholm - React tutor and full time sustainability advocate" />
-                                                      <meta property="twitter:image" content="https://mnogueron.github.io/image.jpg" />
+        {/** <!-- Twitter --> **/}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://mnogueron.github.io/" />
+        <meta
+          property="twitter:title"
+          content="Matthieu Nogueron - Portfolio"
+        />
+        <meta
+          property="twitter:description"
+          content="Matthieu Nogueron - French software engineer living in Stockholm - React tutor and full time sustainability advocate"
+        />
+        <meta
+          property="twitter:image"
+          content="https://mnogueron.github.io/image.jpg"
+        />
 
-          {/** <!--
+        {/** <!--
                                                             These stylesheets provide Fonts for Material-UI: Roboto and the material icons
                                                           --> **/}
-                                                          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-                                                          <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <WrappedApp />
 
-        <WrappedApp />
-
-
-        {/**<div
+      {/**<div
         className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
       >
         <main className={styles.main}>

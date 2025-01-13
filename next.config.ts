@@ -24,8 +24,11 @@ const nextConfig: NextConfig = {
     images: {
         unoptimized: true,
     },
+    experimental: {
+        optimizePackageImports: ["@chakra-ui/react"],
+    },
 
-  /* config options here */
+    /* config options here */
   //reactStrictMode: true,
 };
 

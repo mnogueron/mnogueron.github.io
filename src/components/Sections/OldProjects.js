@@ -1,13 +1,13 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import { makeStyles } from '@material-ui/styles'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import grey from '@material-ui/core/colors/grey'
-import blueGrey from '@material-ui/core/colors/blueGrey'
-import Section from './Section'
+import React from 'react';
+import {FormattedMessage} from 'react-intl';
+import {makeStyles} from '@material-ui/styles';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import grey from '@material-ui/core/colors/grey';
+import blueGrey from '@material-ui/core/colors/blueGrey';
+import Section from './Section';
 
-import { ProjectCards } from '../Project'
+import {ProjectCards} from '../Project';
 
 const useStyles = makeStyles(theme => ({
   gridRoot: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     paddingRight: 40,
     backgroundColor: grey['200'],
   },
-  titleContainer : {
+  titleContainer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -52,14 +52,13 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 4,
     overflow: 'hidden',
   },
-}))
+}));
 
-const Projects = (props) => {
-  const classes = useStyles(props)
+const OldProjects = props => {
+  const classes = useStyles(props);
 
   return (
     <Section backgroundColor={blueGrey['50']}>
-
       <div className={classes.titleContainer}>
         <Typography variant={'h4'} className={classes.title}>
           <FormattedMessage id={'section.projects.title'} />
@@ -68,16 +67,14 @@ const Projects = (props) => {
       </div>
 
       <Grid container spacing={2}>
-        {
-          ProjectCards.map(({ key, ProjectComponent }) => (
-            <Grid key={key} item xs={12} sm={6} lg={4}>
-              <ProjectComponent />
-            </Grid>
-          ))
-        }
+        {ProjectCards.map(({key, ProjectComponent}) => (
+          <Grid key={key} item xs={12} sm={6} lg={4}>
+            <ProjectComponent />
+          </Grid>
+        ))}
       </Grid>
     </Section>
-  )
-}
+  );
+};
 
-export default Projects
+export default OldProjects;

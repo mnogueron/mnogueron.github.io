@@ -1,6 +1,6 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/styles'
-import Grid from '@material-ui/core/Grid'
+import React from 'react';
+import {makeStyles} from '@material-ui/styles';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
@@ -19,22 +19,18 @@ const useStyles = makeStyles(theme => ({
     paddingRight: 40,
     backgroundColor: props.backgroundColor || undefined,
   }),
-}))
+}));
 
-const Section = (props) => {
-  const { children } = props
-  const classes = useStyles(props)
+const Section = props => {
+  const {children} = props;
+  const classes = useStyles(props);
   return (
-    <Grid
-      container
-      className={classes.root}
-      justify={'center'}
-    >
+    <Grid container className={classes.root} justify={'center'}>
       <Grid item xs={12} md={10} lg={8} xl={7}>
         {children}
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default Section
+export default Section;

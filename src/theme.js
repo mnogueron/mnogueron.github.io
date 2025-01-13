@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core'
+import {createMuiTheme} from '@material-ui/core';
 
 const theme = createMuiTheme({
   palette: {
@@ -15,6 +15,6 @@ const theme = createMuiTheme({
       contrastText: '#212121',
     },
   },
-})
+});
 
-export default theme
+export default theme;

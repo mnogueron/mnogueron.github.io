@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 import AboutMe from './Sections/AboutMe'
 import Contact from './Sections/Contact'
-import Projects from './Sections/Projects'
+import OldProjects from './Sections/OldProjects'
 
 const useStyles = makeStyles({
   root: {
@@ -17,7 +17,7 @@ const PageContent = (props) => {
   return (
     <div ref={innerRef} className={classes.root}>
       <AboutMe />
-      <Projects />
+      <OldProjects />
       <Contact />
     </div>
   )

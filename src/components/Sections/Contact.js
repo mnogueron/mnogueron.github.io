@@ -1,11 +1,16 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/styles'
-import { FormattedMessage } from 'react-intl'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import { GithubButton, EmailButton, FacebookButton, LinkedInButton } from '../ContactButton'
-import grey from '@material-ui/core/colors/grey'
-import Section from './Section'
+import React from 'react';
+import {makeStyles} from '@material-ui/styles';
+import {FormattedMessage} from 'react-intl';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import {
+  GithubButton,
+  EmailButton,
+  FacebookButton,
+  LinkedInButton,
+} from '../ContactButton';
+import grey from '@material-ui/core/colors/grey';
+import Section from './Section';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -73,10 +78,10 @@ const useStyles = makeStyles(theme => ({
       },
     },
   },
-}))
+}));
 
-const Contact = (props) => {
-  const classes = useStyles(props)
+const Contact = props => {
+  const classes = useStyles(props);
   return (
     <Section>
       <Grid container spacing={4} className={classes.root}>
@@ -111,7 +116,7 @@ const Contact = (props) => {
         </Grid>
       </Grid>
     </Section>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;
