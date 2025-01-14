@@ -53,11 +53,11 @@ html:has(body[data-screen='projects']) {
   background: #0C9B8A;
 }
 
-* {
+/** {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-}
+}*/
 
 a {
   color: inherit;

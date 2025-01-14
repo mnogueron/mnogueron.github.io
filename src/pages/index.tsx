@@ -58,8 +58,8 @@ export default function Home() {
         />
 
         {/** <!--
-                                                            These stylesheets provide Fonts for Material-UI: Roboto and the material icons
-                                                          --> **/}
+         These stylesheets provide Fonts for Material-UI: Roboto and the material icons
+         --> **/}
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
@@ -76,7 +76,7 @@ export default function Home() {
       <WrappedApp />
 
       {/**<div
-        className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
+       className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
       >
         <main className={styles.main}>
           <Image

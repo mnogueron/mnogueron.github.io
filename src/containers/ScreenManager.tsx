@@ -10,6 +10,7 @@ import Court from '@/components/Court';
 import Racket from '@/components/Racket';
 import ExperienceCard from '@/components/ExperienceCard';
 import {ABOUT_ME_DOTS, EXPERIENCES} from '@/constants/data';
+import LandingTextAnimator from '@/components/LandingTextAnimator';
 
 const ScreenManager = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null!);
@@ -93,8 +94,9 @@ const ScreenManager = () => {
           </Heading>
         </VStack>
       </VStack>*/}
+        <LandingTextAnimator position="absolute" top={8} left={8} />
         <Flex alignItems="center" justifyContent="center" height="100%">
-          <Shuttle height="50vh" onFeatherClick={handleFeatherClick} />
+          <Shuttle height="50dvh" onFeatherClick={handleFeatherClick} />
         </Flex>
       </Box>
 
@@ -118,7 +120,11 @@ const ScreenManager = () => {
                 transform="translateY(-50%)"
                 zIndex={-1}
               />
-              <HStack px={32} gap={32} width="100%">
+              <HStack
+                px={{base: 16, md: 32}}
+                gap={{base: 16, md: 32}}
+                width="100%"
+              >
                 {EXPERIENCES.map(({id, dateLabel, title, content}) => (
                   <ExperienceCard
                     key={id}
@@ -157,9 +163,14 @@ const ScreenManager = () => {
         height="100%"
       >
         {/* TODO bring the racket down */}
-        <Flex alignItems="flex-end" justifyContent="center" height="100%">
+        <Flex
+          justifyContent="center"
+          height="100%"
+          pt="calc(43dvh/2)"
+          overflow="hidden"
+        >
           <Racket
-            height="90vh"
+            height="90dvh"
             dots={ABOUT_ME_DOTS}
             onDotClick={id => console.log(id)}
           />

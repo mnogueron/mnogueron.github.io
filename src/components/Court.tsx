@@ -6,7 +6,7 @@ type CourtProps = {
   onCourtClick: (projectId: ProjectType) => void;
 } & Partial<HTMLChakraProps<'svg'>>;
 
-const Court = ({...props}: CourtProps) => {
+const Court = ({onCourtClick, ...props}: CourtProps) => {
   const handleProject = () => {
     // TODO handle project
   };
@@ -42,8 +42,8 @@ const Court = ({...props}: CourtProps) => {
       <path
         d="M1340 0V1220"
         stroke="white"
-        stroke-width="12"
-        stroke-dasharray="24 24"
+        strokeWidth="12"
+        strokeDasharray="24 24"
       />
       <path
         fillRule="evenodd"

@@ -22,7 +22,7 @@ const ExperienceCard = ({dateLabel, title, content}: ExperienceCardProps) => {
       ps={4}
       pe={8}
       width="xl"
-      maxWidth="90%"
+      maxWidth="90vw"
       borderRadius={8}
       backgroundColor="#29282BE6" // 90% opacity
       borderColor="#333333"
