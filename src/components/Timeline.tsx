@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {Box, BoxProps, Flex, Text, VStack} from '@chakra-ui/react';
 import {useScroll} from '@react-spring/web';
 import Animated from '@/components/Animated';
+import useMeasure from 'react-use-measure';
 
 type TimelineProps = {
   scrollRef: React.RefObject<HTMLDivElement>;
 } & BoxProps;
 
 const Timeline = ({scrollRef, ...props}: TimelineProps) => {
+  const [timelineRef, {width: timelineWidth}] = useMeasure();
   const {scrollXProgress} = useScroll({
     container: scrollRef,
     default: {
@@ -29,15 +31,26 @@ const Timeline = ({scrollRef, ...props}: TimelineProps) => {
       </Flex>
 
       <Box position="relative">
-        <Box width="100%" height="2px" backgroundColor="white" />
+        <Box
+          ref={timelineRef}
+          width="100%"
+          height="2px"
+          backgroundColor="white"
+        />
 
         <Animated.Box
           position="absolute"
           bottom="-18px"
           style={{
             left: scrollXProgress.to(scrollP => {
-              // TODO constrain to the inside of the timeline
-              return `${scrollP * 100}%`;
+              // TODO increase or decrease speed based on the length of the assignment
+              // Constrain to the sides of the timeline
+              const sidePadding = 46;
+              const shuttleWidth = 47;
+              const timelineLength =
+                timelineWidth - 2 * sidePadding - shuttleWidth;
+              const left = scrollP * timelineLength + sidePadding;
+              return `${left}px`;
             }),
           }}
         >

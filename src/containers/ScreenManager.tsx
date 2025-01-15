@@ -112,16 +112,20 @@ const ScreenManager = () => {
           overflowX="scroll"
         >
           <Box position="absolute" top="50%" transform="translateY(-50%)">
-            <Flex position="relative" overflow="hidden" height="40vh">
+            <Flex
+              position="relative"
+              overflow="hidden"
+              height={{base: '60dvh', md: '40dvh'}}
+            >
               <Net
-                height="40vh"
+                height={{base: '60dvh', md: '40dvh'}}
                 position="absolute"
                 top="50%"
                 transform="translateY(-50%)"
                 zIndex={-1}
               />
               <HStack
-                px={{base: 16, md: 32}}
+                px={{base: 10, md: 32}}
                 gap={{base: 16, md: 32}}
                 width="100%"
               >
@@ -139,9 +143,9 @@ const ScreenManager = () => {
         </Box>
         <Timeline
           position="absolute"
-          right={8}
-          left={8}
-          top="20%"
+          right={{base: 2, md: 8}}
+          left={{base: 2, md: 8}}
+          top={{base: '5dvh', md: '20dvh'}}
           scrollRef={scrollContainerRef}
         />
       </Box>
