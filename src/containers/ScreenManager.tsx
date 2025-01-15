@@ -96,7 +96,7 @@ const ScreenManager = () => {
       </VStack>*/}
         <LandingTextAnimator position="absolute" top={8} left={8} />
         <Flex alignItems="center" justifyContent="center" height="100%">
-          <Shuttle height="50dvh" onFeatherClick={handleFeatherClick} />
+          <Shuttle height="54dvh" onFeatherClick={handleFeatherClick} />
         </Flex>
       </Box>
 
