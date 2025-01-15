@@ -148,6 +148,7 @@ const Menu = ({
       default:
         break;
     }
+    onClose();
   };
   const {height, opacity, y} = useSpring({
     from: {height: 0, opacity: 0, y: 0},
