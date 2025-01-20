@@ -21,7 +21,9 @@ if (process.env.NODE_ENV === 'production') {
   ReactGA.pageview('Homepage');
 }
 
-const ScreenManager = dynamic(() => import('@/containers/ScreenManager'), {ssr: false});
+const ScreenManager = dynamic(() => import('@/containers/ScreenManager'), {
+  ssr: false,
+});
 
 export default function Home() {
   return (
