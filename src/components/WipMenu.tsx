@@ -42,7 +42,7 @@ const WipMenu = ({...props}: WipMenuProps) => {
 
 I recently decided to totally rewrite my previous portfolio and do something that matches a little bit more who I am. What you will find in there is a badminton themed technical website that contains my experiences, my projects and a little bit more about me.
 
-Follow along as I had more and more UI and technical details to this portfolio!
+Follow along as I add more and more UI and technical details to this portfolio!
 
 Last update: ${new Date(LAST_UPDATE).toDateString()}`}
             </Text>
