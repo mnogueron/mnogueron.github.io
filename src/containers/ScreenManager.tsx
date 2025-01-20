@@ -23,13 +23,13 @@ const ScreenManager = () => {
   const backgroundColor = useMemo(() => {
     switch (screen) {
       case ScreenType.LANDING:
-        return '#29282B';
+        return 'screen.landing';
       case ScreenType.EXPERIENCES:
-        return '#E97D30';
+        return 'screen.experiences';
       case ScreenType.PROJECTS:
-        return '#0C9B8A';
+        return 'screen.projects';
       case ScreenType.ABOUT_ME:
-        return '#334858';
+        return 'screen.aboutMe';
     }
   }, [screen]);
 

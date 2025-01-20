@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {Box, BoxProps, Flex, Text, VStack} from '@chakra-ui/react';
 import {useScroll} from '@react-spring/web';
 import Animated from '@/components/Animated';
@@ -22,11 +22,11 @@ const Timeline = ({scrollRef, ...props}: TimelineProps) => {
       <Flex justifyContent="space-between" px={6} color="white">
         <VStack>
           <Text fontWeight="bold">2017</Text>
-          <Box height={9} width="2px" backgroundColor="white" />
+          <Box height={9} width="2px" backgroundColor="outline" />
         </VStack>
         <VStack>
           <Text fontWeight="bold">Now</Text>
-          <Box height={9} width="2px" backgroundColor="white" />
+          <Box height={9} width="2px" backgroundColor="outline" />
         </VStack>
       </Flex>
 
@@ -35,7 +35,7 @@ const Timeline = ({scrollRef, ...props}: TimelineProps) => {
           ref={timelineRef}
           width="100%"
           height="2px"
-          backgroundColor="white"
+          backgroundColor="outline"
         />
 
         <Animated.Box
@@ -54,6 +54,7 @@ const Timeline = ({scrollRef, ...props}: TimelineProps) => {
             }),
           }}
         >
+          {/*TODO extract*/}
           <svg
             width="47"
             height="38"

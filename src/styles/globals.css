@@ -1,15 +1,3 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 html,
 body {
   max-width: 100vw;
@@ -20,14 +8,7 @@ html, body, #__next, #__next>div {
     height: 100%
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
-  color: var(--foreground);
-  /*background: var(--background);*/
-  background: #29282B;
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -37,27 +18,6 @@ body {
 }
 
 /* TODO improve handling of global styling */
-html {
-  background: #29282B;
-}
-
-html:has(body[data-screen='about_me']) {
-  background: #334858;
-}
-
-html:has(body[data-screen='experiences']) {
-  background: #E97D30;
-}
-
-html:has(body[data-screen='projects']) {
-  background: #0C9B8A;
-}
-
-/** {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}*/
 
 a {
   color: inherit;

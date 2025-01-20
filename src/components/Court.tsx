@@ -12,19 +12,19 @@ const Court = ({onCourtClick, ...props}: CourtProps) => {
   };
 
   return (
-    <chakra.svg height="1220" viewBox="0 0 2680 1220" fill="white" {...props}>
+    <chakra.svg height="1220" viewBox="0 0 2680 1220" fill="outline" {...props}>
       <chakra.path
         d="M952 96H1340V1124H952V96Z"
-        fill={'#29282B'}
+        fill="screen.landing"
         cursor="pointer"
       />
       <chakra.path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M940 96V604H156V96H940Z"
-        fill={'#334858'}
+        fill="screen.aboutMe"
         _hover={{
-          fill: '#5C829E',
+          fill: 'screen.aboutMe.hover',
         }}
         cursor="pointer"
         onClick={handleProject}
@@ -33,7 +33,7 @@ const Court = ({onCourtClick, ...props}: CourtProps) => {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M144 1208V1136H12V1208H144Z"
-        fill={'#E97D30'}
+        fill="screen.experiences"
         _hover={{
           fill: '#F0A46E',
         }}
