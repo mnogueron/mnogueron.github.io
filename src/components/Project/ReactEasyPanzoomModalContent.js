@@ -1,6 +1,6 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/styles'
-import PanZoom from 'react-easy-panzoom'
+import React from 'react';
+import {makeStyles} from '@material-ui/styles';
+import PanZoom from 'react-easy-panzoom';
 
 const useModalStyles = makeStyles(theme => ({
   container: {
@@ -13,10 +13,10 @@ const useModalStyles = makeStyles(theme => ({
     border: `1px solid grey`,
     overflow: 'hidden',
   },
-}))
+}));
 
-const ReactEasyPanzoomModalContent = (props) => {
-  const classes = useModalStyles(props)
+const ReactEasyPanzoomModalContent = props => {
+  const classes = useModalStyles(props);
   return (
     <div className={classes.container}>
       <PanZoom
@@ -30,7 +30,7 @@ const ReactEasyPanzoomModalContent = (props) => {
         <div>You can pan and zoom this text</div>
       </PanZoom>
     </div>
-  )
-}
+  );
+};
 
-export default ReactEasyPanzoomModalContent
+export default ReactEasyPanzoomModalContent;

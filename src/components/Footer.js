@@ -1,6 +1,6 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/styles'
-import grey from '@material-ui/core/colors/grey'
+import React from 'react';
+import {makeStyles} from '@material-ui/styles';
+import grey from '@material-ui/core/colors/grey';
 //import Link from '@material-ui/core/Link'
 
 const useStyles = makeStyles(theme => ({
@@ -12,11 +12,11 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.common.white,
     textAlign: 'center',
   },
-}))
+}));
 
-const year = new Date().getFullYear()
-const Footer = (props) => {
-  const classes = useStyles(props)
+const year = new Date().getFullYear();
+const Footer = props => {
+  const classes = useStyles(props);
   return (
     <div className={classes.root}>
       {`Copyright © ${year} All Rights Reserved | Portfolio designed and implemented by Matthieu Nogueron`}
@@ -41,7 +41,7 @@ const Footer = (props) => {
         {'Material-UI'}
       </Link>*/}
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

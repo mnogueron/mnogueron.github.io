@@ -1,13 +1,13 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/styles'
-import { FormattedMessage } from 'react-intl'
-import Typography from '@material-ui/core/Typography'
+import React from 'react';
+import {makeStyles} from '@material-ui/styles';
+import {FormattedMessage} from 'react-intl';
+import Typography from '@material-ui/core/Typography';
 /*import BackgroundImage from '../assets/philippe-toupet-unsplash.jpg'
 import IconButton from '@material-ui/core/IconButton'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { EmailButton, GithubButton, LinkedInButton } from './ContactButton'*/
-import Grid from '@material-ui/core/Grid'
-import BuildRibbon from './BuildRibbon'
+import Grid from '@material-ui/core/Grid';
+import BuildRibbon from './BuildRibbon';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -80,8 +80,8 @@ const useStyles = makeStyles(theme => ({
     color: 'rgba(255, 255, 255, 0.85)',
   },
   '@keyframes bounce': {
-    '0%' : { transform: 'translateY(0)' },
-    '100%': { transform: 'translateY(-20px)' },
+    '0%': {transform: 'translateY(0)'},
+    '100%': {transform: 'translateY(-20px)'},
   },
   contactButtonContainer: {
     marginTop: theme.spacing(2),
@@ -98,11 +98,11 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: 'rgba(255, 255, 255, 0.08)',
     },
   },
-}))
+}));
 
-const Header = (props) => {
+const Header = props => {
   /*const { onExpandClick } = props*/
-  const classes = useStyles(props)
+  const classes = useStyles(props);
   return (
     <header className={classes.root}>
       <div className={classes.backgroundContainer}>
@@ -123,7 +123,12 @@ const Header = (props) => {
           />
         </Typography>
 
-        <Grid container justify={'center'} alignItems={'center'} className={classes.contactButtonContainer}>
+        <Grid
+          container
+          justify={'center'}
+          alignItems={'center'}
+          className={classes.contactButtonContainer}
+        >
           {/*<GithubButton
             fontSize={'default'}
             className={classes.contactButton}
@@ -151,7 +156,7 @@ const Header = (props) => {
 
       <BuildRibbon />
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

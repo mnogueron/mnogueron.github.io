@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {ScreenType} from '@/containers/types';
 import {useRouter} from 'next/router';
-import {Box, Flex, HStack} from '@chakra-ui/react';
+import {Box, Flex, HStack, Text} from '@chakra-ui/react';
 import Shuttle from '@/components/Shuttle';
 import Menu from '@/components/Menu';
 import Net from '@/components/Net';
@@ -19,6 +19,7 @@ import {
   DialogRoot,
   DialogTitle,
 } from '@/components/ui/dialog';
+import WipMenu from '@/components/WipMenu';
 
 const ScreenManager = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null!);
@@ -126,7 +127,7 @@ const ScreenManager = () => {
           </Heading>
         </VStack>
       </VStack>*/}
-        <LandingTextAnimator position="absolute" top={8} left={8} />
+        <LandingTextAnimator />
         <Flex alignItems="center" justifyContent="center" height="100%">
           <Shuttle height="54dvh" onFeatherClick={handleFeatherClick} />
         </Flex>
@@ -221,7 +222,9 @@ const ScreenManager = () => {
                 <DialogTitle>{modalTitle}</DialogTitle>
               </DialogHeader>
               <DialogBody>
-                <p>{modalText}</p>
+                <Text as="p" whiteSpace="pre-wrap" textAlign="justify">
+                  {modalText}
+                </Text>
               </DialogBody>
               <DialogCloseTrigger />
             </DialogContent>
@@ -237,6 +240,12 @@ const ScreenManager = () => {
         onMenuShuttleClick={handleMenuShuttleClick}
         onMenuItemClick={handleFeatherClick}
         screen={screen}
+      />
+
+      <WipMenu
+        position="absolute"
+        top={{base: 3, md: 6}}
+        right={{base: 3, md: 6}}
       />
     </Box>
   );

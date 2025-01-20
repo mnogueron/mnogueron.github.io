@@ -1,6 +1,6 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/styles'
-import orange from '@material-ui/core/colors/orange'
+import React from 'react';
+import {makeStyles} from '@material-ui/styles';
+import orange from '@material-ui/core/colors/orange';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -25,19 +25,17 @@ const useStyles = makeStyles(theme => ({
     borderTop: '1px dashed white',
     borderBottom: '1px dashed white',
   },
-}))
+}));
 
-const BuildRibbon = (props) => {
-  const classes = useStyles(props)
+const BuildRibbon = props => {
+  const classes = useStyles(props);
   return (
     <div className={classes.container}>
       <div className={classes.root}>
-        <div className={classes.innerRibbon}>
-          Under reconstruction
-        </div>
+        <div className={classes.innerRibbon}>Under reconstruction</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default BuildRibbon
+export default BuildRibbon;

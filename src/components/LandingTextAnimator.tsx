@@ -18,8 +18,8 @@ const LandingTextAnimator = ({...props}: LandingTextAnimatorProps) => {
         {...props}
         gap={{base: 2, md: 4}}
         position="absolute"
-        top={{base: 8, md: 16}}
-        left={{base: 8, md: 16}}
+        top={{base: 6, md: 16}}
+        left={{base: 6, md: 16}}
         pointerEvents="none"
       >
         <VStack alignItems="initial" gap={0}>
@@ -95,7 +95,7 @@ const LandingTextAnimator = ({...props}: LandingTextAnimatorProps) => {
         gap={1}
         position="absolute"
         bottom={{base: 12, md: 12}}
-        right={{base: 8, md: 12}}
+        right={{base: 6, md: 12}}
         pointerEvents="none"
       >
         <Heading as="h3" size={{base: 'md', md: 'xl'}} textAlign="right">

@@ -1,12 +1,12 @@
-import React from 'react'
-import Link from '@material-ui/core/Link'
-import { GA } from '../../utils'
+import React from 'react';
+import Link from '@material-ui/core/Link';
+import {GA} from '../../utils';
 
-const NewTabLink = (props) => {
-  const { href, gaAction, text } = props
+const NewTabLink = props => {
+  const {href, gaAction, text} = props;
 
   function onClick() {
-    GA.navigateTo(gaAction)
+    GA.navigateTo(gaAction);
   }
 
   return (
@@ -18,7 +18,7 @@ const NewTabLink = (props) => {
     >
       {text}
     </Link>
-  )
-}
+  );
+};
 
-export default NewTabLink
+export default NewTabLink;

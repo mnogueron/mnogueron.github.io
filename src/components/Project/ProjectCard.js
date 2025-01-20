@@ -1,24 +1,23 @@
-import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/styles'
-import { FormattedMessage } from 'react-intl'
-import Dialog from '@material-ui/core/Dialog'
-import Typography from '@material-ui/core/Typography'
-import * as ReactGA from 'react-ga'
+import React, {useState} from 'react';
+import {makeStyles} from '@material-ui/styles';
+import {FormattedMessage} from 'react-intl';
+import Dialog from '@material-ui/core/Dialog';
+import Typography from '@material-ui/core/Typography';
+import * as ReactGA from 'react-ga';
 
-import Card from '@material-ui/core/Card'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
-import SEOPortal from '../SEOPortal'
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import SEOPortal from '../SEOPortal';
 
 const useStyles = makeStyles(theme => ({
-
   backgroundContainer: {
     width: '100%',
-    paddingTop: '80%', /* 0.8:1 Aspect Ratio */
+    paddingTop: '80%' /* 0.8:1 Aspect Ratio */,
     position: 'relative',
 
     [theme.breakpoints.up('lg')]: {
@@ -90,23 +89,31 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
     marginLeft: 'auto',
   },
-}))
+}));
 
-const ProjectCard = (props) => {
-  const { projectName, title, description, subtitle, backgroundImage, actionButtons = [], modalLeftSection } = props
-  const [dialogOpen, setOpenDialog] = useState(false)
-  const classes = useStyles(props)
+const ProjectCard = props => {
+  const {
+    projectName,
+    title,
+    description,
+    subtitle,
+    backgroundImage,
+    actionButtons = [],
+    modalLeftSection,
+  } = props;
+  const [dialogOpen, setOpenDialog] = useState(false);
+  const classes = useStyles(props);
 
   function openDialog() {
     if (process.env.NODE_ENV === 'production') {
-      ReactGA.pageview(`Project: ${projectName}`)
+      ReactGA.pageview(`Project: ${projectName}`);
     }
 
-    setOpenDialog(true)
+    setOpenDialog(true);
   }
 
   function closeDialog() {
-    setOpenDialog(false)
+    setOpenDialog(false);
   }
 
   return (
@@ -132,10 +139,7 @@ const ProjectCard = (props) => {
         </CardActionArea>
 
         <CardActions disableSpacing>
-
-          {
-            actionButtons
-          }
+          {actionButtons}
 
           <Button
             size="small"
@@ -149,39 +153,30 @@ const ProjectCard = (props) => {
         </CardActions>
       </Card>
 
-      <SEOPortal>
-        {description}
-      </SEOPortal>
+      <SEOPortal>{description}</SEOPortal>
 
-      <Dialog
-        open={dialogOpen}
-        onClose={closeDialog}
-        maxWidth={'md'}
-        fullWidth
-      >
+      <Dialog open={dialogOpen} onClose={closeDialog} maxWidth={'md'} fullWidth>
         <Grid container spacing={0} className={classes.modalContent}>
           <Grid item sm={12} md={8} className={classes.modalLeftSection}>
-            {
-              modalLeftSection || <div className={classes.modalBackground} />
-            }
+            {modalLeftSection || <div className={classes.modalBackground} />}
           </Grid>
           <Grid item sm={12} md={4} className={classes.modalRightSection}>
             <Typography component="h2" variant="h5">
               {title}
             </Typography>
 
-            <div className={classes.modalDescription}>
-              {description}
-            </div>
+            <div className={classes.modalDescription}>{description}</div>
 
             <div className={classes.modalButton}>
-              <Button onClick={closeDialog} color={'primary'}>Close</Button>
+              <Button onClick={closeDialog} color={'primary'}>
+                Close
+              </Button>
             </div>
           </Grid>
         </Grid>
       </Dialog>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default ProjectCard
+export default ProjectCard;

@@ -9,6 +9,7 @@ type CourtProps = {
 const Court = ({onCourtClick, ...props}: CourtProps) => {
   const handleProject = () => {
     // TODO handle project
+    onCourtClick(ProjectType.BML_WEBSITE);
   };
 
   return (

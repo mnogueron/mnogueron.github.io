@@ -1,13 +1,13 @@
-import React from 'react'
-import IconButton from '@material-ui/core/IconButton'
-import Link from '@material-ui/core/Link'
-import { GA } from '../../utils'
+import React from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import Link from '@material-ui/core/Link';
+import {GA} from '../../utils';
 
-const NewTabIconButton = (props) => {
-  const { href, gaAction, children } = props
+const NewTabIconButton = props => {
+  const {href, gaAction, children} = props;
 
   function onClick() {
-    GA.navigateTo(gaAction)
+    GA.navigateTo(gaAction);
   }
 
   return (
@@ -20,7 +20,7 @@ const NewTabIconButton = (props) => {
     >
       {children}
     </IconButton>
-  )
-}
+  );
+};
 
-export default NewTabIconButton
+export default NewTabIconButton;

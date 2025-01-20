@@ -1,6 +1,6 @@
-import SimpleTagImage from '../../assets/simpletag.png'
-import NpmImage from '../../assets/npm.png'
-import PortfolioImage from '../../assets/portfolio.png'
+import SimpleTagImage from '../../assets/simpletag.png';
+import NpmImage from '../../assets/npm.png';
+import PortfolioImage from '../../assets/portfolio.png';
 
 /**
  * This object contains all the different projects displayed on the portfolio
@@ -83,4 +83,4 @@ export default [
       },
     ],
   },
-]
+];
