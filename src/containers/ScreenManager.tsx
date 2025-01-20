@@ -1,3 +1,5 @@
+'use client';
+
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {ScreenType} from '@/containers/types';
 import {useRouter} from 'next/router';
@@ -24,10 +26,7 @@ import WipMenu from '@/components/WipMenu';
 const ScreenManager = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null!);
   const [screen, setScreen] = useState<ScreenType>(() => {
-    const locationHash =
-      typeof window !== 'undefined'
-        ? window.location.hash.replace('#', '')
-        : '';
+    const locationHash = window.location.hash.replace('#', '');
     return (locationHash as ScreenType) || ScreenType.LANDING; // TODO fix shady cast
   });
   const router = useRouter();

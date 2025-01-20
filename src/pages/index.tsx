@@ -3,7 +3,7 @@ import Head from 'next/head';
 /*import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";*/
 import * as ReactGA from 'react-ga';
-import ScreenManager from '@/containers/ScreenManager';
+import dynamic from 'next/dynamic';
 /*import Footer from '@/components/Sections/Footer';*/
 
 /*const geistSans = Geist({
@@ -20,6 +20,8 @@ if (process.env.NODE_ENV === 'production') {
   ReactGA.initialize('UA-143826195-1');
   ReactGA.pageview('Homepage');
 }
+
+const ScreenManager = dynamic(() => import('@/containers/ScreenManager'), {ssr: false});
 
 export default function Home() {
   return (
