@@ -1,7 +1,9 @@
 import React from 'react';
 import {chakra, HTMLChakraProps} from '@chakra-ui/react';
 
-type ShuttleCompactProps = Partial<HTMLChakraProps<'svg'>>;
+type ShuttleCompactProps = {
+  ref?: React.Ref<HTMLOrSVGElement>;
+} & Partial<HTMLChakraProps<'svg'>>;
 
 const ShuttleCompact = (props: ShuttleCompactProps) => {
   return (

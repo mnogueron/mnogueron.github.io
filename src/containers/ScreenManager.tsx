@@ -22,6 +22,10 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import WipMenu from '@/components/WipMenu';
+import useMeasure from 'react-use-measure';
+import ShuttleAnimator, {
+  ShuttleAnimatorRef,
+} from '@/components/ShuttleAnimator';
 
 const ScreenManager = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null!);
@@ -46,6 +50,22 @@ const ScreenManager = () => {
       modalText: dotData.text,
     };
   }, [dotId.current]);
+  const [shuttleRef, {x: shuttleX, y: shuttleY}] = useMeasure();
+  const shuttleAnimatorRef = useRef<ShuttleAnimatorRef>(null);
+  const position = {
+    bottom: 496.6812744140625,
+    height: 63.340728759765625,
+    left: 436.41107177734375,
+    right: 499.7518310546875,
+    top: 433.3405456542969,
+    width: 63.34075927734375,
+    x: 436.41107177734375,
+    y: 433.3405456542969,
+  };
+  const [shuttleEndPosition, setShuttleEndPosition] = useState({
+    x: position.x + position.width / 2,
+    y: position.y + position.height / 2,
+  });
 
   const backgroundColor = useMemo(() => {
     switch (screen) {
@@ -92,9 +112,21 @@ const ScreenManager = () => {
     // TODO handle court click
   };
 
-  const handleDotClick = (e: React.UIEvent, id: string) => {
+  const handleDotClick = (e: React.UIEvent<SVGCircleElement>, id: string) => {
+    // TODO cancel previous callback if not finished
     dotId.current = id;
-    setOpen(true);
+    const position = (e.target as SVGCircleElement).getBoundingClientRect();
+    shuttleAnimatorRef.current?.springApi.start({
+      from: {offsetDistance: '0%'},
+      to: {offsetDistance: '100%'},
+      onResolve: () => {
+        setOpen(true);
+      },
+    });
+    setShuttleEndPosition({
+      x: position.x + position.width / 2,
+      y: position.y + position.height / 2,
+    });
   };
 
   return (
@@ -232,6 +264,7 @@ const ScreenManager = () => {
       </Box>
 
       <Menu
+        shuttleRef={shuttleRef}
         display={screen === ScreenType.LANDING ? 'none' : 'flex'}
         position="absolute"
         bottom={6}
@@ -239,6 +272,15 @@ const ScreenManager = () => {
         onMenuShuttleClick={handleMenuShuttleClick}
         onMenuItemClick={handleFeatherClick}
         screen={screen}
+      />
+
+      <ShuttleAnimator
+        ref={shuttleAnimatorRef}
+        positionStart={{x: shuttleX + 16, y: shuttleY + 16}}
+        positionEnd={shuttleEndPosition}
+        height="32px"
+        width="32px"
+        animate={false}
       />
 
       <WipMenu

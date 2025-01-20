@@ -19,6 +19,7 @@ type MenuProps = {
   onMenuShuttleClick: () => void;
   onMenuItemClick: (id: ScreenType) => void;
   screen: ScreenType;
+  shuttleRef: React.Ref<HTMLOrSVGElement>;
 } & StackProps;
 
 type MenuItemProps = {
@@ -72,6 +73,7 @@ const Menu = ({
   screen,
   onMenuShuttleClick,
   onMenuItemClick,
+  shuttleRef,
   ...props
 }: MenuProps) => {
   const {open, onOpen, onToggle, onClose} = useDisclosure();
@@ -173,7 +175,7 @@ const Menu = ({
       overflow="hidden"
     >
       <Box p={2} onClick={onMenuShuttleClick} cursor="pointer">
-        <ShuttleCompact height="32px" width="32px" />
+        <ShuttleCompact ref={shuttleRef} height="32px" width="32px" />
       </Box>
       <VStack
         alignItems="initial"
