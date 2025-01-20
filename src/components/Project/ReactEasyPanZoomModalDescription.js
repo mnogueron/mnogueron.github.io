@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { makeStyles } from '@material-ui/styles'
-import { FormattedMessage } from 'react-intl'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchGithubReactEasyPanzoomData } from '../../actions/appThunk'
-import NewTabLink from './NewTabLink'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import React from 'react';
+import {makeStyles} from '@material-ui/styles';
+import {FormattedMessage} from 'react-intl';
+import NewTabLink from './NewTabLink';
 
 const useStyles = makeStyles(theme => ({
   versionContainer: {
@@ -15,30 +12,11 @@ const useStyles = makeStyles(theme => ({
   version: {
     marginLeft: theme.spacing(2),
   },
-}))
+}));
 
-const ReactEasyPanZoomModalDescription = (props) => {
-  const [loading, setLoading] = useState(false)
-  const [versionError, setVersionError] = useState(false)
-  const dispatch = useDispatch()
-  const classes = useStyles(props)
-  const latestVersion = useSelector(state => state.app.reactEasyPanZoomLatestVersion)
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        setLoading(true)
-        await dispatch(fetchGithubReactEasyPanzoomData())
-      } catch(e) {
-        console.error('An error occurred while loading react-easy-panzoom repo data', e)
-        setVersionError(true)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchData()
-  }, [dispatch])
+const ReactEasyPanZoomModalDescription = props => {
+  const classes = useStyles(props);
+  const latestVersion = '0.4.4';
 
   return (
     <React.Fragment>
@@ -46,7 +24,7 @@ const ReactEasyPanZoomModalDescription = (props) => {
         id={'section.projects.react-easy-panzoom.description'}
         values={{
           a: () => (
-            <div style={{ marginTop: 16, textAlign: 'center' }}>
+            <div style={{marginTop: 16, textAlign: 'center'}}>
               <NewTabLink
                 href={'https://github.com/mnogueron/react-easy-panzoom'}
                 gaAction={'Open GitHub react-easy-panzoom'}
@@ -58,18 +36,14 @@ const ReactEasyPanZoomModalDescription = (props) => {
         }}
       />
 
-      {
-        !versionError && (
-          <div className={classes.versionContainer}>
-            <FormattedMessage id={'general.latestVersion'} />
-            <div className={classes.version}>
-              { loading ? <CircularProgress size={20} /> : <b>{latestVersion}</b> }
-            </div>
-          </div>
-        )
-      }
+      <div className={classes.versionContainer}>
+        <FormattedMessage id={'general.latestVersion'} />
+        <div className={classes.version}>
+          <b>{latestVersion}</b>
+        </div>
+      </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default ReactEasyPanZoomModalDescription
+export default ReactEasyPanZoomModalDescription;

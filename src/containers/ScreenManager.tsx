@@ -11,14 +11,41 @@ import Racket from '@/components/Racket';
 import ExperienceCard from '@/components/ExperienceCard';
 import {ABOUT_ME_DOTS, EXPERIENCES} from '@/constants/data';
 import LandingTextAnimator from '@/components/LandingTextAnimator';
+import {
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogRoot,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 const ScreenManager = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null!);
   const [screen, setScreen] = useState<ScreenType>(() => {
-    const locationHash = window.location.hash.replace('#', '');
+    const locationHash =
+      typeof window !== 'undefined'
+        ? window.location.hash.replace('#', '')
+        : '';
     return (locationHash as ScreenType) || ScreenType.LANDING; // TODO fix shady cast
   });
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const dotId = useRef<string>(null);
+  // TODO just get data when clicking on the dot
+  const {modalTitle, modalText} = useMemo(() => {
+    const dotData = ABOUT_ME_DOTS.find(d => d.id === dotId.current);
+    if (!dotData) {
+      return {
+        modalTitle: undefined,
+        modalText: undefined,
+      };
+    }
+    return {
+      modalTitle: dotData.title,
+      modalText: dotData.text,
+    };
+  }, [dotId.current]);
 
   const backgroundColor = useMemo(() => {
     switch (screen) {
@@ -63,6 +90,11 @@ const ScreenManager = () => {
 
   const handleCourtClick = () => {
     // TODO handle court click
+  };
+
+  const handleDotClick = (e: React.UIEvent, id: string) => {
+    dotId.current = id;
+    setOpen(true);
   };
 
   return (
@@ -176,8 +208,24 @@ const ScreenManager = () => {
           <Racket
             height="90dvh"
             dots={ABOUT_ME_DOTS}
-            onDotClick={id => console.log(id)}
+            onDotClick={handleDotClick}
           />
+          <DialogRoot
+            placement={{base: 'top', md: 'center'}}
+            motionPreset="slide-in-top"
+            open={open}
+            onOpenChange={e => setOpen(e.open)}
+          >
+            <DialogContent mx={4}>
+              <DialogHeader>
+                <DialogTitle>{modalTitle}</DialogTitle>
+              </DialogHeader>
+              <DialogBody>
+                <p>{modalText}</p>
+              </DialogBody>
+              <DialogCloseTrigger />
+            </DialogContent>
+          </DialogRoot>
         </Flex>
       </Box>
 

@@ -44,9 +44,39 @@ export const ABOUT_ME_DOTS: {
   variant: 'light' | 'medium' | 'full';
   cx: number;
   cy: number;
+  title: string;
+  text: string;
 }[] = [
-  {id: 'test_1', variant: 'light', cx: 121, cy: 159},
-  {id: 'test_2', variant: 'light', cx: 141, cy: 280},
-  {id: 'test_3', variant: 'medium', cx: 266, cy: 371},
-  {id: 'test_4', variant: 'full', cx: 330, cy: 261},
+  {
+    id: 'who_am_i',
+    variant: 'light',
+    cx: 121,
+    cy: 159,
+    title: 'Who am I?',
+    text: `Born and raised in the Alps, I graduated from Polytech' Grenoble in 2017 as Computer Software Engineer`,
+  },
+  {
+    id: 'internation_experience',
+    variant: 'light',
+    cx: 141,
+    cy: 280,
+    title: 'International Experience',
+    text: 'In 2016, I decided to move to Sweden for an Erasmus exchange. What started as 8 months in Linköping, continued into my first professional assignment in Stockholm. Fast forward 4 years later, I worked with 3 different companies and grew up to the role of senior Software Engineer.',
+  },
+  {
+    id: 'professional_experience',
+    variant: 'medium',
+    cx: 266,
+    cy: 371,
+    title: 'Professional Experience',
+    text: '',
+  },
+  {
+    id: 'lead_mindset',
+    variant: 'full',
+    cx: 330,
+    cy: 261,
+    title: 'Lead mindset',
+    text: '',
+  },
 ];
