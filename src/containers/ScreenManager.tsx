@@ -267,8 +267,8 @@ const ScreenManager = () => {
         shuttleRef={shuttleRef}
         display={screen === ScreenType.LANDING ? 'none' : 'flex'}
         position="absolute"
-        bottom={6}
-        left={6}
+        bottom={{base: 3, md: 6}}
+        left={{base: 3, md: 6}}
         onMenuShuttleClick={handleMenuShuttleClick}
         onMenuItemClick={handleFeatherClick}
         screen={screen}
@@ -281,12 +281,15 @@ const ScreenManager = () => {
         height="32px"
         width="32px"
         animate={false}
+        display={screen === ScreenType.ABOUT_ME ? 'block' : 'none'}
       />
 
       <WipMenu
+        display={screen === ScreenType.LANDING ? 'flex' : 'none'}
         position="absolute"
-        top={{base: 3, md: 6}}
         right={{base: 3, md: 6}}
+        top={{base: 'initial', md: 6}}
+        bottom={{base: 3, md: 'initial'}}
       />
     </Box>
   );

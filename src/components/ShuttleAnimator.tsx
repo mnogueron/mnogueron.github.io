@@ -46,6 +46,7 @@ const ShuttleAnimator = ({
   positionStart,
   positionEnd,
   animate,
+  display,
   ...props
 }: ShuttleAnimatorProps) => {
   const rotate = 90;
@@ -106,6 +107,7 @@ const ShuttleAnimator = ({
         offsetPath={`path("${path}")`}
         style={{offsetDistance}}
         zIndex={1000}
+        display={display}
       >
         <ShuttleCompact {...props} transform={`rotate(${rotate}deg)`} />
       </Animated.Box>
@@ -117,6 +119,7 @@ const ShuttleAnimator = ({
         height={1}
         width={1}
         rounded="full"
+        display={display}
       />
       <Box
         position="absolute"
@@ -126,6 +129,7 @@ const ShuttleAnimator = ({
         height={1}
         width={1}
         rounded="full"
+        display={display}
       />
     </>
   );
