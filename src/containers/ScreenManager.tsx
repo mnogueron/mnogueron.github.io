@@ -26,8 +26,11 @@ import useMeasure from 'react-use-measure';
 import ShuttleAnimator, {
   ShuttleAnimatorRef,
 } from '@/components/ShuttleAnimator';
+import Window from '@/components/Window';
 
 const ScreenManager = () => {
+  // TODO create APP context with ids + location on screen + state, etc...
+  const [showAboutMe, setShowAboutMe] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null!);
   const [screen, setScreen] = useState<ScreenType>(() => {
     const locationHash = window.location.hash.replace('#', '');
@@ -100,6 +103,11 @@ const ScreenManager = () => {
 
   const handleFeatherClick = (id: ScreenType) => {
     //setScreen(id);
+    if (id === ScreenType.ABOUT_ME) {
+      setShowAboutMe(true);
+      router.push('/');
+      return;
+    }
     router.push(`/#${id}`);
   };
 
@@ -137,7 +145,7 @@ const ScreenManager = () => {
       bottom={0}
       top={0}
       width="100%"
-      backgroundColor={backgroundColor}
+      backgroundColor="screen.landing"
       transition="background-color 500ms ease" // TODO sync with over animations
     >
       <Box
@@ -226,19 +234,26 @@ const ScreenManager = () => {
         />
       </Box>
 
-      <Box
-        display={screen === ScreenType.ABOUT_ME ? 'block' : 'none'}
-        height="100%"
+      <Window
+        title="About me"
+        position="absolute"
+        top={{base: 3, md: 6}}
+        left={{base: 3, md: 6}}
+        right={{base: 3, md: 6}}
+        display={showAboutMe ? 'block' : 'none'}
+        containerProps={{bg: 'screen.aboutMe', overflowY: 'auto'}}
+        height="90dvh"
+        onClose={() => setShowAboutMe(false)}
       >
         {/* TODO bring the racket down */}
         <Flex
           justifyContent="center"
           height="100%"
-          pt="calc(43dvh/2)"
+          pt="calc(35dvh/2)"
           overflow="hidden"
         >
           <Racket
-            height="90dvh"
+            height="85dvh"
             dots={ABOUT_ME_DOTS}
             onDotClick={handleDotClick}
           />
@@ -261,18 +276,7 @@ const ScreenManager = () => {
             </DialogContent>
           </DialogRoot>
         </Flex>
-      </Box>
-
-      <Menu
-        shuttleRef={shuttleRef}
-        display={screen === ScreenType.LANDING ? 'none' : 'flex'}
-        position="absolute"
-        bottom={{base: 3, md: 6}}
-        left={{base: 3, md: 6}}
-        onMenuShuttleClick={handleMenuShuttleClick}
-        onMenuItemClick={handleFeatherClick}
-        screen={screen}
-      />
+      </Window>
 
       <ShuttleAnimator
         ref={shuttleAnimatorRef}
@@ -281,16 +285,37 @@ const ScreenManager = () => {
         height="32px"
         width="32px"
         animate={false}
-        display={screen === ScreenType.ABOUT_ME ? 'block' : 'none'}
+        display={showAboutMe ? 'block' : 'none'}
+        pointerEvents="none"
       />
+
+      {/*TODO add bottom menu*/}
 
       <WipMenu
         display={screen === ScreenType.LANDING ? 'flex' : 'none'}
         position="absolute"
         right={{base: 3, md: 6}}
-        top={{base: 'initial', md: 6}}
-        bottom={{base: 3, md: 'initial'}}
+        bottom={{base: 3, md: 6}}
       />
+
+      <Flex
+        position="absolute"
+        bottom={0}
+        left={0}
+        right={0}
+        bg="screen.landing"
+        height={16}
+        borderTop="1px solid white"
+        borderTopRadius={16}
+        alignItems="center"
+      >
+        <Menu
+          shuttleRef={shuttleRef}
+          onMenuShuttleClick={handleMenuShuttleClick}
+          onMenuItemClick={handleFeatherClick}
+          screen={screen}
+        />
+      </Flex>
     </Box>
   );
 };

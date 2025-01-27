@@ -177,48 +177,50 @@ const Menu = ({
       <Box p={2} onClick={onMenuShuttleClick} cursor="pointer">
         <ShuttleCompact ref={shuttleRef} height="32px" width="32px" />
       </Box>
-      <VStack
-        alignItems="initial"
-        py={2}
-        gap={{base: 0, md: 1}}
-        onMouseLeave={onClose}
-        flexDirection="column-reverse"
-      >
-        <MenuItem
-          role="button"
-          active={!open}
-          tabIndex={0}
-          zIndex={1000}
-          onKeyDown={handleKeyDown}
-          onClick={onOpen}
-          onMouseEnter={onOpen}
-          text={screenLabel}
-        />
-        <Animated.Box
-          style={{
-            opacity,
-            height: open ? 'auto' : height,
-          }}
+      {options.length > 0 && (
+        <VStack
+          alignItems="initial"
+          py={2}
+          gap={{base: 0, md: 1}}
+          onMouseLeave={onClose}
+          flexDirection="column-reverse"
         >
-          <Animated.VStack
-            ref={ref}
-            alignItems="initial"
-            style={{y}}
-            gap={{base: 0, md: 1}}
-            flexDirection="column-reverse"
+          <MenuItem
+            role="button"
+            active={!open}
+            tabIndex={0}
+            zIndex={1000}
+            onKeyDown={handleKeyDown}
+            onClick={onOpen}
+            onMouseEnter={onOpen}
+            text={screenLabel}
+          />
+          <Animated.Box
+            style={{
+              opacity,
+              height: open ? 'auto' : height,
+            }}
           >
-            {options.map(({id, label}) => (
-              <MenuItem
-                id={id}
-                key={label}
-                text={label}
-                onClick={handleMenuItemClick}
-                tabIndex={0}
-              />
-            ))}
-          </Animated.VStack>
-        </Animated.Box>
-      </VStack>
+            <Animated.VStack
+              ref={ref}
+              alignItems="initial"
+              style={{y}}
+              gap={{base: 0, md: 1}}
+              flexDirection="column-reverse"
+            >
+              {options.map(({id, label}) => (
+                <MenuItem
+                  id={id}
+                  key={label}
+                  text={label}
+                  onClick={handleMenuItemClick}
+                  tabIndex={0}
+                />
+              ))}
+            </Animated.VStack>
+          </Animated.Box>
+        </VStack>
+      )}
     </HStack>
   );
 };

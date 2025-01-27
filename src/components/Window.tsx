@@ -3,11 +3,19 @@ import {Box, BoxProps, Flex, HStack, Text} from '@chakra-ui/react';
 import {JetBrainsMono} from '@/styles/fonts';
 
 type WindowProps = {
-  children: React.ReactElement;
+  children: React.ReactNode;
   title?: string;
+  containerProps?: BoxProps;
+  onClose?: () => void;
 } & BoxProps;
 
-const Window = ({title, children, ...props}: WindowProps) => {
+const Window = ({
+  title,
+  children,
+  containerProps,
+  onClose,
+  ...props
+}: WindowProps) => {
   return (
     <Box
       {...props}
@@ -16,6 +24,8 @@ const Window = ({title, children, ...props}: WindowProps) => {
       boxShadow="xs"
       border="2px solid #2e333f"
       className={JetBrainsMono.className}
+      overflow="hidden"
+      gap={0}
     >
       <Flex
         px={2}
@@ -54,10 +64,15 @@ const Window = ({title, children, ...props}: WindowProps) => {
             borderRadius={6}
             border="1px solid #ca5f59"
             cursor="pointer"
+            onClick={onClose}
           />
         </HStack>
       </Flex>
-      <Box p={{base: 1, md: 2}} className={JetBrainsMono.className}>
+      <Box
+        p={{base: 1, md: 2}}
+        {...containerProps}
+        className={JetBrainsMono.className}
+      >
         {children}
       </Box>
     </Box>

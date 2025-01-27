@@ -6,7 +6,7 @@ const customConfig = defineConfig({
       background: 'screen.landing',
       scrollBehavior: 'smooth',
     },
-    "html:has(body[data-screen='about_me'])": {
+    /*"html:has(body[data-screen='about_me'])": {
       background: 'screen.aboutMe',
     },
     "html:has(body[data-screen='experiences'])": {
@@ -14,7 +14,7 @@ const customConfig = defineConfig({
     },
     "html:has(body[data-screen='projects'])": {
       background: 'screen.projects',
-    },
+    },*/
   },
   theme: {
     tokens: {
