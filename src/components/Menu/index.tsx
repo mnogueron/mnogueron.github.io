@@ -13,12 +13,12 @@ import {useSpring} from '@react-spring/web';
 import useMeasure from 'react-use-measure';
 import {FaChevronRight} from 'react-icons/fa6';
 import Animated from '@/components/Animated';
-import {ScreenType} from '@/containers/types';
+import {ApplicationId} from '@/applications/types';
 
 type MenuProps = {
   onMenuShuttleClick: () => void;
-  onMenuItemClick: (id: ScreenType) => void;
-  screen: ScreenType;
+  onMenuItemClick: (id: ApplicationId) => void;
+  screen: ApplicationId;
   shuttleRef: React.Ref<HTMLOrSVGElement>;
 } & StackProps;
 
@@ -80,57 +80,53 @@ const Menu = ({
   const [ref, {height: viewHeight}] = useMeasure();
   const screenLabel = useMemo(() => {
     switch (screen) {
-      case ScreenType.LANDING:
-        return '';
-      case ScreenType.ABOUT_ME:
+      case ApplicationId.ABOUT_ME:
         return 'About me';
-      case ScreenType.EXPERIENCES:
+      case ApplicationId.EXPERIENCES:
         return 'Experiences';
-      case ScreenType.PROJECTS:
+      case ApplicationId.PROJECTS:
         return 'Projects';
     }
   }, [screen]);
   const options = useMemo(() => {
     switch (screen) {
-      case ScreenType.LANDING:
-        return [];
-      case ScreenType.ABOUT_ME:
+      case ApplicationId.ABOUT_ME:
         return [
           {
             id: 'experiences',
             label: 'Experiences',
-            onClick: () => onMenuItemClick(ScreenType.EXPERIENCES),
+            onClick: () => onMenuItemClick(ApplicationId.EXPERIENCES),
           },
           {
             id: 'projects',
             label: 'Projects',
-            onClick: () => onMenuItemClick(ScreenType.PROJECTS),
+            onClick: () => onMenuItemClick(ApplicationId.PROJECTS),
           },
         ];
-      case ScreenType.EXPERIENCES:
+      case ApplicationId.EXPERIENCES:
         return [
           {
             id: 'about_me',
             label: 'About me',
-            onClick: () => onMenuItemClick(ScreenType.ABOUT_ME),
+            onClick: () => onMenuItemClick(ApplicationId.ABOUT_ME),
           },
           {
             id: 'projects',
             label: 'Projects',
-            onClick: () => onMenuItemClick(ScreenType.PROJECTS),
+            onClick: () => onMenuItemClick(ApplicationId.PROJECTS),
           },
         ];
-      case ScreenType.PROJECTS:
+      case ApplicationId.PROJECTS:
         return [
           {
             id: 'experiences',
             label: 'Experiences',
-            onClick: () => onMenuItemClick(ScreenType.EXPERIENCES),
+            onClick: () => onMenuItemClick(ApplicationId.EXPERIENCES),
           },
           {
             id: 'about_me',
             label: 'About me',
-            onClick: () => onMenuItemClick(ScreenType.ABOUT_ME),
+            onClick: () => onMenuItemClick(ApplicationId.ABOUT_ME),
           },
         ];
     }
@@ -139,13 +135,13 @@ const Menu = ({
   const handleMenuItemClick = (id?: string) => {
     switch (id) {
       case 'about_me':
-        onMenuItemClick(ScreenType.ABOUT_ME);
+        onMenuItemClick(ApplicationId.ABOUT_ME);
         break;
       case 'experiences':
-        onMenuItemClick(ScreenType.EXPERIENCES);
+        onMenuItemClick(ApplicationId.EXPERIENCES);
         break;
       case 'projects':
-        onMenuItemClick(ScreenType.PROJECTS);
+        onMenuItemClick(ApplicationId.PROJECTS);
         break;
       default:
         break;

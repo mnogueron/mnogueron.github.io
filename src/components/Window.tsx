@@ -71,6 +71,9 @@ const Window = ({
       <Box
         p={{base: 1, md: 2}}
         {...containerProps}
+        height="100%"
+        width="100%"
+        position="relative"
         className={JetBrainsMono.className}
       >
         {children}

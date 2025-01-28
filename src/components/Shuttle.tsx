@@ -1,9 +1,10 @@
 import React, {useMemo} from 'react';
 import {chakra, HTMLChakraProps} from '@chakra-ui/react';
 import {ScreenType} from '@/containers/types';
+import {ApplicationId} from '@/applications/types';
 
 type ShuttleProps = {
-  onFeatherClick: (id: ScreenType) => void;
+  onFeatherClick: (id: ApplicationId) => void;
 } & Partial<HTMLChakraProps<'svg'>>;
 
 type FeatherProps = {
@@ -152,15 +153,15 @@ const Feather = ({variant, onClick, animate}: FeatherProps) => {
 // TODO make it more generic to support more feather click
 const Shuttle = ({onFeatherClick, ...props}: ShuttleProps) => {
   const handleAboutMeFeather = () => {
-    onFeatherClick(ScreenType.ABOUT_ME);
+    onFeatherClick(ApplicationId.ABOUT_ME);
   };
 
   const handleExperiencesFeather = () => {
-    onFeatherClick(ScreenType.EXPERIENCES);
+    onFeatherClick(ApplicationId.EXPERIENCES);
   };
 
   const handleProjectsFeather = () => {
-    onFeatherClick(ScreenType.PROJECTS);
+    onFeatherClick(ApplicationId.PROJECTS);
   };
 
   return (
