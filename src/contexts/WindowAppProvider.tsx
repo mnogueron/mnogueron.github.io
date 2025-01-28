@@ -32,6 +32,7 @@ type WindowApp = {
   ) => void;
   closeApplication: (id: string) => void;
   updateContainerSize: (height: number, width: number) => void;
+  moveApplication: (id: string, x: number, y: number) => void;
 };
 
 const defaultWindowAppValue: WindowApp = {
@@ -39,6 +40,7 @@ const defaultWindowAppValue: WindowApp = {
   openApplication: () => {},
   closeApplication: () => {},
   updateContainerSize: () => {},
+  moveApplication: () => {},
 };
 
 export const MIN_PADDING = 12;
@@ -110,6 +112,21 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
     []
   );
 
+  // TODO keep track of the container width and height to know where it is
+  const moveApplication = useCallback((id: string, x: number, y: number) => {
+    setApplications(apps =>
+      apps.map(a => {
+        if (a.id === id) {
+          const {positions} = a;
+          positions.top += y;
+          positions.left += x;
+          return a;
+        }
+        return a;
+      })
+    );
+  }, []);
+
   // TODO handle resizing
   //const resizeApplication = () => {};
 
@@ -119,8 +136,15 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
       openApplication,
       closeApplication,
       updateContainerSize,
+      moveApplication,
     };
-  }, [applications, closeApplication, openApplication, updateContainerSize]);
+  }, [
+    applications,
+    closeApplication,
+    moveApplication,
+    openApplication,
+    updateContainerSize,
+  ]);
 
   return <WindowAppContext value={contextValue}>{children}</WindowAppContext>;
 };

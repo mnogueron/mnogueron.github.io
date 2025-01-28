@@ -69,11 +69,11 @@ const ScreenManager = () => {
         width="100%"
         bg="#404552"
         borderTop="1px solid white"
-        borderTopRadius={16}
         alignItems="center"
         justifyContent="space-between"
-        py={3}
-        px={3}
+        py={{base: 2, md: 3}}
+        px={{base: 2, md: 3}}
+        zIndex="sticky"
       >
         <AppMenu onMenuClick={handleFeatherClick} />
         <WipMenu />

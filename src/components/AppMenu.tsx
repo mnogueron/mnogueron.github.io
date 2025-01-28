@@ -22,7 +22,7 @@ const AppMenu = ({onMenuClick}: AppMenuProps) => {
     <MenuRoot onSelect={handleSelect}>
       <MenuTrigger asChild>
         <Button variant="ghost" size="sm">
-          Menu
+          App Menu
         </Button>
       </MenuTrigger>
       <MenuContent>

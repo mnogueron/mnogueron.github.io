@@ -1,10 +1,11 @@
 import React from 'react';
-import {Box, BoxProps, Flex, HStack, Text} from '@chakra-ui/react';
+import {Box, BoxProps, Flex, FlexProps, HStack, Text} from '@chakra-ui/react';
 import {JetBrainsMono} from '@/styles/fonts';
 
 type WindowProps = {
   children: React.ReactNode;
   title?: string;
+  headerProps?: FlexProps;
   containerProps?: BoxProps;
   onClose?: () => void;
 } & BoxProps;
@@ -12,6 +13,7 @@ type WindowProps = {
 const Window = ({
   title,
   children,
+  headerProps,
   containerProps,
   onClose,
   ...props
@@ -31,12 +33,16 @@ const Window = ({
         px={2}
         py={1}
         bg="#2e333f"
-        direction="row"
         justifyContent="space-between"
         alignItems="center"
         minHeight="26px"
+        {...headerProps}
+        direction="row"
+        draggable="true"
       >
-        <Text fontSize="xs">{title}</Text>
+        <Text pointerEvents="none" fontSize="xs" userSelect="none">
+          {title}
+        </Text>
         <HStack gap={2}>
           <Box
             as="button"
