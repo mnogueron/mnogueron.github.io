@@ -28,7 +28,6 @@ const Window = ({
   return (
     <Box {...props}>
       <Box position="relative" height="100%" width="100%">
-        <ResizeHandlers onResize={onResize} />
         <Box
           height="100%"
           width="100%"
@@ -56,6 +55,7 @@ const Window = ({
             {children}
           </Box>
         </Box>
+        <ResizeHandlers onResize={onResize} />
       </Box>
     </Box>
   );

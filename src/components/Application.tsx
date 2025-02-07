@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useRef} from 'react';
+import React, {useContext, useMemo} from 'react';
 import AboutMe from '@/applications/AboutMe';
 import Window from '@/components/Window';
 import {WindowAppContext} from '@/contexts/WindowAppProvider';
@@ -53,10 +53,7 @@ const Application = ({id}: ApplicationProps) => {
     };
   }, [applications, id]);
 
-  const handleMove = (delta: {
-    x: number;
-    y: number;
-  }) => {
+  const handleMove = (delta: {x: number; y: number}) => {
     moveApplication(id, delta);
   };
 

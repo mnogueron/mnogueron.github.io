@@ -56,32 +56,32 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
         return {
           left: 0,
           right: 0,
-          height: '3px',
-          top: '-1px',
+          height: '4px',
+          top: 0,
           cursor: `ns-resize`,
         };
       case ResizeDirection.S:
         return {
           left: 0,
           right: 0,
-          height: '3px',
-          bottom: '-1px',
+          height: '4px',
+          bottom: 0,
           cursor: `ns-resize`,
         };
       case ResizeDirection.E:
         return {
           top: 0,
           bottom: 0,
-          width: '3px',
-          right: '-1px',
+          width: '4px',
+          right: 0,
           cursor: `ew-resize`,
         };
       case ResizeDirection.W:
         return {
           top: 0,
           bottom: 0,
-          width: '3px',
-          left: '-1px',
+          width: '4px',
+          left: 0,
           cursor: `ew-resize`,
         };
       case ResizeDirection.NW:
