@@ -26,7 +26,7 @@ const Window = ({
   ...props
 }: WindowProps) => {
   return (
-    <Box {...props}>
+    <Box {...props} zIndex={2}>
       <Box position="relative" height="100%" width="100%">
         <Box
           height="100%"

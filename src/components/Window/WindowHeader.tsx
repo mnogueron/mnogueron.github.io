@@ -104,6 +104,7 @@ const WindowHeader = ({
           border="1px solid #ca5f59"
           cursor="pointer"
           onClick={onClose}
+          zIndex={1}
         />
       </HStack>
     </Flex>
