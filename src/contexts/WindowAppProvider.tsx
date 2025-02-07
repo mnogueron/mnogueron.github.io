@@ -1,5 +1,6 @@
 import React, {createContext, useCallback, useMemo, useState} from 'react';
 import {ApplicationId} from '@/applications/types';
+import {ResizeDirection} from '@/components/Window/types';
 
 export enum WindowState {
   REDUCED = 'reduced',
@@ -32,7 +33,11 @@ type WindowApp = {
   ) => void;
   closeApplication: (id: string) => void;
   updateContainerSize: (height: number, width: number) => void;
-  moveApplication: (id: string, x: number, y: number) => void;
+  moveApplication: (id: string, delta: {x: number; y: number}) => void;
+  resizeApplication: (
+    id: string,
+    delta: {x: number; y: number; dir: ResizeDirection}
+  ) => void;
 };
 
 const defaultWindowAppValue: WindowApp = {
@@ -41,6 +46,7 @@ const defaultWindowAppValue: WindowApp = {
   closeApplication: () => {},
   updateContainerSize: () => {},
   moveApplication: () => {},
+  resizeApplication: () => {},
 };
 
 export const MIN_PADDING = 12;
@@ -113,22 +119,76 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
   );
 
   // TODO keep track of the container width and height to know where it is
-  const moveApplication = useCallback((id: string, x: number, y: number) => {
-    setApplications(apps =>
-      apps.map(a => {
-        if (a.id === id) {
-          const {positions} = a;
-          positions.top += y;
-          positions.left += x;
+  const moveApplication = useCallback(
+    (id: string, delta: {x: number; y: number}) => {
+      setApplications(apps =>
+        apps.map(a => {
+          if (a.id === id) {
+            const {x, y} = delta;
+            const {positions} = a;
+            positions.top += y;
+            positions.left += x;
+            return a;
+          }
           return a;
-        }
-        return a;
-      })
-    );
-  }, []);
+        })
+      );
+    },
+    []
+  );
 
-  // TODO handle resizing
-  //const resizeApplication = () => {};
+  const resizeApplication = useCallback(
+    (id: string, delta: {x: number; y: number; dir: ResizeDirection}) => {
+      setApplications(apps =>
+        apps.map(a => {
+          if (a.id === id) {
+            const {x, y, dir} = delta;
+            const {positions} = a;
+
+            switch (dir) {
+              case ResizeDirection.N:
+                positions.top += y;
+                positions.height -= y;
+                break;
+              case ResizeDirection.S:
+                positions.height += y;
+                break;
+              case ResizeDirection.E:
+                positions.width += x;
+                break;
+              case ResizeDirection.W:
+                positions.left += x;
+                positions.width -= x;
+                break;
+              case ResizeDirection.NE:
+                positions.top += y;
+                positions.width += x;
+                positions.height -= y;
+                break;
+              case ResizeDirection.NW:
+                positions.top += y;
+                positions.left += x;
+                positions.width -= x;
+                positions.height -= y;
+                break;
+              case ResizeDirection.SE:
+                positions.height += y;
+                positions.width += x;
+                break;
+              case ResizeDirection.SW:
+                positions.height += y;
+                positions.left += x;
+                positions.width -= x;
+                break;
+            }
+            return a;
+          }
+          return a;
+        })
+      );
+    },
+    []
+  );
 
   const contextValue = useMemo<WindowApp>(() => {
     return {
@@ -137,12 +197,14 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
       closeApplication,
       updateContainerSize,
       moveApplication,
+      resizeApplication,
     };
   }, [
     applications,
     closeApplication,
     moveApplication,
     openApplication,
+    resizeApplication,
     updateContainerSize,
   ]);
 
