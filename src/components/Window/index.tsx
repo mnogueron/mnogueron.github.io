@@ -13,6 +13,7 @@ type WindowProps = {
   onClose?: () => void;
   onResize: ResizeHandler;
   onMove: (delta: {x: number; y: number}) => void;
+  onFocus: () => void;
 } & Omit<BoxProps, 'onResize'>;
 
 const Window = ({
@@ -23,10 +24,11 @@ const Window = ({
   onClose,
   onResize,
   onMove,
+  onFocus,
   ...props
 }: WindowProps) => {
   return (
-    <Box {...props} zIndex={2}>
+    <Box {...props} onMouseDownCapture={onFocus}>
       <Box position="relative" height="100%" width="100%">
         <Box
           height="100%"

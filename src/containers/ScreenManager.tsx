@@ -24,12 +24,13 @@ const ScreenManager = () => {
   const handleFeatherClick = (id: ApplicationId) => {
     openApplication(
       id,
-      0,
       {
         top: MIN_PADDING,
         left: MIN_PADDING,
         height: containerHeight - MIN_PADDING * 2,
         width: containerWidth - MIN_PADDING * 2,
+        //height: 400,
+        //width: 400,
       },
       WindowState.DEFAULT
     );
@@ -59,7 +60,7 @@ const ScreenManager = () => {
           </Flex>
         </Box>
 
-        {applications.map(app => (
+        {Object.values(applications).map(app => (
           <Application key={app.id} id={app.id} />
         ))}
       </Box>

@@ -12,11 +12,17 @@ type ApplicationProps = {
 };
 
 const Application = ({id}: ApplicationProps) => {
-  const {applications, closeApplication, moveApplication, resizeApplication} =
-    useContext(WindowAppContext);
+  const {
+    applications,
+    closeApplication,
+    moveApplication,
+    resizeApplication,
+    focusApplication,
+  } = useContext(WindowAppContext);
 
   const data = useMemo(() => {
-    const application = applications.find(a => a.id === id);
+    const application = applications[id];
+    //const application = applications.find(a => a.id === id);
     if (!application) {
       return;
     }
@@ -69,6 +75,10 @@ const Application = ({id}: ApplicationProps) => {
     closeApplication(id);
   };
 
+  const handleFocus = () => {
+    focusApplication(id);
+  };
+
   if (!data?.AppComponent) {
     return null;
   }
@@ -87,6 +97,8 @@ const Application = ({id}: ApplicationProps) => {
       onClose={handleClose}
       onResize={handleResize}
       onMove={handleMove}
+      onFocus={handleFocus}
+      zIndex={application.priority}
     >
       <AppComponent />
     </Window>
