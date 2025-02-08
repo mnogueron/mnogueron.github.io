@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, BoxProps, FlexProps} from '@chakra-ui/react';
+import {Box, BoxProps, Flex, FlexProps} from '@chakra-ui/react';
 import {JetBrainsMono} from '@/styles/fonts';
 import {ResizeHandler} from '@/components/Window/types';
 import ResizeHandlers from '@/components/Window/ResizeHandlers';
@@ -34,7 +34,8 @@ const Window = ({
   return (
     <Box {...props} onMouseDownCapture={onFocus}>
       <Box position="relative" height="100%" width="100%">
-        <Box
+        <Flex
+          direction="column"
           height="100%"
           width="100%"
           bg="#404552"
@@ -53,7 +54,6 @@ const Window = ({
             {...headerProps}
           />
           <Box
-            p={{base: 1, md: 2}}
             {...containerProps}
             height="100%"
             width="100%"
@@ -62,7 +62,7 @@ const Window = ({
           >
             {children}
           </Box>
-        </Box>
+        </Flex>
         <ResizeHandlers onResize={onResize} />
       </Box>
     </Box>

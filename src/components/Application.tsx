@@ -36,7 +36,6 @@ const Application = ({id}: ApplicationProps) => {
         AppComponent = AboutMe;
         customProps = {
           bg: 'screen.aboutMe',
-          overflowY: 'auto',
         };
         break;
       case ApplicationId.EXPERIENCES:
