@@ -78,11 +78,13 @@ const AboutMe = ({shuttleStartPosition}: AboutMeProps) => {
         /* TODO bring the racket down */
         justifyContent="center"
         height="100%"
-        pt="calc(35dvh/2)"
+        //pt="calc(35dvh/2)"
         overflow="hidden"
       >
         <Racket
-          height="85dvh"
+          height="90%"
+          top="20%"
+          position="absolute"
           dots={ABOUT_ME_DOTS}
           onDotClick={handleDotClick}
         />
