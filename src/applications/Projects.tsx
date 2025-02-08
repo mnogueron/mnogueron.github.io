@@ -21,4 +21,9 @@ const Projects = () => {
 
 Projects.appTitle = 'Projects';
 
+Projects.preferredRatio = 1.3;
+Projects.preferredRatioMobile = 0.7;
+Projects.maxApplicationHeight = 900;
+Projects.minMobileRatio = 0.55;
+
 export default Projects;

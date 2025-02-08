@@ -63,4 +63,9 @@ const Experiences = () => {
 
 Experiences.appTitle = 'Experiences';
 
+Experiences.preferredRatio = 1.3;
+Experiences.preferredRatioMobile = 0.7;
+Experiences.maxApplicationHeight = 900;
+Experiences.minMobileRatio = 0.55;
+
 export default Experiences;

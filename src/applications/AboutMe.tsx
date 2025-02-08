@@ -125,4 +125,9 @@ const AboutMe = ({shuttleStartPosition}: AboutMeProps) => {
 
 AboutMe.appTitle = 'About me';
 
+AboutMe.preferredRatio = 0.8;
+AboutMe.preferredRatioMobile = 0.7;
+AboutMe.maxApplicationHeight = 900;
+AboutMe.minMobileRatio = 0.55;
+
 export default AboutMe;

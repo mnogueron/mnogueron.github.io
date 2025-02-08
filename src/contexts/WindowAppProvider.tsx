@@ -8,6 +8,9 @@ import React, {
 import {ApplicationId} from '@/applications/types';
 import {ResizeDirection} from '@/components/Window/types';
 import useMeasure from 'react-use-measure';
+import Applications from '@/applications';
+import {MIN_PADDING} from '@/constants';
+import {getApplicationPreferredSize} from '@/contexts/windowUtils';
 
 export enum WindowState {
   REDUCED = 'reduced',
@@ -62,8 +65,6 @@ const defaultWindowAppValue: WindowApp = {
   toggleFullScreenApplication: () => {},
 };
 
-export const MIN_PADDING = 12;
-
 export const WindowAppContext = createContext<WindowApp>(defaultWindowAppValue);
 
 type WindowAppProviderProps = {
@@ -103,7 +104,7 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
         (acc, [key, app]) => {
           let priority = app.priority;
           if (app.id === id) {
-            priority = Object.values(apps).length;
+            priority = Object.values(apps).length + 1;
           } else if (priority > appPriority) {
             priority--;
           }
@@ -129,23 +130,46 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
         return;
       }
 
+      const application = Applications[appId];
+      if (!application) {
+        return;
+      }
+
+      const {width, height} = getApplicationPreferredSize(
+        {
+          width: containerWidth,
+          height: containerHeight,
+        },
+        application.preferredRatio,
+        application.preferredRatioMobile,
+        application.maxApplicationHeight,
+        application.minMobileRatio
+      );
+
+      let top = MIN_PADDING;
+      const left = MIN_PADDING;
+
+      // TODO improve logic to show multiple windows on different top values
+      if (containerWidth < 800 && width >= containerWidth - 2 * MIN_PADDING) {
+        top = Math.max((containerHeight - height) / 2, 0);
+      }
+
+      // TODO improve how the app lays out the applications
+      //top: MIN_PADDING + 32 * Object.values(apps).length,
+      //left: MIN_PADDING + 32 * Object.values(apps).length,
+
       // TODO handle multiple app
       setApplications(apps => ({
         ...apps,
         [appId]: {
           id: appId,
           appId,
-          priority: Object.values(apps).length,
+          priority: Object.values(apps).length + 1,
           positions: {
-            // TODO improve how the app lays out the applications
-            //top: MIN_PADDING + 32 * Object.values(apps).length,
-            //left: MIN_PADDING + 32 * Object.values(apps).length,
-            top: MIN_PADDING,
-            left: MIN_PADDING,
-            /*height: containerHeight - MIN_PADDING * 2,
-            width: containerWidth - MIN_PADDING * 2,*/
-            height: 400,
-            width: 400,
+            top,
+            left,
+            height,
+            width,
           },
           state,
         },
