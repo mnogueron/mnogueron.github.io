@@ -10,11 +10,11 @@ const LandingTextAnimator = ({...props}: LandingTextAnimatorProps) => {
   const firstLineTypedRef = useRef<Typed | null>(null);
   const secondLineTypedRef = useRef<Typed | null>(null);
   const thirdLineTypedRef = useRef<Typed | null>(null);
-  const fourthLineTypedRef = useRef<Typed | null>(null);
   const [showLoopCursor, setShowLoopCursor] = useState(false);
-  const firstLoop = useRef(true);
   return (
     <>
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-expect-error */}
       <Window
         position="absolute"
         top={{base: 2, md: 16}}

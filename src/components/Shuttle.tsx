@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
 import {chakra, HTMLChakraProps} from '@chakra-ui/react';
-import {ScreenType} from '@/containers/types';
 import {ApplicationId} from '@/applications/types';
 
 type ShuttleProps = {
