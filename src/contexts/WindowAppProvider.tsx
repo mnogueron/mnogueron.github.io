@@ -9,7 +9,7 @@ import {ApplicationId} from '@/applications/types';
 import {ResizeDirection} from '@/components/Window/types';
 import useMeasure from 'react-use-measure';
 import Applications from '@/applications';
-import {MIN_PADDING} from '@/constants';
+import {MIN_PADDING, MIN_WINDOW_HEIGHT, MIN_WINDOW_WIDTH} from '@/constants';
 import {getApplicationPreferredSize} from '@/contexts/windowUtils';
 
 export enum WindowState {
@@ -257,11 +257,26 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
             positions.width -= x;
             break;
         }
+
+        const width = Math.max(positions.width, MIN_WINDOW_WIDTH);
+        const height = Math.max(positions.height, MIN_WINDOW_HEIGHT);
+
         return {
           ...apps,
           [id]: {
             ...app,
-            positions: positions,
+            positions: {
+              top:
+                height === MIN_WINDOW_HEIGHT
+                  ? app.positions.top
+                  : positions.top,
+              left:
+                width === MIN_WINDOW_WIDTH
+                  ? app.positions.left
+                  : positions.left,
+              width,
+              height,
+            },
           },
         };
       });
