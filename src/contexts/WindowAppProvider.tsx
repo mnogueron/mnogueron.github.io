@@ -1,6 +1,13 @@
-import React, {createContext, useCallback, useMemo, useState} from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {ApplicationId} from '@/applications/types';
 import {ResizeDirection} from '@/components/Window/types';
+import useMeasure from 'react-use-measure';
 
 export enum WindowState {
   REDUCED = 'reduced',
@@ -20,34 +27,39 @@ type Application = {
   appId: ApplicationId; // Used to retrieve the correct application to bind to the Window
   priority: number;
   positions: Positions;
+  trackedPositions?: Positions; // Only used when we want to track the previous positions before a full screen
   state: WindowState;
 };
 
 type WindowApp = {
   applications: {[key: string]: Application};
-  openApplication: (
-    appId: ApplicationId,
-    positions: Positions,
-    state: WindowState
-  ) => void;
+  containerRef: React.Ref<HTMLOrSVGElement>;
+  fullScreenPrompt: boolean;
+  openApplication: (appId: ApplicationId, state?: WindowState) => void;
   closeApplication: (id: string) => void;
-  updateContainerSize: (height: number, width: number) => void;
   moveApplication: (id: string, delta: {x: number; y: number}) => void;
   resizeApplication: (
     id: string,
     delta: {x: number; y: number; dir: ResizeDirection}
   ) => void;
   focusApplication: (id: string) => void;
+  updateFullScreenPromptState: (open: boolean) => void;
+  fullScreenApplication: (id: string) => void;
+  toggleFullScreenApplication: (id: string) => void;
 };
 
 const defaultWindowAppValue: WindowApp = {
   applications: {},
+  containerRef: null,
+  fullScreenPrompt: false,
   openApplication: () => {},
   closeApplication: () => {},
-  updateContainerSize: () => {},
   moveApplication: () => {},
   resizeApplication: () => {},
   focusApplication: () => {},
+  updateFullScreenPromptState: () => {},
+  fullScreenApplication: () => {},
+  toggleFullScreenApplication: () => {},
 };
 
 export const MIN_PADDING = 12;
@@ -58,21 +70,61 @@ type WindowAppProviderProps = {
   children: React.ReactNode;
 };
 
+const getBoundPositions = (
+  positions: Positions,
+  containerWidth: number,
+  containerHeight: number
+) => {
+  let top = Math.max(positions.top, 0);
+  let left = Math.max(positions.left, 0);
+  if (left + positions.width > containerWidth) {
+    left = containerWidth - positions.width;
+  }
+  if (top + positions.height > containerHeight) {
+    top = containerHeight - positions.height;
+  }
+  return {left, top};
+};
+
 const WindowAppProvider = ({children}: WindowAppProviderProps) => {
+  const [containerRef, {width: containerWidth, height: containerHeight}] =
+    useMeasure();
   const [applications, setApplications] = useState(
     defaultWindowAppValue.applications
   );
+  const [fullScreenPrompt, setFullScreenPrompt] = useState(
+    defaultWindowAppValue.fullScreenPrompt
+  );
+
+  const focusApplication = useCallback((id: string) => {
+    setApplications(apps => {
+      const appPriority = apps[id].priority;
+      return Object.entries(apps).reduce<{[key: string]: Application}>(
+        (acc, [key, app]) => {
+          let priority = app.priority;
+          if (app.id === id) {
+            priority = Object.values(apps).length;
+          } else if (priority > appPriority) {
+            priority--;
+          }
+          acc[key] = {
+            ...app,
+            priority,
+          };
+          return acc;
+        },
+        {}
+      );
+    });
+  }, []);
 
   const openApplication = useCallback(
-    (
-      appId: ApplicationId,
-      positions: Positions,
-      state = WindowState.DEFAULT
-    ) => {
+    (appId: ApplicationId, state = WindowState.DEFAULT) => {
       console.log('Opening', appId);
       const app = applications[appId];
+
+      // If app is already open, focus it
       if (app) {
-        // TODO improve priority to not have to deal with window ordering
         focusApplication(appId);
         return;
       }
@@ -84,12 +136,22 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
           id: appId,
           appId,
           priority: Object.values(apps).length,
-          positions,
+          positions: {
+            // TODO improve how the app lays out the applications
+            //top: MIN_PADDING + 32 * Object.values(apps).length,
+            //left: MIN_PADDING + 32 * Object.values(apps).length,
+            top: MIN_PADDING,
+            left: MIN_PADDING,
+            /*height: containerHeight - MIN_PADDING * 2,
+            width: containerWidth - MIN_PADDING * 2,*/
+            height: 400,
+            width: 400,
+          },
           state,
         },
       }));
     },
-    [applications]
+    [applications, focusApplication]
   );
 
   const closeApplication = useCallback((id: string) => {
@@ -100,54 +162,33 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
     });
   }, []);
 
-  const updateContainerSize = useCallback(
-    (containerHeight: number, containerWidth: number) => {
-      setApplications(apps =>
-        Object.entries(apps).reduce<{[key: string]: Application}>(
-          (acc, [key, app]) => {
-            const positions = {...app.positions};
-            if (positions.height > containerHeight - 2 * MIN_PADDING) {
-              positions.height = containerHeight - 2 * MIN_PADDING;
-            }
-
-            if (positions.width > containerWidth - 2 * MIN_PADDING) {
-              positions.width = containerWidth - 2 * MIN_PADDING;
-            }
-
-            acc[key] = {
-              ...app,
-              positions,
-            };
-            return acc;
-          },
-          {}
-        )
-      );
-    },
-    []
-  );
-
-  // TODO keep track of the container width and height to know where it is
   const moveApplication = useCallback(
     (id: string, delta: {x: number; y: number}) => {
       setApplications(apps => {
         const app = apps[id];
         const {x, y} = delta;
         const {positions} = app;
+
+        const {top, left} = getBoundPositions(
+          {...positions, top: positions.top + y, left: positions.left + x},
+          containerWidth,
+          containerHeight
+        );
+
         return {
           ...apps,
           [id]: {
             ...app,
             positions: {
               ...positions,
-              top: positions.top + y,
-              left: positions.left + x,
+              top,
+              left,
             },
           },
         };
       });
     },
-    []
+    [containerHeight, containerWidth]
   );
 
   const resizeApplication = useCallback(
@@ -204,46 +245,123 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
     []
   );
 
-  const focusApplication = useCallback((id: string) => {
-    setApplications(apps => {
-      const appPriority = apps[id].priority;
-      return Object.entries(apps).reduce<{[key: string]: Application}>(
+  const updateFullScreenPromptState = useCallback((open: boolean) => {
+    setFullScreenPrompt(open);
+  }, []);
+
+  const fullScreenApplication = useCallback(
+    (id: string) => {
+      updateFullScreenPromptState(false);
+      setApplications(apps => {
+        const app = apps[id];
+        return {
+          ...apps,
+          [id]: {
+            ...app,
+            positions: {
+              top: 0,
+              left: 0,
+              width: containerWidth,
+              height: containerHeight,
+            },
+            trackedPositions: app.positions,
+            state: WindowState.FULL_SCREEN,
+          },
+        };
+      });
+    },
+    [containerHeight, containerWidth, updateFullScreenPromptState]
+  );
+
+  const toggleFullScreenApplication = useCallback(
+    (id: string) => {
+      setApplications(apps => {
+        const app = apps[id];
+
+        if (app.state !== WindowState.FULL_SCREEN) {
+          return {
+            ...apps,
+            [id]: {
+              ...app,
+              positions: {
+                top: 0,
+                left: 0,
+                width: containerWidth,
+                height: containerHeight,
+              },
+              trackedPositions: app.positions,
+              state: WindowState.FULL_SCREEN,
+            },
+          };
+        }
+
+        if (app.trackedPositions) {
+          return {
+            ...apps,
+            [id]: {
+              ...app,
+              positions: app.trackedPositions,
+              state: WindowState.DEFAULT,
+            },
+          };
+        }
+
+        return apps;
+      });
+    },
+    [containerHeight, containerWidth]
+  );
+
+  useLayoutEffect(() => {
+    setApplications(apps =>
+      Object.entries(apps).reduce<{[key: string]: Application}>(
         (acc, [key, app]) => {
-          let priority = app.priority;
-          if (app.id === id) {
-            priority = Object.values(apps).length;
-          } else if (priority > appPriority) {
-            priority--;
+          const positions = {...app.positions};
+          if (positions.height > containerHeight - 2 * MIN_PADDING) {
+            positions.height = containerHeight - 2 * MIN_PADDING;
           }
+
+          if (positions.width > containerWidth - 2 * MIN_PADDING) {
+            positions.width = containerWidth - 2 * MIN_PADDING;
+          }
+
           acc[key] = {
             ...app,
-            priority,
+            positions,
           };
           return acc;
         },
         {}
-      );
-    });
-  }, []);
+      )
+    );
+  }, [containerHeight, containerWidth]);
 
   const contextValue = useMemo<WindowApp>(() => {
     return {
-      applications: applications,
+      applications,
+      containerRef,
+      fullScreenPrompt,
       openApplication,
       closeApplication,
-      updateContainerSize,
       moveApplication,
       resizeApplication,
       focusApplication,
+      updateFullScreenPromptState,
+      fullScreenApplication,
+      toggleFullScreenApplication,
     };
   }, [
     applications,
+    containerRef,
+    fullScreenPrompt,
     openApplication,
     closeApplication,
-    updateContainerSize,
     moveApplication,
     resizeApplication,
     focusApplication,
+    updateFullScreenPromptState,
+    fullScreenApplication,
+    toggleFullScreenApplication,
   ]);
 
   return <WindowAppContext value={contextValue}>{children}</WindowAppContext>;

@@ -1,44 +1,17 @@
 'use client';
 
-import React, {useContext, useLayoutEffect} from 'react';
+import React, {useContext} from 'react';
 import {Box, Flex, VStack} from '@chakra-ui/react';
 import Shuttle from '@/components/Shuttle';
 import LandingTextAnimator from '@/components/LandingTextAnimator';
 import WipMenu from '@/components/WipMenu';
-import useMeasure from 'react-use-measure';
-import {
-  MIN_PADDING,
-  WindowAppContext,
-  WindowState,
-} from '@/contexts/WindowAppProvider';
-import {ApplicationId} from '@/applications/types';
+import {WindowAppContext} from '@/contexts/WindowAppProvider';
 import Application from '@/components/Application';
 import AppMenu from '@/components/AppMenu';
 
 const ScreenManager = () => {
-  const [containerRef, {width: containerWidth, height: containerHeight}] =
-    useMeasure();
-  const {applications, openApplication, updateContainerSize} =
+  const {applications, containerRef, openApplication, fullScreenPrompt} =
     useContext(WindowAppContext);
-
-  const handleFeatherClick = (id: ApplicationId) => {
-    openApplication(
-      id,
-      {
-        top: MIN_PADDING,
-        left: MIN_PADDING,
-        height: containerHeight - MIN_PADDING * 2,
-        width: containerWidth - MIN_PADDING * 2,
-        //height: 400,
-        //width: 400,
-      },
-      WindowState.DEFAULT
-    );
-  };
-
-  useLayoutEffect(() => {
-    updateContainerSize(containerHeight, containerWidth);
-  }, [containerHeight, containerWidth, updateContainerSize]);
 
   return (
     <VStack
@@ -52,17 +25,36 @@ const ScreenManager = () => {
       backgroundColor="screen.landing"
       transition="background-color 500ms ease" // TODO sync with over animations
     >
-      <Box ref={containerRef} flex={1} width="100%" overflow="hidden">
+      <Box
+        ref={containerRef}
+        flex={1}
+        width="100%"
+        overflow="hidden"
+        position="relative"
+      >
         <Box height="100%">
           <LandingTextAnimator />
           <Flex alignItems="center" justifyContent="center" height="100%">
-            <Shuttle height="54dvh" onFeatherClick={handleFeatherClick} />
+            <Shuttle height="54dvh" onFeatherClick={openApplication} />
           </Flex>
         </Box>
 
         {Object.values(applications).map(app => (
           <Application key={app.id} id={app.id} />
         ))}
+
+        <Box
+          position="absolute"
+          top={2}
+          left={2}
+          right={2}
+          bottom={2}
+          borderRadius={8}
+          border="3px solid white"
+          opacity={fullScreenPrompt ? 1 : 0}
+          transition="opacity 200ms ease"
+          pointerEvents="none"
+        />
       </Box>
 
       {/*TODO add bottom menu*/}
@@ -76,7 +68,7 @@ const ScreenManager = () => {
         px={{base: 2, md: 3}}
         zIndex="sticky"
       >
-        <AppMenu onMenuClick={handleFeatherClick} />
+        <AppMenu onMenuClick={openApplication} />
         <WipMenu />
         {/*<Menu
           shuttleRef={shuttleRef}

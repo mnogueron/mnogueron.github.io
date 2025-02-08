@@ -10,10 +10,28 @@ type ResizeHandleProps = {
 const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
   const dragStart = useRef<{x: number; y: number}>({x: 0, y: 0});
 
+  const cursor = useMemo(() => {
+    switch (direction) {
+      case ResizeDirection.N:
+      case ResizeDirection.S:
+        return `ns-resize`;
+      case ResizeDirection.E:
+      case ResizeDirection.W:
+        return `ew-resize`;
+      case ResizeDirection.NE:
+      case ResizeDirection.SW:
+        return `nesw-resize`;
+      case ResizeDirection.NW:
+      case ResizeDirection.SE:
+        return `nwse-resize`;
+    }
+  }, [direction]);
+
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     dragStart.current = {x: e.clientX, y: e.clientY};
 
     e.dataTransfer.effectAllowed = 'move';
+    document.body.style.cursor = cursor;
 
     // Disable drag visual effect
     const img = document.createElement('img');
@@ -48,6 +66,7 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
     };
     dragStart.current = {x: e.clientX, y: e.clientY};
     onResize(delta);
+    document.body.style.cursor = 'initial';
   };
 
   const positionProps = useMemo(() => {
@@ -58,7 +77,6 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
           right: 0,
           height: '4px',
           top: 0,
-          cursor: `ns-resize`,
         };
       case ResizeDirection.S:
         return {
@@ -66,7 +84,6 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
           right: 0,
           height: '4px',
           bottom: 0,
-          cursor: `ns-resize`,
         };
       case ResizeDirection.E:
         return {
@@ -74,7 +91,6 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
           bottom: 0,
           width: '4px',
           right: 0,
-          cursor: `ew-resize`,
         };
       case ResizeDirection.W:
         return {
@@ -82,7 +98,6 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
           bottom: 0,
           width: '4px',
           left: 0,
-          cursor: `ew-resize`,
         };
       case ResizeDirection.NW:
         return {
@@ -90,7 +105,6 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
           left: 0,
           width: '16px',
           height: '16px',
-          cursor: `nwse-resize`,
         };
       case ResizeDirection.NE:
         return {
@@ -98,7 +112,6 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
           right: 0,
           width: '16px',
           height: '16px',
-          cursor: `nesw-resize`,
         };
       case ResizeDirection.SW:
         return {
@@ -106,7 +119,6 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
           left: 0,
           width: '16px',
           height: '16px',
-          cursor: `nesw-resize`,
         };
       case ResizeDirection.SE:
         return {
@@ -114,7 +126,6 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
           right: 0,
           width: '16px',
           height: '16px',
-          cursor: `nwse-resize`,
         };
     }
   }, [direction]);
@@ -123,6 +134,7 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
     <Box
       position="absolute"
       {...positionProps}
+      cursor={cursor}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDrag={handleDrag}

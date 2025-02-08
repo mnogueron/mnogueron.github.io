@@ -14,6 +14,8 @@ type WindowProps = {
   onResize: ResizeHandler;
   onMove: (delta: {x: number; y: number}) => void;
   onFocus: () => void;
+  onFullScreen: () => void;
+  onFullScreenToggle: () => void;
 } & Omit<BoxProps, 'onResize'>;
 
 const Window = ({
@@ -25,6 +27,8 @@ const Window = ({
   onResize,
   onMove,
   onFocus,
+  onFullScreen,
+  onFullScreenToggle,
   ...props
 }: WindowProps) => {
   return (
@@ -44,6 +48,8 @@ const Window = ({
             title={title}
             onClose={onClose}
             onMove={onMove}
+            onFullScreen={onFullScreen}
+            onFullScreenToggle={onFullScreenToggle}
             {...headerProps}
           />
           <Box

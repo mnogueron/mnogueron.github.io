@@ -1,0 +1,1 @@
+export const FULL_SCREEN_PROMPT_TIMEOUT = 750;

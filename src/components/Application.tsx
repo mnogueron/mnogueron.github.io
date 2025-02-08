@@ -18,6 +18,8 @@ const Application = ({id}: ApplicationProps) => {
     moveApplication,
     resizeApplication,
     focusApplication,
+    fullScreenApplication,
+    toggleFullScreenApplication,
   } = useContext(WindowAppContext);
 
   const data = useMemo(() => {
@@ -79,6 +81,14 @@ const Application = ({id}: ApplicationProps) => {
     focusApplication(id);
   };
 
+  const handleFullScreen = () => {
+    fullScreenApplication(id);
+  };
+
+  const handleFullScreenToggle = () => {
+    toggleFullScreenApplication(id);
+  };
+
   if (!data?.AppComponent) {
     return null;
   }
@@ -99,6 +109,8 @@ const Application = ({id}: ApplicationProps) => {
       onMove={handleMove}
       onFocus={handleFocus}
       zIndex={application.priority}
+      onFullScreen={handleFullScreen}
+      onFullScreenToggle={handleFullScreenToggle}
     >
       <AppComponent />
     </Window>

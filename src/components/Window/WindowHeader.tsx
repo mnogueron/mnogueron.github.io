@@ -1,10 +1,14 @@
 import {Box, Flex, FlexProps, HStack, Text} from '@chakra-ui/react';
-import React, {useRef} from 'react';
+import React, {useContext, useRef} from 'react';
+import {WindowAppContext} from '@/contexts/WindowAppProvider';
+import {FULL_SCREEN_PROMPT_TIMEOUT} from '@/constants';
 
 type WindowHeaderProps = {
   title?: string;
   onClose?: () => void;
   onMove: (delta: {x: number; y: number}) => void;
+  onFullScreen: () => void;
+  onFullScreenToggle: () => void;
 } & FlexProps;
 
 const WindowHeader = ({
@@ -12,8 +16,13 @@ const WindowHeader = ({
   onClose,
   onMove,
   onDragStart,
+  onFullScreen,
+  onFullScreenToggle,
   ...props
 }: WindowHeaderProps) => {
+  const {fullScreenPrompt, updateFullScreenPromptState} =
+    useContext(WindowAppContext);
+  const topTimeout = useRef<number>(null);
   const dragStart = useRef<{x: number; y: number}>({x: 0, y: 0});
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
@@ -40,6 +49,21 @@ const WindowHeader = ({
       y: e.clientY - dragStart.current.y,
     };
     dragStart.current = {x: e.clientX, y: e.clientY};
+    if (e.clientY < 10) {
+      if (!topTimeout.current) {
+        topTimeout.current = window.setTimeout(() => {
+          updateFullScreenPromptState(true);
+        }, FULL_SCREEN_PROMPT_TIMEOUT);
+      }
+    } else {
+      if (topTimeout.current) {
+        window.clearTimeout(topTimeout.current);
+        topTimeout.current = null;
+      }
+      if (fullScreenPrompt) {
+        updateFullScreenPromptState(false);
+      }
+    }
     onMove(delta);
   };
 
@@ -50,6 +74,14 @@ const WindowHeader = ({
     };
     dragStart.current = {x: e.clientX, y: e.clientY};
     onMove(delta);
+    if (topTimeout.current) {
+      window.clearTimeout(topTimeout.current);
+      topTimeout.current = null;
+    }
+    if (fullScreenPrompt) {
+      updateFullScreenPromptState(false);
+      onFullScreen();
+    }
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -93,6 +125,7 @@ const WindowHeader = ({
           height={3}
           borderRadius={6}
           border="1px solid #d6a839"
+          onClick={onFullScreenToggle}
           cursor="pointer"
         />
         <Box
