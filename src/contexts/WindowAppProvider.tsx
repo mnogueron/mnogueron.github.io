@@ -356,12 +356,18 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
       Object.entries(apps).reduce<{[key: string]: Application}>(
         (acc, [key, app]) => {
           const positions = {...app.positions};
-          if (positions.height > containerHeight - 2 * MIN_PADDING) {
-            positions.height = containerHeight - 2 * MIN_PADDING;
-          }
 
-          if (positions.width > containerWidth - 2 * MIN_PADDING) {
-            positions.width = containerWidth - 2 * MIN_PADDING;
+          if (app.state === WindowState.FULL_SCREEN) {
+            positions.height = containerHeight;
+            positions.width = containerWidth;
+          } else {
+            if (positions.height > containerHeight - 2 * MIN_PADDING) {
+              positions.height = containerHeight - 2 * MIN_PADDING;
+            }
+
+            if (positions.width > containerWidth - 2 * MIN_PADDING) {
+              positions.width = containerWidth - 2 * MIN_PADDING;
+            }
           }
 
           acc[key] = {

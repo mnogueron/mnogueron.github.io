@@ -22,6 +22,7 @@ type AboutMeProps = {
 };
 
 const AboutMe = ({shuttleStartPosition}: AboutMeProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const dotId = useRef<string>(null);
   // TODO just get data when clicking on the dot
@@ -58,27 +59,43 @@ const AboutMe = ({shuttleStartPosition}: AboutMeProps) => {
   const handleDotClick = (e: React.UIEvent<SVGCircleElement>, id: string) => {
     // TODO cancel previous callback if not finished
     dotId.current = id;
+
+    if (!containerRef.current || !shuttleAnimatorRef.current) {
+      return;
+    }
+
+    const parentPosition = containerRef.current.getBoundingClientRect();
     const position = (e.target as SVGCircleElement).getBoundingClientRect();
-    shuttleAnimatorRef.current?.springApi.start({
+
+    if (shuttleAnimatorRef.current.shuttleElement) {
+      shuttleAnimatorRef.current.shuttleElement.style.display = 'block';
+    }
+    shuttleAnimatorRef.current.springApi.stop(true);
+    shuttleAnimatorRef.current.springApi.start({
       from: {offsetDistance: '0%'},
       to: {offsetDistance: '100%'},
-      onResolve: () => {
-        setOpen(true);
+      onRest: ({cancelled}) => {
+        if (!cancelled) {
+          console.log('Open modal');
+          setOpen(true);
+          if (shuttleAnimatorRef.current?.shuttleElement) {
+            shuttleAnimatorRef.current.shuttleElement.style.display = 'none';
+          }
+        }
       },
     });
     setShuttleEndPosition({
-      x: position.x + position.width / 2,
-      y: position.y + position.height / 2,
+      x: position.x - parentPosition.x + position.width / 2,
+      y: position.y - parentPosition.y + position.height / 2,
     });
   };
 
   return (
     <>
       <Flex
-        /* TODO bring the racket down */
+        ref={containerRef}
         justifyContent="center"
         height="100%"
-        //pt="calc(35dvh/2)"
         overflow="hidden"
       >
         <Racket
@@ -93,8 +110,9 @@ const AboutMe = ({shuttleStartPosition}: AboutMeProps) => {
           motionPreset="slide-in-top"
           open={open}
           onOpenChange={e => setOpen(e.open)}
+          closeOnInteractOutside={true} // TODO correctly handle outside interaction
         >
-          <DialogContent mx={4}>
+          <DialogContent mx={4} portalled={false} embedded={true}>
             <DialogHeader>
               <DialogTitle>{modalTitle}</DialogTitle>
             </DialogHeader>
@@ -118,6 +136,7 @@ const AboutMe = ({shuttleStartPosition}: AboutMeProps) => {
         positionEnd={shuttleEndPosition}
         height="32px"
         width="32px"
+        display="none"
         animate={false}
         pointerEvents="none"
       />

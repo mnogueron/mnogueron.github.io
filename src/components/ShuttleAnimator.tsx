@@ -1,4 +1,4 @@
-import React, {useImperativeHandle, useMemo} from 'react';
+import React, {useImperativeHandle, useMemo, useRef} from 'react';
 import ShuttleCompact from '@/components/ShuttleCompact';
 import {Box, HTMLChakraProps} from '@chakra-ui/react';
 import {SpringRef, useSpring} from '@react-spring/web';
@@ -6,6 +6,7 @@ import Animated from './Animated';
 
 export type ShuttleAnimatorRef = {
   springApi: SpringRef<{offsetDistance: string}>;
+  shuttleElement: SVGElement | null;
 };
 
 type ShuttleAnimatorProps = {
@@ -49,6 +50,7 @@ const ShuttleAnimator = ({
   display,
   ...props
 }: ShuttleAnimatorProps) => {
+  const shuttleRef = useRef<SVGElement>(null);
   const rotate = 90;
   const [{offsetDistance}, api] = useSpring(
     () => ({
@@ -67,6 +69,7 @@ const ShuttleAnimator = ({
     ref,
     () => ({
       springApi: api,
+      shuttleElement: shuttleRef.current,
     }),
     [api]
   );
@@ -101,6 +104,7 @@ const ShuttleAnimator = ({
   return (
     <>
       <Animated.Box
+        ref={shuttleRef}
         position="absolute"
         top={1}
         left={0}
