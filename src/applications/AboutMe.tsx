@@ -97,6 +97,7 @@ const AboutMe = ({shuttleStartPosition}: AboutMeProps) => {
         justifyContent="center"
         height="100%"
         overflow="hidden"
+        bg="screen.aboutMe"
       >
         <Racket
           height="90%"

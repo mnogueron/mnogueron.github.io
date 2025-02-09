@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, BoxProps, Flex, FlexProps} from '@chakra-ui/react';
+import {Box, BoxProps, Flex} from '@chakra-ui/react';
 import {JetBrainsMono} from '@/styles/fonts';
 import {ResizeHandler} from '@/components/Window/types';
 import ResizeHandlers from '@/components/Window/ResizeHandlers';
@@ -8,8 +8,6 @@ import WindowHeader from '@/components/Window/WindowHeader';
 type WindowProps = {
   children: React.ReactNode;
   title?: string;
-  headerProps?: FlexProps;
-  containerProps?: BoxProps;
   onClose?: () => void;
   onResize: ResizeHandler;
   onMove: (delta: {x: number; y: number}) => void;
@@ -22,8 +20,6 @@ type WindowProps = {
 const Window = ({
   title,
   children,
-  headerProps,
-  containerProps,
   onClose,
   onResize,
   onMove,
@@ -54,10 +50,8 @@ const Window = ({
             onFullScreen={onFullScreen}
             onFullScreenToggle={onFullScreenToggle}
             onReduce={onReduce}
-            {...headerProps}
           />
           <Box
-            {...containerProps}
             height="100%"
             width="100%"
             position="relative"

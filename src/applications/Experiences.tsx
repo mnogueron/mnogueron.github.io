@@ -9,7 +9,7 @@ const Experiences = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null!);
 
   return (
-    <>
+    <Box bg="screen.experiences" height="100%" width="100%" overflowX="auto">
       <Box
         ref={scrollContainerRef}
         position="absolute"
@@ -57,7 +57,7 @@ const Experiences = () => {
         top={{base: '5dvh', md: '20dvh'}}
         scrollRef={scrollContainerRef}
       />
-    </>
+    </Box>
   );
 };
 

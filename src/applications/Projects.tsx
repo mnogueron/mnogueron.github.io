@@ -8,7 +8,7 @@ const Projects = () => {
   };
 
   return (
-    <Box height="100%">
+    <Box height="100%" bg="screen.projects">
       <Court
         onCourtClick={handleCourtClick}
         height="60vh"

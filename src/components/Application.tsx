@@ -1,12 +1,9 @@
 import React, {useContext, useMemo} from 'react';
-import AboutMe from '@/applications/AboutMe';
 import Window from '@/components/Window';
 import {WindowAppContext} from '@/contexts/WindowAppProvider';
-import {ApplicationId} from '@/applications/types';
-import Projects from '@/applications/Projects';
-import Experiences from '@/applications/Experiences';
 import {ResizeDirection} from '@/components/Window/types';
 import {WindowState} from '@/contexts/types';
+import Applications from '@/applications';
 
 type ApplicationProps = {
   id: string;
@@ -26,39 +23,13 @@ const Application = ({id}: ApplicationProps) => {
 
   const data = useMemo(() => {
     const application = applications[id];
-    //const application = applications.find(a => a.id === id);
     if (!application) {
       return;
     }
 
-    let AppComponent = undefined;
-    let customProps = {};
-    switch (application.appId) {
-      case ApplicationId.ABOUT_ME:
-        AppComponent = AboutMe;
-        customProps = {
-          bg: 'screen.aboutMe',
-        };
-        break;
-      case ApplicationId.EXPERIENCES:
-        AppComponent = Experiences;
-        customProps = {
-          bg: 'screen.experiences',
-          overflowX: 'auto',
-        };
-        break;
-      case ApplicationId.PROJECTS:
-        AppComponent = Projects;
-        customProps = {
-          bg: 'screen.projects',
-        };
-        break;
-    }
-
     return {
       application,
-      AppComponent,
-      customProps,
+      AppComponent: Applications[application.appId],
     };
   }, [applications, id]);
 
@@ -98,7 +69,7 @@ const Application = ({id}: ApplicationProps) => {
     return null;
   }
 
-  const {AppComponent, application, customProps} = data;
+  const {AppComponent, application} = data;
 
   // TODO handle reduced state and animation
   if (application.isReduced) {
@@ -113,13 +84,12 @@ const Application = ({id}: ApplicationProps) => {
         application.state === WindowState.FULL_SCREEN
           ? 0
           : `${application.positions.top}px`
-      } // {base: 3, md: 6}
+      }
       left={
         application.state === WindowState.FULL_SCREEN
           ? 0
           : `${application.positions.left}px`
-      } // {base: 3, md: 6}
-      containerProps={customProps}
+      }
       width={
         application.state === WindowState.FULL_SCREEN
           ? '100%'
@@ -129,7 +99,7 @@ const Application = ({id}: ApplicationProps) => {
         application.state === WindowState.FULL_SCREEN
           ? '100%'
           : `${application.positions.height}px`
-      } // "90dvh"
+      }
       onClose={handleClose}
       onResize={handleResize}
       onMove={handleMove}
