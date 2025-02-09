@@ -1,4 +1,6 @@
+import React from 'react';
 import {MIN_PADDING} from '@/constants';
+import {ApplicationRegistry, Positions} from '@/contexts/types';
 
 export const getApplicationPreferredSize = (
   containerDimensions: {
@@ -31,4 +33,20 @@ export const getApplicationPreferredSize = (
     height,
     width,
   };
+};
+
+export const getBoundPositions = (
+  positions: Positions,
+  containerWidth: number,
+  containerHeight: number
+) => {
+  let top = Math.max(positions.top, 0);
+  let left = Math.max(positions.left, 0);
+  if (left + positions.width > containerWidth) {
+    left = containerWidth - positions.width;
+  }
+  if (top + positions.height > containerHeight) {
+    top = containerHeight - positions.height;
+  }
+  return {left, top};
 };

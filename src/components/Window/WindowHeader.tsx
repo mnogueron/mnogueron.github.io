@@ -9,6 +9,7 @@ type WindowHeaderProps = {
   onMove: (delta: {x: number; y: number}) => void;
   onFullScreen: () => void;
   onFullScreenToggle: () => void;
+  onReduce: () => void;
 } & FlexProps;
 
 const WindowHeader = ({
@@ -18,6 +19,7 @@ const WindowHeader = ({
   onDragStart,
   onFullScreen,
   onFullScreenToggle,
+  onReduce,
   ...props
 }: WindowHeaderProps) => {
   const {fullScreenPrompt, updateFullScreenPromptState} =
@@ -116,6 +118,7 @@ const WindowHeader = ({
           height={3}
           borderRadius={6}
           border="1px solid #51a75c"
+          onClick={onReduce}
           cursor="pointer"
         />
         <Box

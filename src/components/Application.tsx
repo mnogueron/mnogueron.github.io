@@ -6,6 +6,7 @@ import {ApplicationId} from '@/applications/types';
 import Projects from '@/applications/Projects';
 import Experiences from '@/applications/Experiences';
 import {ResizeDirection} from '@/components/Window/types';
+import {WindowState} from '@/contexts/types';
 
 type ApplicationProps = {
   id: string;
@@ -19,6 +20,7 @@ const Application = ({id}: ApplicationProps) => {
     resizeApplication,
     focusApplication,
     fullScreenApplication,
+    reduceApplication,
     toggleFullScreenApplication,
   } = useContext(WindowAppContext);
 
@@ -88,26 +90,52 @@ const Application = ({id}: ApplicationProps) => {
     toggleFullScreenApplication(id);
   };
 
+  const handleReduce = () => {
+    reduceApplication(id);
+  };
+
   if (!data?.AppComponent) {
     return null;
   }
 
   const {AppComponent, application, customProps} = data;
 
+  // TODO handle reduced state and animation
+  if (application.isReduced) {
+    return null;
+  }
+
   return (
     <Window
       title={AppComponent.appTitle}
       position="absolute"
-      top={`${application.positions.top}px`} // {base: 3, md: 6}
-      left={`${application.positions.left}px`} // {base: 3, md: 6}
+      top={
+        application.state === WindowState.FULL_SCREEN
+          ? 0
+          : `${application.positions.top}px`
+      } // {base: 3, md: 6}
+      left={
+        application.state === WindowState.FULL_SCREEN
+          ? 0
+          : `${application.positions.left}px`
+      } // {base: 3, md: 6}
       containerProps={customProps}
-      width={`${application.positions.width}px`}
-      height={`${application.positions.height}px`} // "90dvh"
+      width={
+        application.state === WindowState.FULL_SCREEN
+          ? '100%'
+          : `${application.positions.width}px`
+      }
+      height={
+        application.state === WindowState.FULL_SCREEN
+          ? '100%'
+          : `${application.positions.height}px`
+      } // "90dvh"
       onClose={handleClose}
       onResize={handleResize}
       onMove={handleMove}
       onFocus={handleFocus}
       zIndex={application.priority}
+      onReduce={handleReduce}
       onFullScreen={handleFullScreen}
       onFullScreenToggle={handleFullScreenToggle}
     >
