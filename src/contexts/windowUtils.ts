@@ -1,6 +1,5 @@
-import React from 'react';
 import {MIN_PADDING} from '@/constants';
-import {ApplicationRegistry, Positions} from '@/contexts/types';
+import {Positions} from '@/contexts/types';
 
 export const getApplicationPreferredSize = (
   containerDimensions: {
