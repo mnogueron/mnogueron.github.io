@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useLayoutEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import {ApplicationId} from '@/applications/types';
@@ -56,6 +57,7 @@ type WindowAppProviderProps = {
 };
 
 const WindowAppProvider = ({children}: WindowAppProviderProps) => {
+  const hydrating = useRef(true);
   const [containerRef, {width: containerWidth, height: containerHeight}] =
     useMeasure();
   const [applications, setApplications] = useState(
@@ -104,28 +106,45 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
         return;
       }
 
-      const {width, height} = getApplicationPreferredSize(
-        {
+      let positions = {
+        top: MIN_PADDING,
+        left: MIN_PADDING,
+        width: 0,
+        height: 0,
+      };
+      if (application.getStaticBox) {
+        positions = application.getStaticBox({
           width: containerWidth,
           height: containerHeight,
-        },
-        application.preferredRatio,
-        application.preferredRatioMobile,
-        application.maxApplicationHeight,
-        application.minMobileRatio
-      );
+        });
+        console.log(positions);
+      } else {
+        const {width, height} = getApplicationPreferredSize(
+          {
+            width: containerWidth,
+            height: containerHeight,
+          },
+          application.preferredRatio,
+          application.preferredRatioMobile,
+          application.maxApplicationHeight,
+          application.minMobileRatio
+        );
 
-      let top = MIN_PADDING;
-      const left = MIN_PADDING;
+        // TODO improve logic to show multiple windows on different top values
+        if (containerWidth < 800 && width >= containerWidth - 2 * MIN_PADDING) {
+          positions.top = Math.max((containerHeight - height) / 2, 0);
+        }
 
-      // TODO improve logic to show multiple windows on different top values
-      if (containerWidth < 800 && width >= containerWidth - 2 * MIN_PADDING) {
-        top = Math.max((containerHeight - height) / 2, 0);
+        // TODO improve how the app lays out the applications
+        //top: MIN_PADDING + 32 * Object.values(apps).length,
+        //left: MIN_PADDING + 32 * Object.values(apps).length,
+
+        positions = {
+          ...positions,
+          width,
+          height,
+        };
       }
-
-      // TODO improve how the app lays out the applications
-      //top: MIN_PADDING + 32 * Object.values(apps).length,
-      //left: MIN_PADDING + 32 * Object.values(apps).length,
 
       // TODO handle multiple app
       setApplications(apps => ({
@@ -134,12 +153,7 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
           id: appId,
           appId,
           priority: Object.values(apps).length + 1,
-          positions: {
-            top,
-            left,
-            height,
-            width,
-          },
+          positions,
           state,
           isReduced: false,
         },
@@ -308,7 +322,14 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
     });
   }, []);
 
+  // TODO improve logic for rehydrating applications and avoid opening app on container dimensions update
+  //  This forces the deps to ignore openApplication
+  // TODO improve how to handle resizing and move window when the container resizes
   useLayoutEffect(() => {
+    if (hydrating.current && containerHeight > 0 && containerWidth > 0) {
+      openApplication(ApplicationId.LANDING_TEXT_ANIMATOR);
+      hydrating.current = false;
+    }
     setApplications(apps =>
       Object.entries(apps).reduce<{[key: string]: Application}>(
         (acc, [key, app]) => {
@@ -319,10 +340,12 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
             positions.width = containerWidth;
           } else {
             if (positions.height > containerHeight - 2 * MIN_PADDING) {
+              positions.top = MIN_PADDING;
               positions.height = containerHeight - 2 * MIN_PADDING;
             }
 
             if (positions.width > containerWidth - 2 * MIN_PADDING) {
+              positions.left = MIN_PADDING;
               positions.width = containerWidth - 2 * MIN_PADDING;
             }
           }
@@ -336,6 +359,7 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
         {}
       )
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [containerHeight, containerWidth]);
 
   const contextValue = useMemo<WindowApp>(() => {

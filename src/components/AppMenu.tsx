@@ -25,25 +25,10 @@ const AppMenu = ({onMenuClick}: AppMenuProps) => {
           App Menu
         </Button>
       </MenuTrigger>
-      <MenuContent>
+      <MenuContent zIndex="popover">
         <MenuItem value={ApplicationId.ABOUT_ME}>{'About me'}</MenuItem>
         <MenuItem value={ApplicationId.EXPERIENCES}>{'Experiences'}</MenuItem>
         <MenuItem value={ApplicationId.PROJECTS}>{'Projects'}</MenuItem>
-        {/*<MenuItem value="new-txt-a">
-          New Text File <MenuItemCommand>⌘E</MenuItemCommand>
-        </MenuItem>
-        <MenuItem value="new-file-a">
-          New File... <MenuItemCommand>⌘N</MenuItemCommand>
-        </MenuItem>
-        <MenuItem value="new-win-a">
-          New Window <MenuItemCommand>⌘⇧N</MenuItemCommand>
-        </MenuItem>
-        <MenuItem value="open-file-a">
-          Open File... <MenuItemCommand>⌘O</MenuItemCommand>
-        </MenuItem>
-        <MenuItem value="export-a">
-          Export <MenuItemCommand>⌘S</MenuItemCommand>
-        </MenuItem>*/}
       </MenuContent>
     </MenuRoot>
   );

@@ -10,6 +10,7 @@ type WindowHeaderProps = {
   onFullScreen: () => void;
   onFullScreenToggle: () => void;
   onReduce: () => void;
+  disableMove?: boolean;
 } & FlexProps;
 
 const WindowHeader = ({
@@ -20,6 +21,7 @@ const WindowHeader = ({
   onFullScreen,
   onFullScreenToggle,
   onReduce,
+  disableMove,
   ...props
 }: WindowHeaderProps) => {
   const {fullScreenPrompt, updateFullScreenPromptState} =
@@ -28,6 +30,10 @@ const WindowHeader = ({
   const dragStart = useRef<{x: number; y: number}>({x: 0, y: 0});
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    if (disableMove) {
+      return;
+    }
+
     dragStart.current = {x: e.clientX, y: e.clientY};
     e.dataTransfer.effectAllowed = 'move';
 
@@ -105,7 +111,7 @@ const WindowHeader = ({
       onDragEnd={handleDragEnd}
       {...props}
       direction="row"
-      draggable="true"
+      draggable={disableMove ? undefined : 'true'}
     >
       <Text pointerEvents="none" fontSize="xs" userSelect="none">
         {title}

@@ -25,7 +25,18 @@ const customConfig = defineConfig({
         outline: {
           value: {base: 'black', _dark: 'white'},
         },
+        menubar: {
+          background: {
+            value: {base: '#404552'},
+          },
+          border: {
+            value: {base: '#657b83'},
+          },
+        },
         screen: {
+          homepage: {
+            DEFAULT: {value: '#29282B'},
+          },
           landing: {
             DEFAULT: {value: '#29282B'},
             hover: {value: '#29282B'},
