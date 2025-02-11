@@ -32,6 +32,11 @@ const customConfig = defineConfig({
           border: {
             value: {base: '#657b83'},
           },
+          item: {
+            hover: {
+              value: {base: '#657b8355'},
+            },
+          },
         },
         screen: {
           homepage: {

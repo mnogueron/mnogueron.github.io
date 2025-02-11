@@ -1,12 +1,9 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Flex} from '@chakra-ui/react';
 import WipMenu from '@/components/WipMenu';
-import {WindowAppContext} from '@/contexts/WindowAppProvider';
 import AppMenu from '@/components/AppMenu';
 
 const MenuBar = () => {
-  const {openApplication} = useContext(WindowAppContext);
-
   return (
     <Flex
       width="100%"
@@ -19,7 +16,7 @@ const MenuBar = () => {
       zIndex="sticky"
       bg="menubar.background"
     >
-      <AppMenu onMenuClick={openApplication} />
+      <AppMenu />
       <WipMenu />
     </Flex>
   );

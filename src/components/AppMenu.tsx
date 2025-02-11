@@ -1,36 +1,124 @@
-import React from 'react';
-import {
-  MenuContent,
-  MenuItem,
-  MenuRoot,
-  MenuTrigger,
-} from '@/components/ui/menu';
-import {Button} from '@/components/ui/button';
+import React, {useContext, useState} from 'react';
 import {ApplicationId} from '@/applications/types';
-import {SelectionDetails} from '@zag-js/menu';
+import {Box, BoxProps, IconButton, Text, VStack} from '@chakra-ui/react';
+import Logo from '@/components/icons/Logo';
+import {
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverRoot,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import {WindowAppContext} from '@/contexts/WindowAppProvider';
 
-type AppMenuProps = {
-  onMenuClick: (id: ApplicationId) => void;
+type MenuItem = {
+  id: string;
+  title: string;
+  meta: {
+    isApplication: boolean;
+    appId: ApplicationId;
+  };
 };
 
-const AppMenu = ({onMenuClick}: AppMenuProps) => {
-  const handleSelect = (details: SelectionDetails) => {
-    onMenuClick(details.value as ApplicationId);
+const AppMenuItems: MenuItem[] = [
+  {
+    id: ApplicationId.ABOUT_ME,
+    title: 'About me',
+    meta: {
+      isApplication: true,
+      appId: ApplicationId.ABOUT_ME,
+    },
+  },
+  {
+    id: ApplicationId.EXPERIENCES,
+    title: 'Experiences',
+    meta: {
+      isApplication: true,
+      appId: ApplicationId.EXPERIENCES,
+    },
+  },
+  {
+    id: ApplicationId.PROJECTS,
+    title: 'Projects',
+    meta: {
+      isApplication: true,
+      appId: ApplicationId.PROJECTS,
+    },
+  },
+];
+
+type AppMenuItemProps = {
+  item: MenuItem;
+  onClick: (item: MenuItem) => void;
+} & Omit<BoxProps, 'onClick'>;
+
+const AppMenuItem = ({item, onClick, ...rest}: AppMenuItemProps) => {
+  const handleClick = () => {
+    if (onClick) {
+      onClick(item);
+    }
   };
 
   return (
-    <MenuRoot onSelect={handleSelect}>
-      <MenuTrigger asChild>
-        <Button variant="ghost" size="sm">
-          App Menu
-        </Button>
-      </MenuTrigger>
-      <MenuContent zIndex="popover">
-        <MenuItem value={ApplicationId.ABOUT_ME}>{'About me'}</MenuItem>
-        <MenuItem value={ApplicationId.EXPERIENCES}>{'Experiences'}</MenuItem>
-        <MenuItem value={ApplicationId.PROJECTS}>{'Projects'}</MenuItem>
-      </MenuContent>
-    </MenuRoot>
+    <Box
+      py={{base: 2, md: 3}}
+      px={{base: 2, md: 4}}
+      cursor="pointer"
+      _hover={{bg: 'menubar.item.hover'}}
+      borderRadius={8}
+      onClick={handleClick}
+      {...rest}
+    >
+      <Text fontSize="sm" fontWeight="semibold">
+        {item.title}
+      </Text>
+    </Box>
+  );
+};
+
+const AppMenu = () => {
+  const {openApplication} = useContext(WindowAppContext);
+  const [open, setOpen] = useState(false);
+
+  const handleMenuClick = (item: MenuItem) => {
+    if (item.meta.isApplication) {
+      openApplication(item.meta.appId);
+    }
+    setOpen(false);
+  };
+
+  return (
+    <PopoverRoot
+      // TODO improve spacing to match with menuBar
+      positioning={{offset: {mainAxis: 18}}}
+      open={open}
+      onOpenChange={e => setOpen(e.open)}
+    >
+      <PopoverTrigger asChild={true}>
+        <IconButton
+          colorPalette="gray"
+          variant="solid"
+          size={{base: 'md', md: 'lg'}}
+          rounded="full"
+        >
+          <Logo width={8} height={8} strokeWidth="14" />
+        </IconButton>
+      </PopoverTrigger>
+      <PopoverContent>
+        <PopoverArrow />
+        <PopoverBody p={3}>
+          <VStack gap={1} alignItems="initial">
+            {AppMenuItems.map(item => (
+              <AppMenuItem
+                key={item.id}
+                item={item}
+                onClick={handleMenuClick}
+              />
+            ))}
+          </VStack>
+        </PopoverBody>
+      </PopoverContent>
+    </PopoverRoot>
   );
 };
 
