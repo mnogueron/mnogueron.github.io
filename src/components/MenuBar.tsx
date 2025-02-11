@@ -1,6 +1,5 @@
 import React from 'react';
 import {Flex} from '@chakra-ui/react';
-import WipMenu from '@/components/WipMenu';
 import AppMenu from '@/components/AppMenu';
 
 const MenuBar = () => {
@@ -17,7 +16,6 @@ const MenuBar = () => {
       bg="menubar.background"
     >
       <AppMenu />
-      <WipMenu />
     </Flex>
   );
 };

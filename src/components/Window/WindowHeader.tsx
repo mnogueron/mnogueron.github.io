@@ -2,6 +2,7 @@ import {Box, Flex, FlexProps, HStack, Text} from '@chakra-ui/react';
 import React, {useContext, useRef} from 'react';
 import {WindowAppContext} from '@/contexts/WindowAppProvider';
 import {FULL_SCREEN_PROMPT_TIMEOUT} from '@/constants';
+import {JetBrainsMono} from '@/styles/fonts';
 
 type WindowHeaderProps = {
   title?: string;
@@ -110,6 +111,7 @@ const WindowHeader = ({
       onDrag={handleDrag}
       onDragEnd={handleDragEnd}
       {...props}
+      className={JetBrainsMono.className}
       direction="row"
       draggable={disableMove ? undefined : 'true'}
     >

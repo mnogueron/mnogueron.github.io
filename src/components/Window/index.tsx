@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
 import {Box, BoxProps, Flex} from '@chakra-ui/react';
-import {JetBrainsMono} from '@/styles/fonts';
 import {ResizeHandler} from '@/components/Window/types';
 import ResizeHandlers from '@/components/Window/ResizeHandlers';
 import WindowHeader from '@/components/Window/WindowHeader';
@@ -74,19 +73,13 @@ const Window = ({
       width={width}
       height={height}
       zIndex={priority}
+      bg="#404552"
+      borderRadius={8}
+      boxShadow="xs"
+      border="2px solid #2e333f"
     >
       <Box position="relative" height="100%" width="100%">
-        <Flex
-          direction="column"
-          height="100%"
-          width="100%"
-          bg="#404552"
-          borderRadius={8}
-          boxShadow="xs"
-          border="2px solid #2e333f"
-          className={JetBrainsMono.className}
-          overflow="hidden"
-        >
+        <Flex direction="column" height="100%" width="100%">
           <WindowHeader
             title={title}
             onClose={onClose}
@@ -96,12 +89,7 @@ const Window = ({
             onReduce={onReduce}
             disableMove={disableMove}
           />
-          <Box
-            height="100%"
-            width="100%"
-            position="relative"
-            className={JetBrainsMono.className}
-          >
+          <Box flex={1} width="100%" position="relative" overflow="hidden">
             {children}
           </Box>
         </Flex>

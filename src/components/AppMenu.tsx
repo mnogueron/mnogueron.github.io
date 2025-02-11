@@ -45,6 +45,14 @@ const AppMenuItems: MenuItem[] = [
       appId: ApplicationId.PROJECTS,
     },
   },
+  {
+    id: ApplicationId.ABOUT_APP,
+    title: 'About - WIP',
+    meta: {
+      isApplication: true,
+      appId: ApplicationId.ABOUT_APP,
+    },
+  },
 ];
 
 type AppMenuItemProps = {

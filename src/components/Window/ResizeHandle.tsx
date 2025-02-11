@@ -28,6 +28,7 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
   }, [direction]);
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    console.log('Start drag');
     dragStart.current = {x: e.clientX, y: e.clientY};
 
     e.dataTransfer.effectAllowed = 'move';
@@ -41,11 +42,13 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    console.log('Drag over');
     // Prevent drag animation feedback
     e.preventDefault();
   };
 
   const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
+    console.log('Drag');
     if (e.clientX === 0 && e.clientY === 0) {
       return;
     }
@@ -59,6 +62,7 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
   };
 
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
+    console.log('Drag end');
     const delta = {
       x: e.clientX - dragStart.current.x,
       y: e.clientY - dragStart.current.y,

@@ -18,6 +18,7 @@ const LandingTextAnimator = ({...props}: LandingTextAnimatorProps) => {
         {...props}
         gap={{base: 2, md: 4}}
         pointerEvents="none"
+        className={JetBrainsMono.className}
         p={1}
       >
         <VStack alignItems="initial" gap={0}>

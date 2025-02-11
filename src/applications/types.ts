@@ -3,4 +3,5 @@ export enum ApplicationId {
   EXPERIENCES = 'experiences',
   PROJECTS = 'projects',
   LANDING_TEXT_ANIMATOR = 'landing_text_animator',
+  ABOUT_APP = 'about_app',
 }

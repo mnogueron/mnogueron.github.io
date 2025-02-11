@@ -5,6 +5,7 @@ import Experiences from '@/applications/Experiences';
 import Projects from '@/applications/Projects';
 import LandingTextAnimator from '@/applications/LandingTextAnimator';
 import {Positions} from '@/contexts/types';
+import About from '@/applications/About';
 
 const Applications: {
   [key in ApplicationId]: React.ComponentType & {
@@ -22,6 +23,7 @@ const Applications: {
   [ApplicationId.EXPERIENCES]: Experiences,
   [ApplicationId.PROJECTS]: Projects,
   [ApplicationId.LANDING_TEXT_ANIMATOR]: LandingTextAnimator,
+  [ApplicationId.ABOUT_APP]: About,
 };
 
 export default Applications;
