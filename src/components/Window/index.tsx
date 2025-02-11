@@ -68,15 +68,17 @@ const Window = ({
       {...props}
       position="absolute"
       onMouseDownCapture={onFocus}
-      top={top}
-      left={left}
-      width={width}
-      height={height}
       zIndex={priority}
       bg="#404552"
       borderRadius={8}
       boxShadow="xs"
       border="2px solid #2e333f"
+      style={{
+        top,
+        left,
+        width,
+        height,
+      }}
     >
       <Box position="relative" height="100%" width="100%">
         <Flex direction="column" height="100%" width="100%">

@@ -3,6 +3,7 @@ import React, {useContext, useRef} from 'react';
 import {WindowAppContext} from '@/contexts/WindowAppProvider';
 import {FULL_SCREEN_PROMPT_TIMEOUT} from '@/constants';
 import {JetBrainsMono} from '@/styles/fonts';
+import {EMPTY_DRAG_IMAGE} from '@/dragUtils';
 
 type WindowHeaderProps = {
   title?: string;
@@ -39,10 +40,9 @@ const WindowHeader = ({
     e.dataTransfer.effectAllowed = 'move';
 
     // Disable drag visual effect
-    const img = document.createElement('img');
-    img.src =
-      'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-    e.dataTransfer.setDragImage(img, 0, 0);
+    if (EMPTY_DRAG_IMAGE.complete) {
+      e.dataTransfer.setDragImage(EMPTY_DRAG_IMAGE, 0, 0);
+    }
 
     if (onDragStart) {
       onDragStart(e);

@@ -1,0 +1,3 @@
+export const EMPTY_DRAG_IMAGE = new Image(1, 1);
+EMPTY_DRAG_IMAGE.src =
+  'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';

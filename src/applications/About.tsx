@@ -5,7 +5,14 @@ import {MIN_PADDING} from '@/constants';
 
 const About = () => {
   return (
-    <VStack gap={2} px={2} py={5} overflowY="auto" height="100%" marginY="auto">
+    <VStack
+      gap={2}
+      px={2}
+      py={5}
+      overflowY="auto"
+      height="100%"
+      justifyContent="center"
+    >
       <Text as="p" whiteSpace="pre-wrap" textAlign="center">
         {`This website is currently in a WIP state.
 
@@ -27,6 +34,7 @@ Last update: ${new Date(LAST_UPDATE).toDateString()}`}
 };
 
 About.appTitle = 'About this app';
+About.disableResize = true;
 
 // TODO handle strict window size
 About.preferredRatio = 0.8;

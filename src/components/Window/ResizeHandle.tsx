@@ -1,6 +1,7 @@
 import React, {useMemo, useRef} from 'react';
 import {Box} from '@chakra-ui/react';
 import {ResizeDirection, ResizeHandler} from './types';
+import {EMPTY_DRAG_IMAGE} from '@/dragUtils';
 
 type ResizeHandleProps = {
   direction: ResizeDirection;
@@ -28,27 +29,23 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
   }, [direction]);
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    console.log('Start drag');
     dragStart.current = {x: e.clientX, y: e.clientY};
 
     e.dataTransfer.effectAllowed = 'move';
     document.body.style.cursor = cursor;
 
     // Disable drag visual effect
-    const img = document.createElement('img');
-    img.src =
-      'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-    e.dataTransfer.setDragImage(img, 0, 0);
+    if (EMPTY_DRAG_IMAGE.complete) {
+      e.dataTransfer.setDragImage(EMPTY_DRAG_IMAGE, 0, 0);
+    }
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    console.log('Drag over');
     // Prevent drag animation feedback
     e.preventDefault();
   };
 
   const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
-    console.log('Drag');
     if (e.clientX === 0 && e.clientY === 0) {
       return;
     }
@@ -62,7 +59,6 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
   };
 
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
-    console.log('Drag end');
     const delta = {
       x: e.clientX - dragStart.current.x,
       y: e.clientY - dragStart.current.y,
@@ -139,6 +135,7 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
       position="absolute"
       {...positionProps}
       cursor={cursor}
+      draggable="true"
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDrag={handleDrag}
