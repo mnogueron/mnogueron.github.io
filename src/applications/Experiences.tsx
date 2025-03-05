@@ -9,32 +9,40 @@ const Experiences = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null!);
 
   return (
-    <Box bg="screen.experiences" height="100%" width="100%" overflowX="auto">
+    <Flex
+      direction="column-reverse"
+      bg="screen.experiences"
+      height="100%"
+      width="100%"
+      gap={{base: 4, md: 16}}
+    >
       <Box
         ref={scrollContainerRef}
-        position="absolute"
-        right={0}
-        left={0}
-        bottom={0}
-        top={0}
-        width="100%"
+        position="relative"
         overflowX="scroll"
+        flex={1}
+        width="100%"
       >
-        <Box position="absolute" top="50%" transform="translateY(-50%)">
+        <Box position="absolute" top={0} bottom={{base: 4, md: 16}}>
           <Flex
+            height="100%"
+            width="100%"
             position="relative"
             overflow="hidden"
-            height={{base: '60dvh', md: '40dvh'}}
           >
             <Net
-              height={{base: '60dvh', md: '40dvh'}}
               position="absolute"
-              top="50%"
-              transform="translateY(-50%)"
-              zIndex={-1}
+              height="100%"
+              top={0}
+              bottom={0}
+              left={0}
+              right={0}
             />
             <HStack
+              alignItems="flex-start"
+              justifyContent="flex-start"
               px={{base: 10, md: 32}}
+              py={{base: 16, md: 16}}
               gap={{base: 16, md: 32}}
               width="100%"
             >
@@ -50,14 +58,8 @@ const Experiences = () => {
           </Flex>
         </Box>
       </Box>
-      <Timeline
-        position="absolute"
-        right={{base: 2, md: 8}}
-        left={{base: 2, md: 8}}
-        top={{base: '5dvh', md: '20dvh'}}
-        scrollRef={scrollContainerRef}
-      />
-    </Box>
+      <Timeline scrollRef={scrollContainerRef} p={{base: 4, md: 16}} />
+    </Flex>
   );
 };
 
