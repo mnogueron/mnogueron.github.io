@@ -4,6 +4,7 @@ import Net from '@/components/Net';
 import {EXPERIENCES} from '@/constants/data';
 import ExperienceCard from '@/components/ExperienceCard';
 import Timeline from '@/components/Timeline';
+import {relativeSize} from '@/components/Window/utils';
 
 const Experiences = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null!);
@@ -14,7 +15,7 @@ const Experiences = () => {
       bg="screen.experiences"
       height="100%"
       width="100%"
-      gap={{base: 4, md: 16}}
+      gap={relativeSize(0.1, 'containerHeight', 64)}
     >
       <Box
         ref={scrollContainerRef}
@@ -23,9 +24,15 @@ const Experiences = () => {
         flex={1}
         width="100%"
       >
-        <Box position="absolute" top={0} bottom={{base: 4, md: 16}}>
+        <Flex
+          position="absolute"
+          top={0}
+          bottom={relativeSize(0.05, 'containerHeight', 64, 32)}
+          alignItems="center"
+        >
           <Flex
             height="100%"
+            maxHeight="600px"
             width="100%"
             position="relative"
             overflow="hidden"
@@ -41,9 +48,9 @@ const Experiences = () => {
             <HStack
               alignItems="flex-start"
               justifyContent="flex-start"
-              px={{base: 10, md: 32}}
-              py={{base: 16, md: 16}}
-              gap={{base: 16, md: 32}}
+              pt={relativeSize(0.1, 'containerHeight')}
+              px={relativeSize(0.05, 'containerWidth', 64)}
+              gap={relativeSize(0.1, 'containerWidth', 128)}
               width="100%"
             >
               {EXPERIENCES.map(({id, dateLabel, title, content}) => (
@@ -56,9 +63,13 @@ const Experiences = () => {
               ))}
             </HStack>
           </Flex>
-        </Box>
+        </Flex>
       </Box>
-      <Timeline scrollRef={scrollContainerRef} p={{base: 4, md: 16}} />
+      <Timeline
+        scrollRef={scrollContainerRef}
+        pt={relativeSize(0.05, 'containerHeight')}
+        px={relativeSize(0.05, 'containerWidth', 64)}
+      />
     </Flex>
   );
 };
@@ -69,5 +80,8 @@ Experiences.preferredRatio = 1.3;
 Experiences.preferredRatioMobile = 0.7;
 Experiences.maxApplicationHeight = 900;
 Experiences.minMobileRatio = 0.55;
+
+Experiences.minWidth = 350;
+Experiences.minHeight = 450;
 
 export default Experiences;

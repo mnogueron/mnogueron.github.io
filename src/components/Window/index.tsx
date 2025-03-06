@@ -4,6 +4,7 @@ import {ResizeHandler} from '@/components/Window/types';
 import ResizeHandlers from '@/components/Window/ResizeHandlers';
 import WindowHeader from '@/components/Window/WindowHeader';
 import {Positions, WindowState} from '@/contexts/types';
+import useMeasure from 'react-use-measure';
 
 type WindowProps = {
   children: React.ReactNode;
@@ -22,6 +23,30 @@ type WindowProps = {
   disableResize?: boolean;
   disableMove?: boolean;
 } & Omit<BoxProps, 'onResize'>;
+
+type WindowContainerProps = {
+  children: React.ReactNode;
+};
+
+const WindowContainer = ({children}: WindowContainerProps) => {
+  const [containerRef, {height, width}] = useMeasure();
+  return (
+    <Box
+      ref={containerRef}
+      flex={1}
+      width="100%"
+      position="relative"
+      overflow="hidden"
+      borderBottomRadius={6}
+      css={{
+        '--containerWidth': `${width}px`,
+        '--containerHeight': `${height}px`,
+      }}
+    >
+      {children}
+    </Box>
+  );
+};
 
 const Window = ({
   title,
@@ -91,9 +116,7 @@ const Window = ({
             onReduce={onReduce}
             disableMove={disableMove}
           />
-          <Box flex={1} width="100%" position="relative" overflow="hidden">
-            {children}
-          </Box>
+          <WindowContainer>{children}</WindowContainer>
         </Flex>
         {!disableResize && <ResizeHandlers onResize={onResize} />}
       </Box>

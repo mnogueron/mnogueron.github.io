@@ -2,6 +2,7 @@ import React, {useMemo} from 'react';
 import {Box, IconButton, Text, useDisclosure, VStack} from '@chakra-ui/react';
 import useMeasure from 'react-use-measure';
 import {FaChevronDown, FaChevronUp} from 'react-icons/fa6';
+import {relativeSize} from '@/components/Window/utils';
 
 type ExperienceCardProps = {
   dateLabel: string;
@@ -22,7 +23,7 @@ const ExperienceCard = ({dateLabel, title, content}: ExperienceCardProps) => {
       ps={4}
       pe={8}
       width="xl"
-      maxWidth="90vw"
+      maxWidth={relativeSize(0.9, 'containerWidth')}
       maxHeight="100%"
       borderRadius={8}
       backgroundColor="#29282BE6" // 90% opacity

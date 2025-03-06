@@ -14,6 +14,8 @@ const Applications: {
     preferredRatioMobile: number;
     maxApplicationHeight: number;
     minMobileRatio: number;
+    minWidth?: number;
+    minHeight?: number;
     disableResize?: boolean;
     disableMove?: boolean;
     getStaticBox?: (container: {width: number; height: number}) => Positions;

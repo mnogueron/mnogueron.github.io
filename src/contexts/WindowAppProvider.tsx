@@ -242,8 +242,11 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
             break;
         }
 
-        const width = Math.max(positions.width, MIN_WINDOW_WIDTH);
-        const height = Math.max(positions.height, MIN_WINDOW_HEIGHT);
+        const Application = Applications[app.appId];
+        const minWidth = Application.minWidth || MIN_WINDOW_WIDTH;
+        const minHeight = Application.minHeight || MIN_WINDOW_HEIGHT;
+        const width = Math.max(positions.width, minWidth);
+        const height = Math.max(positions.height, minHeight);
 
         return {
           ...apps,
