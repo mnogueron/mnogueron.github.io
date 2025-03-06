@@ -33,6 +33,8 @@ type WindowApp = {
   fullScreenApplication: (id: string) => void;
   reduceApplication: (id: string) => void;
   toggleFullScreenApplication: (id: string) => void;
+  startDragApplication: (id: string) => void;
+  endDragApplication: (id: string) => void;
 };
 
 const defaultWindowAppValue: WindowApp = {
@@ -48,6 +50,8 @@ const defaultWindowAppValue: WindowApp = {
   fullScreenApplication: () => {},
   reduceApplication: () => {},
   toggleFullScreenApplication: () => {},
+  startDragApplication: () => {},
+  endDragApplication: () => {},
 };
 
 export const WindowAppContext = createContext<WindowApp>(defaultWindowAppValue);
@@ -117,7 +121,6 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
           width: containerWidth,
           height: containerHeight,
         });
-        console.log(positions);
       } else {
         const {width, height} = getApplicationPreferredSize(
           {
@@ -245,8 +248,18 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
         const Application = Applications[app.appId];
         const minWidth = Application.minWidth || MIN_WINDOW_WIDTH;
         const minHeight = Application.minHeight || MIN_WINDOW_HEIGHT;
-        const width = Math.max(positions.width, minWidth);
-        const height = Math.max(positions.height, minHeight);
+
+        let width = Math.max(positions.width, minWidth);
+        let height = Math.max(positions.height, minHeight);
+
+        // Constrain resizable window to the document border
+        if (width + positions.left > containerWidth) {
+          width = containerWidth - positions.left;
+        }
+
+        if (height + positions.top > containerHeight) {
+          height = containerHeight - positions.top;
+        }
 
         return {
           ...apps,
@@ -268,7 +281,7 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
         };
       });
     },
-    []
+    [containerHeight, containerWidth]
   );
 
   const updateFullScreenPromptState = useCallback((open: boolean) => {
@@ -316,10 +329,42 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
         ...apps,
         [id]: {
           ...app,
+          ...(app.state === WindowState.FULL_SCREEN
+            ? {
+                positions: app.trackedPositions || app.positions,
+                trackedPositions: undefined,
+              }
+            : {}),
           state:
             app.state === WindowState.FULL_SCREEN
               ? WindowState.DEFAULT
               : WindowState.FULL_SCREEN,
+        },
+      };
+    });
+  }, []);
+
+  const startDragApplication = useCallback((id: string) => {
+    setApplications(apps => {
+      const app = apps[id];
+      return {
+        ...apps,
+        [id]: {
+          ...app,
+          trackedPositions: app.positions,
+        },
+      };
+    });
+  }, []);
+
+  const endDragApplication = useCallback((id: string) => {
+    setApplications(apps => {
+      const app = apps[id];
+      return {
+        ...apps,
+        [id]: {
+          ...app,
+          trackedPositions: undefined,
         },
       };
     });
@@ -379,6 +424,8 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
       fullScreenApplication,
       reduceApplication,
       toggleFullScreenApplication,
+      startDragApplication,
+      endDragApplication,
     };
   }, [
     applications,
@@ -393,6 +440,8 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
     fullScreenApplication,
     reduceApplication,
     toggleFullScreenApplication,
+    startDragApplication,
+    endDragApplication,
   ]);
 
   return <WindowAppContext value={contextValue}>{children}</WindowAppContext>;

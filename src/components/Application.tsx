@@ -18,6 +18,8 @@ const Application = ({id}: ApplicationProps) => {
     fullScreenApplication,
     reduceApplication,
     toggleFullScreenApplication,
+    startDragApplication,
+    endDragApplication,
   } = useContext(WindowAppContext);
 
   const data = useMemo(() => {
@@ -64,6 +66,14 @@ const Application = ({id}: ApplicationProps) => {
     reduceApplication(id);
   };
 
+  const handleDragStart = () => {
+    startDragApplication(id);
+  };
+
+  const handleDragEnd = () => {
+    endDragApplication(id);
+  };
+
   if (!data?.AppComponent) {
     return null;
   }
@@ -86,6 +96,8 @@ const Application = ({id}: ApplicationProps) => {
       title={AppComponent.appTitle}
       disableResize={AppComponent.disableResize}
       disableMove={AppComponent.disableMove}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
     >
       <AppComponent />
     </Window>

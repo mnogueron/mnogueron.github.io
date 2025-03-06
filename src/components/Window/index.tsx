@@ -64,6 +64,8 @@ const Window = ({
   isReduced,
   disableResize,
   disableMove,
+  onDragStart,
+  onDragEnd,
   ...props
 }: WindowProps) => {
   const {top, left, width, height} = useMemo(() => {
@@ -114,11 +116,15 @@ const Window = ({
             onFullScreen={onFullScreen}
             onFullScreenToggle={onFullScreenToggle}
             onReduce={onReduce}
-            disableMove={disableMove}
+            onDragStart={onDragStart}
+            onDragEnd={onDragEnd}
+            disableMove={state === WindowState.FULL_SCREEN || disableMove}
           />
           <WindowContainer>{children}</WindowContainer>
         </Flex>
-        {!disableResize && <ResizeHandlers onResize={onResize} />}
+        {!(state === WindowState.FULL_SCREEN || disableResize) && (
+          <ResizeHandlers onResize={onResize} />
+        )}
       </Box>
     </Box>
   );

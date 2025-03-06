@@ -20,6 +20,7 @@ const WindowHeader = ({
   onClose,
   onMove,
   onDragStart,
+  onDragEnd,
   onFullScreen,
   onFullScreenToggle,
   onReduce,
@@ -90,6 +91,8 @@ const WindowHeader = ({
     if (fullScreenPrompt) {
       updateFullScreenPromptState(false);
       onFullScreen();
+    } else if (onDragEnd) {
+      onDragEnd(e);
     }
   };
 
