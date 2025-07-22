@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {Box, BoxProps, Flex} from '@chakra-ui/react';
-import {ResizeHandler} from '@/components/AppWindow/types';
-import ResizeHandlers from '@/components/AppWindow/ResizeHandlers';
+import {ResizeHandler} from '@/components/os/AppWindow/types';
+import ResizeHandlers from '@/components/os/AppWindow/ResizeHandlers';
 import AppHeader from './AppHeader';
 import {Positions, WindowState} from '@/contexts/types';
 import useMeasure from 'react-use-measure';

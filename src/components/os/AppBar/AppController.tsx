@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {Flex} from '@chakra-ui/react';
 import {useWindowAppContext} from '@/contexts/WindowAppProvider';
-import AppShortcut from '@/components/AppBar/AppShortcut';
+import AppShortcut from '@/components/os/AppBar/AppShortcut';
 
 const AppController = () => {
   const {applications, focusApplication} = useWindowAppContext();

@@ -1,7 +1,7 @@
 import React from 'react';
 import {HStack, StackSeparator} from '@chakra-ui/react';
-import AppLauncher from '@/components/AppLauncher';
-import AppController from '@/components/AppBar/AppController';
+import AppLauncher from '@/components/os/AppBar/AppLauncher';
+import AppController from '@/components/os/AppBar/AppController';
 
 const AppBar = () => {
   return (

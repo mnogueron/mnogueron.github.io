@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import AppWindow from './AppWindow';
 import {useWindowAppContext} from '@/contexts/WindowAppProvider';
-import {ResizeDirection} from '@/components/AppWindow/types';
+import {ResizeDirection} from '@/components/os/AppWindow/types';
 import Applications from '@/applications';
 
 type ApplicationProps = {

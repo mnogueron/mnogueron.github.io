@@ -4,9 +4,9 @@ import React from 'react';
 import {Box, Flex, VStack} from '@chakra-ui/react';
 import Shuttle from '@/components/Shuttle';
 import {useWindowAppContext} from '@/contexts/WindowAppProvider';
-import Application from '@/components/Application';
+import Application from '@/components/os/Application';
 import FullScreenPrompt from '@/components/FullScreenPrompt';
-import AppBar from '@/components/AppBar';
+import AppBar from '../components/os/AppBar';
 
 const ScreenManager = () => {
   const {applications, containerRef, openApplication} = useWindowAppContext();

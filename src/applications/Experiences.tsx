@@ -4,7 +4,7 @@ import Net from '@/components/Net';
 import {EXPERIENCES} from '@/constants/data';
 import ExperienceCard from '@/components/ExperienceCard';
 import Timeline from '@/components/Timeline';
-import {relativeSize} from '@/components/AppWindow/utils';
+import {relativeSize} from '@/components/os/AppWindow/utils';
 
 const Experiences = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null!);

@@ -4,9 +4,9 @@ import {useWindowAppContext} from '@/contexts/WindowAppProvider';
 import {FULL_SCREEN_PROMPT_TIMEOUT} from '@/constants';
 import {JetBrainsMono} from '@/styles/fonts';
 import {EMPTY_DRAG_IMAGE} from '@/dragUtils';
-import AppControls from '@/components/AppWindow/AppHeader/AppControls';
+import AppControls from '@/components/os/AppWindow/AppHeader/AppControls';
 import {WindowState} from '@/contexts/types';
-import AppTitle from '@/components/AppWindow/AppHeader/AppTitle';
+import AppTitle from '@/components/os/AppWindow/AppHeader/AppTitle';
 
 type AppHeaderProps = {
   title?: string;

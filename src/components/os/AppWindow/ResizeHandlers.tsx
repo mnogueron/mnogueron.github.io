@@ -1,6 +1,6 @@
 import React from 'react';
-import ResizeHandle from '@/components/AppWindow/ResizeHandle';
-import {ResizeDirection, ResizeHandler} from '@/components/AppWindow/types';
+import ResizeHandle from '@/components/os/AppWindow/ResizeHandle';
+import {ResizeDirection, ResizeHandler} from '@/components/os/AppWindow/types';
 
 type ResizeHandlersProps = {
   onResize: ResizeHandler;

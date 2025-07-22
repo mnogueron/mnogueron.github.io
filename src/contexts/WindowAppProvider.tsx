@@ -8,7 +8,7 @@ import React, {
   useState,
 } from 'react';
 import {ApplicationId} from '@/applications/types';
-import {ResizeDirection} from '@/components/AppWindow/types';
+import {ResizeDirection} from '@/components/os/AppWindow/types';
 import useMeasure from 'react-use-measure';
 import Applications from '@/applications';
 import {MIN_PADDING, MIN_WINDOW_HEIGHT, MIN_WINDOW_WIDTH} from '@/constants';
