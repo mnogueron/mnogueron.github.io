@@ -32,8 +32,7 @@ const AppHeader = ({
   disableMove,
   ...props
 }: AppHeaderProps) => {
-  const {fullScreenPrompt, updateFullScreenPromptState} =
-    useWindowAppContext();
+  const {fullScreenPrompt, updateFullScreenPromptState} = useWindowAppContext();
   const topTimeout = useRef<number>(null);
   const dragStart = useRef<{x: number; y: number}>({x: 0, y: 0});
 

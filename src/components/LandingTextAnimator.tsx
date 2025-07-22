@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {Heading, StackProps, VStack} from '@chakra-ui/react';
 import {ReactTyped, Typed} from 'react-typed';
-import AppWindow from 'AppWindow';
+import AppWindow from './AppWindow';
 import {JetBrainsMono} from '@/styles/fonts';
 
 type LandingTextAnimatorProps = StackProps;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, Text, VStack} from '@chakra-ui/react';
-import {LAST_UPDATE} from '@/constants/lastUpdate';
+import BUILD_DATA from '@/constants/buildData.json';
 import {MIN_PADDING} from '@/constants';
 
 const About = () => {
@@ -20,7 +20,7 @@ I recently decided to totally rewrite my previous portfolio and do something tha
 
 Follow along as I add more and more UI and technical details to this portfolio!
 
-Last update: ${new Date(LAST_UPDATE).toDateString()}`}
+Last update: ${new Date(BUILD_DATA.lastUpdatedAt).toDateString()}`}
       </Text>
       <Link
         variant="underline"

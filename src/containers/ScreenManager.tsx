@@ -9,8 +9,7 @@ import FullScreenPrompt from '@/components/FullScreenPrompt';
 import AppBar from '@/components/AppBar';
 
 const ScreenManager = () => {
-  const {applications, containerRef, openApplication} =
-    useWindowAppContext();
+  const {applications, containerRef, openApplication} = useWindowAppContext();
 
   return (
     <VStack

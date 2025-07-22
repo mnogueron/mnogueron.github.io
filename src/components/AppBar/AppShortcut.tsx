@@ -1,5 +1,5 @@
 import React from 'react';
-import {Center, Text} from '@chakra-ui/react';
+import {Box, Center, Text} from '@chakra-ui/react';
 
 type AppShortcutProps = {
   id: string;
@@ -12,17 +12,23 @@ const AppShortcut = ({id, onClick}: AppShortcutProps) => {
   };
 
   return (
-    <Center
-      as="button"
-      width={12}
-      height={12}
-      borderRadius="lg"
-      bg="white"
-      onClick={handleClick}
-      cursor="pointer"
-    >
-      <Text color="gray.800">{id.charAt(0).toUpperCase()}</Text>
-    </Center>
+    <Box p={1} className="group" onClick={handleClick}>
+      <Center
+        as="button"
+        width={{base: 9, md: 11}}
+        height={{base: 9, md: 11}}
+        borderRadius="lg"
+        bg="white"
+        cursor="pointer"
+        transition="height 150ms ease-out, width 150ms ease-out" // TODO improve animation
+        _groupHover={{
+          width: {base: 12, md: 14},
+          height: {base: 12, md: 14},
+        }}
+      >
+        <Text color="gray.800">{id.charAt(0).toUpperCase()}</Text>
+      </Center>
+    </Box>
   );
 };
 

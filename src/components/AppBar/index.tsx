@@ -1,24 +1,26 @@
 import React from 'react';
-import {Flex} from '@chakra-ui/react';
+import {HStack, StackSeparator} from '@chakra-ui/react';
 import AppLauncher from '@/components/AppLauncher';
 import AppController from '@/components/AppBar/AppController';
 
 const AppBar = () => {
   return (
-    <Flex
-      width="100%"
-      borderTop="1px solid"
-      borderTopColor="menubar.border"
+    <HStack
+      borderRadius="2xl"
+      border="1px solid"
+      borderColor="menubar.border"
       alignItems="center"
-      py={{base: 2, md: 3}}
-      px={{base: 2, md: 3}}
+      p={{base: 2, md: 2}}
       zIndex="sticky"
-      bg="menubar.background"
+      bg="menubar.background/90"
+      position="absolute"
+      bottom={1}
       gap={4}
+      separator={<StackSeparator />}
     >
       <AppLauncher />
       <AppController />
-    </Flex>
+    </HStack>
   );
 };
 

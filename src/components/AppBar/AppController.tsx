@@ -14,7 +14,7 @@ const AppController = () => {
   };
 
   return (
-    <Flex gap={4} flex={1}>
+    <Flex gap={0} flex={1} alignItems="center">
       {ids.map(id => (
         <AppShortcut key={id} id={id} onClick={handleAppShortcutClick} />
       ))}

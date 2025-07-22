@@ -1,4 +1,5 @@
 import type {NextConfig} from 'next';
+import {generateLastUpdatedAt} from './scripts/generate-last-updated-at';
 
 const nextConfig: NextConfig = {
   /**
@@ -26,6 +27,14 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     optimizePackageImports: ['@chakra-ui/react'],
+  },
+
+  webpack: (config, {isServer}) => {
+    if (isServer) {
+      generateLastUpdatedAt();
+    }
+
+    return config;
   },
 
   /* config options here */
