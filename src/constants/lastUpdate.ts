@@ -1,1 +1,0 @@
-export const LAST_UPDATE = 1738974043455;

@@ -1,7 +1,6 @@
-import '@/styles/globals.css';
 import type {AppProps} from 'next/app';
 import {Provider} from '@/components/ui/provider';
-import {inter} from '@/styles/fonts';
+import {inter} from '@/theme/fonts';
 import WindowAppProvider from '@/contexts/WindowAppProvider';
 
 export default function App({Component, pageProps}: AppProps) {

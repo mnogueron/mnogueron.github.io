@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
   ReactGA.pageview('Homepage');
 }
 
-const ScreenManager = dynamic(() => import('@/containers/ScreenManager'), {
+const AppOrchestrator = dynamic(() => import('@/os/AppOrchestrator'), {
   ssr: false,
 });
 
@@ -69,14 +69,14 @@ export default function Home() {
         {/** <!--
          These stylesheets provide Fonts for Material-UI: Roboto and the material icons
          --> **/}
-        <link
+        {/*<link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
         />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        />
+        />*/}
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -87,7 +87,7 @@ export default function Home() {
         <meta name="theme-color" content="#232323" />
       </Head>
 
-      <ScreenManager />
+      <AppOrchestrator />
 
       {/**<div
        className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}

@@ -8,15 +8,18 @@ import React, {
   useState,
 } from 'react';
 import {ApplicationId} from '@/applications/types';
-import {ResizeDirection} from '@/components/os/AppWindow/types';
+import {ResizeDirection} from '@/os/AppWindow/types';
 import useMeasure from 'react-use-measure';
 import Applications from '@/applications';
-import {MIN_PADDING, MIN_WINDOW_HEIGHT, MIN_WINDOW_WIDTH} from '@/constants';
+import {MIN_PADDING} from '@/constants';
 import {
   getApplicationPreferredSize,
   getBoundPositions,
 } from '@/contexts/windowUtils';
 import {Application, ApplicationRegistry, WindowState} from './types';
+
+const MIN_WINDOW_HEIGHT = 70;
+const MIN_WINDOW_WIDTH = 200;
 
 type WindowApp = {
   applications: ApplicationRegistry;
