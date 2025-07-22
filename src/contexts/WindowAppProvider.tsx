@@ -71,6 +71,8 @@ type WindowAppProviderProps = {
   children: React.ReactNode;
 };
 
+// TODO when opening an app, keep track of where it was last opened and its last size
+
 const WindowAppProvider = ({children}: WindowAppProviderProps) => {
   const hydrating = useRef(true);
   const [containerRef, {width: containerWidth, height: containerHeight}] =

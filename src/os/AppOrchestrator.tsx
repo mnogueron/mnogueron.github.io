@@ -5,7 +5,7 @@ import {Box, VStack} from '@chakra-ui/react';
 import {useWindowAppContext} from '@/contexts/WindowAppProvider';
 import Application from '@/os/Application';
 import FullScreenPrompt from '@/os/components/FullScreenPrompt';
-import AppBar from './AppBar';
+import Dock from './Dock';
 import AppBackground from '@/os/AppBackground';
 
 const AppOrchestrator = () => {
@@ -37,7 +37,7 @@ const AppOrchestrator = () => {
         <FullScreenPrompt isVisible={fullScreenPrompt} />
       </Box>
 
-      <AppBar />
+      <Dock />
     </VStack>
   );
 };

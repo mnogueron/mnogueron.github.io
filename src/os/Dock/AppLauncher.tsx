@@ -109,6 +109,7 @@ const AppLauncher = () => {
           variant="solid"
           size={{base: 'sm', md: 'lg'}}
           rounded="full"
+          m={1}
         >
           <Logo width={8} height={8} strokeWidth="14" />
         </IconButton>
