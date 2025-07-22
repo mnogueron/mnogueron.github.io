@@ -1,12 +1,16 @@
-import {Box, Flex, FlexProps, HStack, Text} from '@chakra-ui/react';
-import React, {useContext, useRef} from 'react';
-import {WindowAppContext} from '@/contexts/WindowAppProvider';
+import React, {useRef} from 'react';
+import {Flex, FlexProps} from '@chakra-ui/react';
+import {useWindowAppContext} from '@/contexts/WindowAppProvider';
 import {FULL_SCREEN_PROMPT_TIMEOUT} from '@/constants';
 import {JetBrainsMono} from '@/styles/fonts';
 import {EMPTY_DRAG_IMAGE} from '@/dragUtils';
+import AppControls from '@/components/AppWindow/AppHeader/AppControls';
+import {WindowState} from '@/contexts/types';
+import AppTitle from '@/components/AppWindow/AppHeader/AppTitle';
 
-type WindowHeaderProps = {
+type AppHeaderProps = {
   title?: string;
+  state: WindowState;
   onClose?: () => void;
   onMove: (delta: {x: number; y: number}) => void;
   onFullScreen: () => void;
@@ -15,8 +19,9 @@ type WindowHeaderProps = {
   disableMove?: boolean;
 } & FlexProps;
 
-const WindowHeader = ({
+const AppHeader = ({
   title,
+  state,
   onClose,
   onMove,
   onDragStart,
@@ -26,9 +31,9 @@ const WindowHeader = ({
   onReduce,
   disableMove,
   ...props
-}: WindowHeaderProps) => {
+}: AppHeaderProps) => {
   const {fullScreenPrompt, updateFullScreenPromptState} =
-    useContext(WindowAppContext);
+    useWindowAppContext();
   const topTimeout = useRef<number>(null);
   const dragStart = useRef<{x: number; y: number}>({x: 0, y: 0});
 
@@ -118,44 +123,15 @@ const WindowHeader = ({
       direction="row"
       draggable={disableMove ? undefined : 'true'}
     >
-      <Text pointerEvents="none" fontSize="xs" userSelect="none">
-        {title}
-      </Text>
-      <HStack gap={2}>
-        <Box
-          as="button"
-          bg="#2cc640"
-          width={3}
-          height={3}
-          borderRadius={6}
-          border="1px solid #51a75c"
-          onClick={onReduce}
-          cursor="pointer"
-        />
-        <Box
-          as="button"
-          bg="#fdbf2e"
-          width={3}
-          height={3}
-          borderRadius={6}
-          border="1px solid #d6a839"
-          onClick={onFullScreenToggle}
-          cursor="pointer"
-        />
-        <Box
-          as="button"
-          bg="#fe6256"
-          width={3}
-          height={3}
-          borderRadius={6}
-          border="1px solid #ca5f59"
-          cursor="pointer"
-          onClick={onClose}
-          zIndex={1}
-        />
-      </HStack>
+      <AppTitle title={title} />
+      <AppControls
+        state={state}
+        onFullScreenToggle={onFullScreenToggle}
+        onReduce={onReduce}
+        onClose={onClose}
+      />
     </Flex>
   );
 };
 
-export default WindowHeader;
+export default AppHeader;

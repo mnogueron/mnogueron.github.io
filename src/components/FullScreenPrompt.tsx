@@ -1,9 +1,9 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Box} from '@chakra-ui/react';
-import {WindowAppContext} from '@/contexts/WindowAppProvider';
+import {useWindowAppContext} from '@/contexts/WindowAppProvider';
 
 const FullScreenPrompt = () => {
-  const {fullScreenPrompt} = useContext(WindowAppContext);
+  const {fullScreenPrompt} = useWindowAppContext();
 
   return (
     <Box

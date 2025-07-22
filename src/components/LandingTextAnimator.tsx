@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {Heading, StackProps, VStack} from '@chakra-ui/react';
 import {ReactTyped, Typed} from 'react-typed';
-import Window from '@/components/Window';
+import AppWindow from 'AppWindow';
 import {JetBrainsMono} from '@/styles/fonts';
 
 type LandingTextAnimatorProps = StackProps;
@@ -15,7 +15,7 @@ const LandingTextAnimator = ({...props}: LandingTextAnimatorProps) => {
     <>
       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
       {/* @ts-expect-error */}
-      <Window
+      <AppWindow
         position="absolute"
         top={{base: 2, md: 16}}
         left={{base: 2, md: 16}}
@@ -99,7 +99,7 @@ const LandingTextAnimator = ({...props}: LandingTextAnimatorProps) => {
             />
           </Heading>
         </VStack>
-      </Window>
+      </AppWindow>
       {/*<VStack
         justifyContent="flex-end"
         alignItems="flex-end"

@@ -1,7 +1,7 @@
-import React, {useContext, useMemo} from 'react';
-import Window from '@/components/Window';
-import {WindowAppContext} from '@/contexts/WindowAppProvider';
-import {ResizeDirection} from '@/components/Window/types';
+import React, {useMemo} from 'react';
+import AppWindow from './AppWindow';
+import {useWindowAppContext} from '@/contexts/WindowAppProvider';
+import {ResizeDirection} from '@/components/AppWindow/types';
 import Applications from '@/applications';
 
 type ApplicationProps = {
@@ -20,7 +20,7 @@ const Application = ({id}: ApplicationProps) => {
     toggleFullScreenApplication,
     startDragApplication,
     endDragApplication,
-  } = useContext(WindowAppContext);
+  } = useWindowAppContext();
 
   const data = useMemo(() => {
     const application = applications[id];
@@ -81,7 +81,7 @@ const Application = ({id}: ApplicationProps) => {
   const {AppComponent, application} = data;
 
   return (
-    <Window
+    <AppWindow
       state={application.state}
       positions={application.positions}
       isReduced={application.isReduced}
@@ -100,7 +100,7 @@ const Application = ({id}: ApplicationProps) => {
       onDragEnd={handleDragEnd}
     >
       <AppComponent />
-    </Window>
+    </AppWindow>
   );
 };
 

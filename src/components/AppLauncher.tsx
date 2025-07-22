@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {ApplicationId} from '@/applications/types';
 import {Box, BoxProps, IconButton, Text, VStack} from '@chakra-ui/react';
 import Logo from '@/components/icons/Logo';
@@ -9,7 +9,7 @@ import {
   PopoverRoot,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import {WindowAppContext} from '@/contexts/WindowAppProvider';
+import {useWindowAppContext} from '@/contexts/WindowAppProvider';
 
 type MenuItem = {
   id: string;
@@ -84,8 +84,8 @@ const AppMenuItem = ({item, onClick, ...rest}: AppMenuItemProps) => {
   );
 };
 
-const AppMenu = () => {
-  const {openApplication} = useContext(WindowAppContext);
+const AppLauncher = () => {
+  const {openApplication} = useWindowAppContext();
   const [open, setOpen] = useState(false);
 
   const handleMenuClick = (item: MenuItem) => {
@@ -130,4 +130,4 @@ const AppMenu = () => {
   );
 };
 
-export default AppMenu;
+export default AppLauncher;

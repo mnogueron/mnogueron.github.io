@@ -1,16 +1,16 @@
 'use client';
 
-import React, {useContext} from 'react';
+import React from 'react';
 import {Box, Flex, VStack} from '@chakra-ui/react';
 import Shuttle from '@/components/Shuttle';
-import {WindowAppContext} from '@/contexts/WindowAppProvider';
+import {useWindowAppContext} from '@/contexts/WindowAppProvider';
 import Application from '@/components/Application';
 import FullScreenPrompt from '@/components/FullScreenPrompt';
-import MenuBar from '@/components/MenuBar';
+import AppBar from '@/components/AppBar';
 
 const ScreenManager = () => {
   const {applications, containerRef, openApplication} =
-    useContext(WindowAppContext);
+    useWindowAppContext();
 
   return (
     <VStack
@@ -42,7 +42,7 @@ const ScreenManager = () => {
         <FullScreenPrompt />
       </Box>
 
-      <MenuBar />
+      <AppBar />
     </VStack>
   );
 };

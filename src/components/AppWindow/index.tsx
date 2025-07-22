@@ -1,8 +1,8 @@
 import React, {useMemo} from 'react';
 import {Box, BoxProps, Flex} from '@chakra-ui/react';
-import {ResizeHandler} from '@/components/Window/types';
-import ResizeHandlers from '@/components/Window/ResizeHandlers';
-import WindowHeader from '@/components/Window/WindowHeader';
+import {ResizeHandler} from '@/components/AppWindow/types';
+import ResizeHandlers from '@/components/AppWindow/ResizeHandlers';
+import AppHeader from './AppHeader';
 import {Positions, WindowState} from '@/contexts/types';
 import useMeasure from 'react-use-measure';
 
@@ -48,7 +48,7 @@ const WindowContainer = ({children}: WindowContainerProps) => {
   );
 };
 
-const Window = ({
+const AppWindow = ({
   title,
   children,
   onClose,
@@ -109,8 +109,9 @@ const Window = ({
     >
       <Box position="relative" height="100%" width="100%">
         <Flex direction="column" height="100%" width="100%">
-          <WindowHeader
+          <AppHeader
             title={title}
+            state={state}
             onClose={onClose}
             onMove={onMove}
             onFullScreen={onFullScreen}
@@ -130,4 +131,4 @@ const Window = ({
   );
 };
 
-export default Window;
+export default AppWindow;

@@ -1,13 +1,14 @@
 import React, {
   createContext,
   useCallback,
+  useContext,
   useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
 import {ApplicationId} from '@/applications/types';
-import {ResizeDirection} from '@/components/Window/types';
+import {ResizeDirection} from '@/components/AppWindow/types';
 import useMeasure from 'react-use-measure';
 import Applications from '@/applications';
 import {MIN_PADDING, MIN_WINDOW_HEIGHT, MIN_WINDOW_WIDTH} from '@/constants';
@@ -55,6 +56,13 @@ const defaultWindowAppValue: WindowApp = {
 };
 
 export const WindowAppContext = createContext<WindowApp>(defaultWindowAppValue);
+
+export const useWindowAppContext = () => useContext(WindowAppContext);
+
+export const useApplications = () => {
+  const {applications} = useWindowAppContext();
+  return applications;
+};
 
 type WindowAppProviderProps = {
   children: React.ReactNode;

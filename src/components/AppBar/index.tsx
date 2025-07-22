@@ -1,23 +1,25 @@
 import React from 'react';
 import {Flex} from '@chakra-ui/react';
-import AppMenu from '@/components/AppMenu';
+import AppLauncher from '@/components/AppLauncher';
+import AppController from '@/components/AppBar/AppController';
 
-const MenuBar = () => {
+const AppBar = () => {
   return (
     <Flex
       width="100%"
       borderTop="1px solid"
       borderTopColor="menubar.border"
       alignItems="center"
-      justifyContent="space-between"
       py={{base: 2, md: 3}}
       px={{base: 2, md: 3}}
       zIndex="sticky"
       bg="menubar.background"
+      gap={4}
     >
-      <AppMenu />
+      <AppLauncher />
+      <AppController />
     </Flex>
   );
 };
 
-export default MenuBar;
+export default AppBar;

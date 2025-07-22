@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {Box, IconButton, Text, useDisclosure, VStack} from '@chakra-ui/react';
 import useMeasure from 'react-use-measure';
 import {FaChevronDown, FaChevronUp} from 'react-icons/fa6';
-import {relativeSize} from '@/components/Window/utils';
+import {relativeSize} from '@/components/AppWindow/utils';
 
 type ExperienceCardProps = {
   dateLabel: string;
