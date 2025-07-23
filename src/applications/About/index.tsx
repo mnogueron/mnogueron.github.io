@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, Text, VStack} from '@chakra-ui/react';
-import BUILD_DATA from '@/constants/buildData.json';
+import BUILD_DATA from '@/config/buildData.json';
 import {AppComponent} from '@/applications/types';
 
 const About: AppComponent = () => {
