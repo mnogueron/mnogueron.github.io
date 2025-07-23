@@ -19,7 +19,7 @@ const Dock = () => {
     <DockContainer>
       <AppLauncher />
       <Separator orientation="vertical" borderColor="menubar.border" />
-      <Flex gap={0} flex={1} alignItems="flex-end">
+      <Flex gap={1} flex={1} alignItems="flex-end">
         {ids.map(id => (
           <AppShortcut key={id} id={id} onClick={handleAppShortcutClick} />
         ))}

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Box, Center, Text} from '@chakra-ui/react';
+import {DockCard} from '@/os/Dock/components/DockCard';
 
 type AppShortcutProps = {
   id: string;
@@ -10,6 +11,12 @@ const AppShortcut = ({id, onClick}: AppShortcutProps) => {
   const handleClick = () => {
     onClick(id);
   };
+
+  return (
+    <DockCard onClick={handleClick}>
+      <Text color="gray.200">{id.charAt(0).toUpperCase()}</Text>
+    </DockCard>
+  );
 
   return (
     <Box p={1} className="group" onClick={handleClick}>
