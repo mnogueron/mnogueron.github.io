@@ -1,8 +1,9 @@
 import React from 'react';
 import Court from '@/applications/Projects/components/Court';
 import {Box} from '@chakra-ui/react';
+import {AppComponent} from '@/applications/types';
 
-const Projects = () => {
+const Projects: AppComponent = () => {
   const handleCourtClick = () => {
     // TODO handle court click
   };
@@ -19,11 +20,12 @@ const Projects = () => {
   );
 };
 
-Projects.appTitle = 'Projects';
-
-Projects.preferredRatio = 1.3;
-Projects.preferredRatioMobile = 0.7;
-Projects.maxApplicationHeight = 900;
-Projects.minMobileRatio = 0.55;
+Projects.config = {
+  appTitle: 'Projects',
+  preferredRatio: 1.3,
+  preferredRatioMobile: 0.7,
+  maxApplicationHeight: 900,
+  minMobileRatio: 0.55,
+};
 
 export default Projects;

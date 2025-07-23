@@ -2,11 +2,13 @@ import React, {useRef, useState} from 'react';
 import {Heading, StackProps, VStack} from '@chakra-ui/react';
 import {ReactTyped, Typed} from 'react-typed';
 import {JetBrainsMono} from '@/theme/fonts';
-import {MIN_PADDING} from '@/constants';
+import {AppComponent} from '@/applications/types';
 
 type LandingTextAnimatorProps = StackProps;
 
-const LandingTextAnimator = ({...props}: LandingTextAnimatorProps) => {
+const LandingTextAnimator: AppComponent = ({
+  ...props
+}: LandingTextAnimatorProps) => {
   const firstLineTypedRef = useRef<Typed | null>(null);
   const secondLineTypedRef = useRef<Typed | null>(null);
   const thirdLineTypedRef = useRef<Typed | null>(null);
@@ -126,38 +128,36 @@ const LandingTextAnimator = ({...props}: LandingTextAnimatorProps) => {
   );
 };
 
-LandingTextAnimator.appTitle = '';
+LandingTextAnimator.config = {
+  appTitle: '',
 
-LandingTextAnimator.disableMove = true;
-// TODO enable disabling screen resize
-LandingTextAnimator.disableResize = true;
+  disableMove: true,
+  // TODO enable disabling screen resize
+  disableResize: true,
 
-// TODO handle strict window size
-LandingTextAnimator.preferredRatio = 0.8;
-LandingTextAnimator.preferredRatioMobile = 0.7;
-LandingTextAnimator.maxApplicationHeight = 900;
-LandingTextAnimator.minMobileRatio = 0.55;
+  // TODO handle strict window size
+  preferredRatio: 0.8,
+  preferredRatioMobile: 0.7,
+  maxApplicationHeight: 900,
+  minMobileRatio: 0.55,
 
-// TODO handle resizing
-
-LandingTextAnimator.getStaticBox = (container: {
-  width: number;
-  height: number;
-}) => {
-  if (container.width < 800) {
+  // TODO handle resizing
+  getStaticBox: (container: {width: number; height: number}) => {
+    if (container.width < 800) {
+      return {
+        top: 12,
+        left: 12,
+        width: container.width - 2 * 12,
+        height: 114,
+      };
+    }
     return {
-      top: MIN_PADDING,
-      left: MIN_PADDING,
-      width: container.width - 2 * MIN_PADDING,
-      height: 114,
+      top: 16 * 4,
+      left: 16 * 4,
+      width: 500,
+      height: 158,
     };
-  }
-  return {
-    top: 16 * 4,
-    left: 16 * 4,
-    width: 500,
-    height: 158,
-  };
+  },
 };
 
 export default LandingTextAnimator;

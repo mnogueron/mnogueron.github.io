@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {Flex, HStack, Separator, StackSeparator} from '@chakra-ui/react';
+import {Flex, Separator} from '@chakra-ui/react';
 import AppLauncher from '@/os/Dock/AppLauncher';
 import AppShortcut from '@/os/Dock/AppShortcut';
 import {useWindowAppContext} from '@/contexts/WindowAppProvider';
@@ -25,29 +25,6 @@ const Dock = () => {
         ))}
       </Flex>
     </DockContainer>
-  );
-
-  return (
-    <HStack
-      borderRadius="2xl"
-      border="1px solid"
-      borderColor="menubar.border"
-      alignItems="center"
-      p={{base: 2, md: 2}}
-      zIndex="sticky"
-      bg="menubar.background/90"
-      position="absolute"
-      bottom={1}
-      gap={4}
-      separator={<StackSeparator />}
-    >
-      <AppLauncher />
-      <Flex gap={0} flex={1} alignItems="center">
-        {ids.map(id => (
-          <AppShortcut key={id} id={id} onClick={handleAppShortcutClick} />
-        ))}
-      </Flex>
-    </HStack>
   );
 };
 

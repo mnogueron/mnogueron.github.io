@@ -1,25 +1,12 @@
-import React from 'react';
-import {ApplicationId} from '@/applications/types';
+import {AppComponent, ApplicationId} from '@/applications/types';
 import AboutMe from '@/applications/AboutMe';
 import Experiences from '@/applications/Experiences';
 import Projects from '@/applications/Projects';
 import LandingTextAnimator from '@/applications/LandingTextAnimator';
-import {Positions} from '@/contexts/types';
 import About from '@/applications/About';
 
 const Applications: {
-  [key in ApplicationId]: React.ComponentType & {
-    appTitle: string;
-    preferredRatio: number;
-    preferredRatioMobile: number;
-    maxApplicationHeight: number;
-    minMobileRatio: number;
-    minWidth?: number;
-    minHeight?: number;
-    disableResize?: boolean;
-    disableMove?: boolean;
-    getStaticBox?: (container: {width: number; height: number}) => Positions;
-  };
+  [key in ApplicationId]: AppComponent;
 } = {
   [ApplicationId.ABOUT_ME]: AboutMe,
   [ApplicationId.EXPERIENCES]: Experiences,

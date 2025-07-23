@@ -13,6 +13,7 @@ import {
 import ShuttleAnimator, {
   ShuttleAnimatorRef,
 } from '@/applications/AboutMe/components/ShuttleAnimator';
+import {AppComponent} from '@/applications/types';
 
 type AboutMeProps = {
   shuttleStartPosition?: {
@@ -21,7 +22,7 @@ type AboutMeProps = {
   };
 };
 
-const AboutMe = ({shuttleStartPosition}: AboutMeProps) => {
+const AboutMe: AppComponent = ({shuttleStartPosition}: AboutMeProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const dotId = useRef<string>(null);
@@ -145,11 +146,12 @@ const AboutMe = ({shuttleStartPosition}: AboutMeProps) => {
   );
 };
 
-AboutMe.appTitle = 'About me';
-
-AboutMe.preferredRatio = 0.8;
-AboutMe.preferredRatioMobile = 0.7;
-AboutMe.maxApplicationHeight = 900;
-AboutMe.minMobileRatio = 0.55;
+AboutMe.config = {
+  appTitle: 'About me',
+  preferredRatio: 0.8,
+  preferredRatioMobile: 0.7,
+  maxApplicationHeight: 900,
+  minMobileRatio: 0.55,
+};
 
 export default AboutMe;

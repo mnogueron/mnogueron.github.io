@@ -5,8 +5,9 @@ import ExperienceCard from '@/applications/Experiences/components/ExperienceCard
 import Timeline from '@/applications/Experiences/components/Timeline';
 import {relativeSize} from '@/os/AppWindow/utils';
 import {EXPERIENCES} from '@/applications/Experiences/data';
+import {AppComponent} from '@/applications/types';
 
-const Experiences = () => {
+const Experiences: AppComponent = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null!);
 
   return (
@@ -74,14 +75,14 @@ const Experiences = () => {
   );
 };
 
-Experiences.appTitle = 'Experiences';
-
-Experiences.preferredRatio = 1.3;
-Experiences.preferredRatioMobile = 0.7;
-Experiences.maxApplicationHeight = 900;
-Experiences.minMobileRatio = 0.55;
-
-Experiences.minWidth = 350;
-Experiences.minHeight = 450;
+Experiences.config = {
+  appTitle: 'Experiences',
+  preferredRatio: 1.3,
+  preferredRatioMobile: 0.7,
+  maxApplicationHeight: 900,
+  minMobileRatio: 0.55,
+  minWidth: 350,
+  minHeight: 450,
+};
 
 export default Experiences;

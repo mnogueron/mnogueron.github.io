@@ -11,10 +11,10 @@ import {ApplicationId} from '@/applications/types';
 import {ResizeDirection} from '@/os/AppWindow/types';
 import useMeasure from 'react-use-measure';
 import Applications from '@/applications';
-import {MIN_PADDING} from '@/constants';
 import {
-  getApplicationPreferredSize,
+  getAppPositions,
   getBoundPositions,
+  MIN_PADDING,
 } from '@/contexts/windowUtils';
 import {Application, ApplicationRegistry, WindowState} from './types';
 
@@ -72,7 +72,9 @@ type WindowAppProviderProps = {
 };
 
 // TODO when opening an app, keep track of where it was last opened and its last size
-
+// TODO improve this whole provider to improve readability and maintainability
+// TODO handle storing window positions in localStorage to reuse for next launch
+// TODO keep track of opened app in localStorage to reopen after refresh
 const WindowAppProvider = ({children}: WindowAppProviderProps) => {
   const hydrating = useRef(true);
   const [containerRef, {width: containerWidth, height: containerHeight}] =
@@ -118,48 +120,9 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
         return;
       }
 
-      const application = Applications[appId];
-      if (!application) {
+      const Application = Applications[appId];
+      if (!Application) {
         return;
-      }
-
-      let positions = {
-        top: MIN_PADDING,
-        left: MIN_PADDING,
-        width: 0,
-        height: 0,
-      };
-      if (application.getStaticBox) {
-        positions = application.getStaticBox({
-          width: containerWidth,
-          height: containerHeight,
-        });
-      } else {
-        const {width, height} = getApplicationPreferredSize(
-          {
-            width: containerWidth,
-            height: containerHeight,
-          },
-          application.preferredRatio,
-          application.preferredRatioMobile,
-          application.maxApplicationHeight,
-          application.minMobileRatio
-        );
-
-        // TODO improve logic to show multiple windows on different top values
-        if (containerWidth < 800 && width >= containerWidth - 2 * MIN_PADDING) {
-          positions.top = Math.max((containerHeight - height) / 2, 0);
-        }
-
-        // TODO improve how the app lays out the applications
-        //top: MIN_PADDING + 32 * Object.values(apps).length,
-        //left: MIN_PADDING + 32 * Object.values(apps).length,
-
-        positions = {
-          ...positions,
-          width,
-          height,
-        };
       }
 
       // TODO handle multiple app
@@ -169,7 +132,10 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
           id: appId,
           appId,
           priority: Object.values(apps).length + 1,
-          positions,
+          positions: getAppPositions(Application.config, {
+            width: containerWidth,
+            height: containerHeight,
+          }),
           state,
           isReduced: false,
         },
@@ -195,8 +161,10 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
 
         const {top, left} = getBoundPositions(
           {...positions, top: positions.top + y, left: positions.left + x},
-          containerWidth,
-          containerHeight
+          {
+            width: containerWidth,
+            height: containerHeight,
+          }
         );
 
         return {
@@ -259,8 +227,8 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
         }
 
         const Application = Applications[app.appId];
-        const minWidth = Application.minWidth || MIN_WINDOW_WIDTH;
-        const minHeight = Application.minHeight || MIN_WINDOW_HEIGHT;
+        const minWidth = Application.config.minWidth || MIN_WINDOW_WIDTH;
+        const minHeight = Application.config.minHeight || MIN_WINDOW_HEIGHT;
 
         let width = Math.max(positions.width, minWidth);
         let height = Math.max(positions.height, minHeight);

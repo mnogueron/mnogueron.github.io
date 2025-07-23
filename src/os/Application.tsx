@@ -93,9 +93,9 @@ const Application = ({id}: ApplicationProps) => {
       onMove={handleMove}
       onFocus={handleFocus}
       onFullScreenToggle={handleFullScreenToggle}
-      title={AppComponent.appTitle}
-      disableResize={AppComponent.disableResize}
-      disableMove={AppComponent.disableMove}
+      title={AppComponent.config.appTitle}
+      disableResize={AppComponent.config.disableResize}
+      disableMove={AppComponent.config.disableMove}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >

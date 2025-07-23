@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link, Text, VStack} from '@chakra-ui/react';
 import BUILD_DATA from '@/constants/buildData.json';
-import {MIN_PADDING} from '@/constants';
+import {AppComponent} from '@/applications/types';
 
-const About = () => {
+const About: AppComponent = () => {
   return (
     <VStack
       gap={2}
@@ -33,29 +33,31 @@ Last update: ${new Date(BUILD_DATA.lastUpdatedAt).toDateString()}`}
   );
 };
 
-About.appTitle = 'About this app';
-About.disableResize = true;
+About.config = {
+  appTitle: 'About this app',
+  disableResize: true,
 
-// TODO handle strict window size
-About.preferredRatio = 0.8;
-About.preferredRatioMobile = 0.7;
-About.maxApplicationHeight = 900;
-About.minMobileRatio = 0.55;
+  // TODO handle strict window size
+  preferredRatio: 0.8,
+  preferredRatioMobile: 0.7,
+  maxApplicationHeight: 900,
+  minMobileRatio: 0.55,
 
-// TODO handle resizing
-About.getStaticBox = (container: {width: number; height: number}) => {
-  let width = 500;
-  let height = 400;
-  if (container.width < 800) {
-    height = Math.min(450, container.height - 2 * MIN_PADDING);
-    width = container.width - 2 * MIN_PADDING;
-  }
-  return {
-    top: (container.height - height) / 2,
-    left: (container.width - width) / 2,
-    width,
-    height,
-  };
+  // TODO handle resizing
+  getStaticBox: (container: {width: number; height: number}) => {
+    let width = 500;
+    let height = 400;
+    if (container.width < 800) {
+      height = Math.min(450, container.height - 2 * 12);
+      width = container.width - 2 * 12;
+    }
+    return {
+      top: (container.height - height) / 2,
+      left: (container.width - width) / 2,
+      width,
+      height,
+    };
+  },
 };
 
 export default About;
