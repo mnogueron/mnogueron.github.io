@@ -10,16 +10,8 @@ import React, {
 import {ApplicationId} from '@/applications/types';
 import {ResizeDirection} from '@/os/AppWindow/types';
 import useMeasure from 'react-use-measure';
-import Applications from '@/applications';
-import {
-  getAppPositions,
-  getBoundPositions,
-  MIN_PADDING,
-} from '@/contexts/windowUtils';
-import {Application, ApplicationRegistry, WindowState} from './types';
-
-const MIN_WINDOW_HEIGHT = 70;
-const MIN_WINDOW_WIDTH = 200;
+import {ApplicationRegistry, WindowState} from './types';
+import {useApplicationsStore} from '@/store';
 
 type WindowApp = {
   applications: ApplicationRegistry;
@@ -75,194 +67,77 @@ type WindowAppProviderProps = {
 // TODO improve this whole provider to improve readability and maintainability
 // TODO handle storing window positions in localStorage to reuse for next launch
 // TODO keep track of opened app in localStorage to reopen after refresh
+// TODO improve how to handle full screen to not rely on width 100%
+// TODO consider thinking about how data flows from this component to the window component
 const WindowAppProvider = ({children}: WindowAppProviderProps) => {
   const hydrating = useRef(true);
   const [containerRef, {width: containerWidth, height: containerHeight}] =
     useMeasure();
-  const [applications, setApplications] = useState(
-    defaultWindowAppValue.applications
+  const applications = useApplicationsStore(state => state.applications);
+  const openApplicationZST = useApplicationsStore(
+    state => state.openApplication
   );
+  const closeApplication = useApplicationsStore(
+    state => state.closeApplication
+  );
+  const focusApplication = useApplicationsStore(
+    state => state.focusApplication
+  );
+  const moveApplicationZST = useApplicationsStore(
+    state => state.moveApplication
+  );
+  const resizeApplicationZST = useApplicationsStore(
+    state => state.resizeApplication
+  );
+  const fullScreenApplicationZST = useApplicationsStore(
+    state => state.fullScreenApplication
+  );
+  const reduceApplicationZST = useApplicationsStore(
+    state => state.reduceApplication
+  );
+  const toggleFullScreenApplication = useApplicationsStore(
+    state => state.toggleFullScreenApplication
+  );
+  const startDragApplication = useApplicationsStore(
+    state => state.startDragApplication
+  );
+  const endDragApplication = useApplicationsStore(
+    state => state.endDragApplication
+  );
+  const resizeContainer = useApplicationsStore(state => state.resizeContainer);
   const [fullScreenPrompt, setFullScreenPrompt] = useState(
     defaultWindowAppValue.fullScreenPrompt
   );
 
-  const focusApplication = useCallback((id: string) => {
-    setApplications(apps => {
-      const appPriority = apps[id].priority;
-      return Object.entries(apps).reduce<ApplicationRegistry>(
-        (acc, [key, app]) => {
-          let priority = app.priority;
-          if (app.id === id) {
-            priority = Object.values(apps).length + 1;
-          } else if (priority > appPriority) {
-            priority--;
-          }
-          acc[key] = {
-            ...app,
-            priority,
-            isReduced: app.id === id ? false : app.isReduced,
-          };
-          return acc;
-        },
-        {}
-      );
-    });
-  }, []);
-
   const openApplication = useCallback(
     (appId: ApplicationId, state = WindowState.DEFAULT) => {
-      console.log('Opening', appId);
-      const app = applications[appId];
-
-      // If app is already open, focus it
-      if (app) {
-        focusApplication(appId);
-        return;
-      }
-
-      const Application = Applications[appId];
-      if (!Application) {
-        return;
-      }
-
-      // TODO handle multiple app
-      setApplications(apps => ({
-        ...apps,
-        [appId]: {
-          id: appId,
-          appId,
-          priority: Object.values(apps).length + 1,
-          positions: getAppPositions(Application.config, {
-            width: containerWidth,
-            height: containerHeight,
-          }),
-          state,
-          isReduced: false,
-        },
-      }));
+      openApplicationZST(
+        appId,
+        {width: containerWidth, height: containerHeight},
+        state
+      );
     },
-    [applications, containerHeight, containerWidth, focusApplication]
+    [containerHeight, containerWidth, openApplicationZST]
   );
-
-  const closeApplication = useCallback((id: string) => {
-    setApplications(apps => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const {[id]: toDelete, ...rest} = apps;
-      return rest;
-    });
-  }, []);
 
   const moveApplication = useCallback(
     (id: string, delta: {x: number; y: number}) => {
-      setApplications(apps => {
-        const app = apps[id];
-        const {x, y} = delta;
-        const {positions} = app;
-
-        const {top, left} = getBoundPositions(
-          {...positions, top: positions.top + y, left: positions.left + x},
-          {
-            width: containerWidth,
-            height: containerHeight,
-          }
-        );
-
-        return {
-          ...apps,
-          [id]: {
-            ...app,
-            positions: {
-              ...positions,
-              top,
-              left,
-            },
-          },
-        };
+      moveApplicationZST(id, delta, {
+        width: containerWidth,
+        height: containerHeight,
       });
     },
-    [containerHeight, containerWidth]
+    [containerHeight, containerWidth, moveApplicationZST]
   );
 
   const resizeApplication = useCallback(
     (id: string, delta: {x: number; y: number; dir: ResizeDirection}) => {
-      setApplications(apps => {
-        const app = apps[id];
-        const {x, y, dir} = delta;
-        const positions = {...app.positions};
-        switch (dir) {
-          case ResizeDirection.N:
-            positions.top += y;
-            positions.height -= y;
-            break;
-          case ResizeDirection.S:
-            positions.height += y;
-            break;
-          case ResizeDirection.E:
-            positions.width += x;
-            break;
-          case ResizeDirection.W:
-            positions.left += x;
-            positions.width -= x;
-            break;
-          case ResizeDirection.NE:
-            positions.top += y;
-            positions.width += x;
-            positions.height -= y;
-            break;
-          case ResizeDirection.NW:
-            positions.top += y;
-            positions.left += x;
-            positions.width -= x;
-            positions.height -= y;
-            break;
-          case ResizeDirection.SE:
-            positions.height += y;
-            positions.width += x;
-            break;
-          case ResizeDirection.SW:
-            positions.height += y;
-            positions.left += x;
-            positions.width -= x;
-            break;
-        }
-
-        const Application = Applications[app.appId];
-        const minWidth = Application.config.minWidth || MIN_WINDOW_WIDTH;
-        const minHeight = Application.config.minHeight || MIN_WINDOW_HEIGHT;
-
-        let width = Math.max(positions.width, minWidth);
-        let height = Math.max(positions.height, minHeight);
-
-        // Constrain resizable window to the document border
-        if (width + positions.left > containerWidth) {
-          width = containerWidth - positions.left;
-        }
-
-        if (height + positions.top > containerHeight) {
-          height = containerHeight - positions.top;
-        }
-
-        return {
-          ...apps,
-          [id]: {
-            ...app,
-            positions: {
-              top:
-                height === MIN_WINDOW_HEIGHT
-                  ? app.positions.top
-                  : positions.top,
-              left:
-                width === MIN_WINDOW_WIDTH
-                  ? app.positions.left
-                  : positions.left,
-              width,
-              height,
-            },
-          },
-        };
+      resizeApplicationZST(id, delta, {
+        width: containerWidth,
+        height: containerHeight,
       });
     },
-    [containerHeight, containerWidth]
+    [containerHeight, containerWidth, resizeApplicationZST]
   );
 
   const updateFullScreenPromptState = useCallback((open: boolean) => {
@@ -272,84 +147,18 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
   const fullScreenApplication = useCallback(
     (id: string) => {
       updateFullScreenPromptState(false);
-      setApplications(apps => {
-        const app = apps[id];
-        return {
-          ...apps,
-          [id]: {
-            ...app,
-            state: WindowState.FULL_SCREEN,
-          },
-        };
-      });
+      fullScreenApplicationZST(id);
     },
-    [updateFullScreenPromptState]
+    [fullScreenApplicationZST, updateFullScreenPromptState]
   );
 
   const reduceApplication = useCallback(
     (id: string) => {
       updateFullScreenPromptState(false);
-      setApplications(apps => {
-        const app = apps[id];
-        return {
-          ...apps,
-          [id]: {
-            ...app,
-            isReduced: true,
-          },
-        };
-      });
+      reduceApplicationZST(id);
     },
-    [updateFullScreenPromptState]
+    [reduceApplicationZST, updateFullScreenPromptState]
   );
-
-  const toggleFullScreenApplication = useCallback((id: string) => {
-    setApplications(apps => {
-      const app = apps[id];
-      return {
-        ...apps,
-        [id]: {
-          ...app,
-          ...(app.state === WindowState.FULL_SCREEN
-            ? {
-                positions: app.trackedPositions || app.positions,
-                trackedPositions: undefined,
-              }
-            : {}),
-          state:
-            app.state === WindowState.FULL_SCREEN
-              ? WindowState.DEFAULT
-              : WindowState.FULL_SCREEN,
-        },
-      };
-    });
-  }, []);
-
-  const startDragApplication = useCallback((id: string) => {
-    setApplications(apps => {
-      const app = apps[id];
-      return {
-        ...apps,
-        [id]: {
-          ...app,
-          trackedPositions: app.positions,
-        },
-      };
-    });
-  }, []);
-
-  const endDragApplication = useCallback((id: string) => {
-    setApplications(apps => {
-      const app = apps[id];
-      return {
-        ...apps,
-        [id]: {
-          ...app,
-          trackedPositions: undefined,
-        },
-      };
-    });
-  }, []);
 
   // TODO improve logic for rehydrating applications and avoid opening app on container dimensions update
   //  This forces the deps to ignore openApplication
@@ -359,35 +168,7 @@ const WindowAppProvider = ({children}: WindowAppProviderProps) => {
       openApplication(ApplicationId.LANDING_TEXT_ANIMATOR);
       hydrating.current = false;
     }
-    setApplications(apps =>
-      Object.entries(apps).reduce<{[key: string]: Application}>(
-        (acc, [key, app]) => {
-          const positions = {...app.positions};
-
-          if (app.state === WindowState.FULL_SCREEN) {
-            positions.height = containerHeight;
-            positions.width = containerWidth;
-          } else {
-            if (positions.height > containerHeight - 2 * MIN_PADDING) {
-              positions.top = MIN_PADDING;
-              positions.height = containerHeight - 2 * MIN_PADDING;
-            }
-
-            if (positions.width > containerWidth - 2 * MIN_PADDING) {
-              positions.left = MIN_PADDING;
-              positions.width = containerWidth - 2 * MIN_PADDING;
-            }
-          }
-
-          acc[key] = {
-            ...app,
-            positions,
-          };
-          return acc;
-        },
-        {}
-      )
-    );
+    resizeContainer({width: containerWidth, height: containerHeight});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [containerHeight, containerWidth]);
 
