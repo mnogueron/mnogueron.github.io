@@ -3,9 +3,9 @@ import {Flex, FlexProps} from '@chakra-ui/react';
 import {JetBrainsMono} from '@/theme/fonts';
 import {EMPTY_DRAG_IMAGE} from '@/os/AppWindow/dragUtils';
 import AppControls from '@/os/AppWindow/AppHeader/AppControls';
-import {WindowState} from '@/contexts/types';
+import {WindowState} from '@/os/store/types';
 import AppTitle from '@/os/AppWindow/AppHeader/AppTitle';
-import {useApplicationsStore} from '@/store';
+import {useApplicationsStore} from '@/os/store';
 
 const FULL_SCREEN_PROMPT_TIMEOUT = 750;
 

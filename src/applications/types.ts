@@ -1,4 +1,4 @@
-import {Positions} from '@/contexts/types';
+import {Positions} from '@/os/store/types';
 import React from 'react';
 
 export enum ApplicationId {

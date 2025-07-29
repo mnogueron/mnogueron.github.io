@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import AppWindow from './AppWindow';
 import {ResizeDirection} from '@/os/AppWindow/types';
 import Applications from '@/applications';
-import {useApplicationsStore} from '@/store';
+import {useApplicationsStore} from '@/os/store';
 
 type ApplicationProps = {
   id: string;

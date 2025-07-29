@@ -9,7 +9,7 @@ import {
   PopoverRoot,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import {useApplicationsStore} from '@/store';
+import {useApplicationsStore} from '@/os/store';
 
 type MenuItem = {
   id: string;

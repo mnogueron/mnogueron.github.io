@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import {immer} from 'zustand/middleware/immer';
-import {Application, ApplicationRegistry, WindowState} from '@/contexts/types';
+import {Application, ApplicationRegistry, WindowState} from '@/os/store/types';
 import {ApplicationId} from '@/applications/types';
 import {ResizeDirection} from '@/os/AppWindow/types';
 import Applications from '@/applications';
@@ -8,7 +8,7 @@ import {
   getAppPositions,
   getBoundPositions,
   MIN_PADDING,
-} from '@/contexts/windowUtils';
+} from '@/os/store/windowUtils';
 
 const MIN_WINDOW_HEIGHT = 70;
 const MIN_WINDOW_WIDTH = 200;

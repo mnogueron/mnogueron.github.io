@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, Flex} from '@chakra-ui/react';
 import Shuttle from '@/os/AppBackground/Shuttle';
-import {useApplicationsStore} from '@/store';
+import {useApplicationsStore} from '@/os/store';
 
 const AppBackground = () => {
   const openApplication = useApplicationsStore(state => state.openApplication);

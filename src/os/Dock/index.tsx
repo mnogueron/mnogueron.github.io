@@ -3,7 +3,7 @@ import {Flex, Separator} from '@chakra-ui/react';
 import AppLauncher from '@/os/Dock/AppLauncher';
 import AppShortcut from '@/os/Dock/AppShortcut';
 import {DockContainer} from '@/os/Dock/components/DockContainer';
-import {useApplicationsStore} from '@/store';
+import {useApplicationsStore} from '@/os/store';
 
 const Dock = () => {
   const applications = useApplicationsStore(state => state.applications);

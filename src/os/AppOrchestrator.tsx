@@ -6,7 +6,7 @@ import Application from '@/os/Application';
 import FullScreenPrompt from '@/os/components/FullScreenPrompt';
 import Dock from './Dock';
 import AppBackground from '@/os/AppBackground';
-import {useApplicationsStore} from '@/store';
+import {useApplicationsStore} from '@/os/store';
 import useMeasure from 'react-use-measure';
 import {ApplicationId} from '@/applications/types';
 
