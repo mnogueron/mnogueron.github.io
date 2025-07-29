@@ -13,30 +13,24 @@ import {
 const MIN_WINDOW_HEIGHT = 70;
 const MIN_WINDOW_WIDTH = 200;
 
+// TODO handle storing window positions in localStorage to reuse for next launch
+// TODO keep track of opened app in localStorage to reopen after refresh
+// TODO improve how to handle full screen to not rely on width 100%
 type State = {
   applications: Record<string, Application>;
-};
-
-type Getters = {
-  getApplicationIds: () => string[];
+  container: {width: number; height: number};
+  fullScreenPrompt: boolean;
 };
 
 type Actions = {
-  openApplication: (
-    appId: ApplicationId,
-    container: {width: number; height: number},
-    state?: WindowState
-  ) => void;
+  setFullScreenPrompt: (value: boolean) => void;
+  setContainerDimensions: (container: {width: number; height: number}) => void;
+  openApplication: (appId: ApplicationId, state?: WindowState) => void;
   closeApplication: (id: string) => void;
-  moveApplication: (
-    id: string,
-    delta: {x: number; y: number},
-    container: {width: number; height: number}
-  ) => void;
+  moveApplication: (id: string, delta: {x: number; y: number}) => void;
   resizeApplication: (
     id: string,
-    delta: {x: number; y: number; dir: ResizeDirection},
-    container: {width: number; height: number}
+    delta: {x: number; y: number; dir: ResizeDirection}
   ) => void;
   focusApplication: (id: string) => void;
   // updateFullScreenPromptState: (open: boolean) => void;
@@ -45,13 +39,23 @@ type Actions = {
   toggleFullScreenApplication: (id: string) => void;
   startDragApplication: (id: string) => void;
   endDragApplication: (id: string) => void;
-  resizeContainer: (container: {width: number; height: number}) => void;
+  resizeContainer: () => void;
 };
 
-export const useApplicationsStore = create<State & Actions & Getters>()(
-  immer((set, getState) => ({
+export const useApplicationsStore = create<State & Actions>()(
+  immer(set => ({
     applications: {},
-    getApplicationIds: () => Object.keys(getState().applications),
+    fullScreenPrompt: false,
+    setFullScreenPrompt: (value: boolean) =>
+      set(state => (state.fullScreenPrompt = value)),
+    container: {width: 0, height: 0},
+    setContainerDimensions: (container: {width: number; height: number}) =>
+      set(state => {
+        state.container = container;
+        state.resizeContainer();
+      }),
+    /*getApplicationIds: () => Object.keys(getState().applications),
+    getApplication: (id: string) => getState().applications[id] || undefined,*/
     focusApplication: (id: string) => {
       set(state => {
         const appPriority = state.applications[id].priority;
@@ -75,7 +79,6 @@ export const useApplicationsStore = create<State & Actions & Getters>()(
     },
     openApplication: (
       appId: ApplicationId,
-      container: {width: number; height: number},
       windowState = WindowState.DEFAULT
     ) => {
       set(state => {
@@ -97,7 +100,7 @@ export const useApplicationsStore = create<State & Actions & Getters>()(
           id: appId,
           appId,
           priority: Object.values(state.applications).length + 1,
-          positions: getAppPositions(Application.config, container),
+          positions: getAppPositions(Application.config, state.container),
           state: windowState,
           isReduced: false,
         };
@@ -109,18 +112,14 @@ export const useApplicationsStore = create<State & Actions & Getters>()(
         const {[id]: toDelete, ...rest} = state.applications;
         state.applications = rest;
       }),
-    moveApplication: (
-      id: string,
-      delta: {x: number; y: number},
-      container: {width: number; height: number}
-    ) => {
+    moveApplication: (id: string, delta: {x: number; y: number}) => {
       set(state => {
         const {x, y} = delta;
         const {positions} = state.applications[id];
 
         const {top, left} = getBoundPositions(
           {...positions, top: positions.top + y, left: positions.left + x},
-          container
+          state.container
         );
 
         state.applications[id].positions = {
@@ -132,8 +131,7 @@ export const useApplicationsStore = create<State & Actions & Getters>()(
     },
     resizeApplication: (
       id: string,
-      delta: {x: number; y: number; dir: ResizeDirection},
-      container: {width: number; height: number}
+      delta: {x: number; y: number; dir: ResizeDirection}
     ) => {
       set(state => {
         const app = state.applications[id];
@@ -184,12 +182,12 @@ export const useApplicationsStore = create<State & Actions & Getters>()(
         let height = Math.max(positions.height, minHeight);
 
         // Constrain resizable window to the document border
-        if (width + positions.left > container.width) {
-          width = container.width - positions.left;
+        if (width + positions.left > state.container.width) {
+          width = state.container.width - positions.left;
         }
 
-        if (height + positions.top > container.height) {
-          height = container.height - positions.top;
+        if (height + positions.top > state.container.height) {
+          height = state.container.height - positions.top;
         }
 
         state.applications[id].positions = {
@@ -203,11 +201,13 @@ export const useApplicationsStore = create<State & Actions & Getters>()(
     },
     fullScreenApplication: (id: string) => {
       set(state => {
+        state.fullScreenPrompt = false;
         state.applications[id].state = WindowState.FULL_SCREEN;
       });
     },
     reduceApplication: (id: string) => {
       set(state => {
+        state.fullScreenPrompt = false;
         state.applications[id].isReduced = true;
       });
     },
@@ -241,8 +241,9 @@ export const useApplicationsStore = create<State & Actions & Getters>()(
         state.applications[id].trackedPositions = undefined;
       });
     },
-    resizeContainer: (container: {width: number; height: number}) => {
+    resizeContainer: () => {
       set(state => {
+        const {container} = state;
         state.applications = Object.entries(state.applications).reduce<{
           [key: string]: Application;
         }>((acc, [key, app]) => {

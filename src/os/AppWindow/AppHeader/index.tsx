@@ -1,11 +1,11 @@
 import React, {useRef} from 'react';
 import {Flex, FlexProps} from '@chakra-ui/react';
-import {useWindowAppContext} from '@/contexts/WindowAppProvider';
 import {JetBrainsMono} from '@/theme/fonts';
 import {EMPTY_DRAG_IMAGE} from '@/os/AppWindow/dragUtils';
 import AppControls from '@/os/AppWindow/AppHeader/AppControls';
 import {WindowState} from '@/contexts/types';
 import AppTitle from '@/os/AppWindow/AppHeader/AppTitle';
+import {useApplicationsStore} from '@/store';
 
 const FULL_SCREEN_PROMPT_TIMEOUT = 750;
 
@@ -33,7 +33,12 @@ const AppHeader = ({
   disableMove,
   ...props
 }: AppHeaderProps) => {
-  const {fullScreenPrompt, updateFullScreenPromptState} = useWindowAppContext();
+  const fullScreenPrompt = useApplicationsStore(
+    state => state.fullScreenPrompt
+  );
+  const setFullScreenPrompt = useApplicationsStore(
+    state => state.setFullScreenPrompt
+  );
   const topTimeout = useRef<number>(null);
   const dragStart = useRef<{x: number; y: number}>({x: 0, y: 0});
 
@@ -67,7 +72,7 @@ const AppHeader = ({
     if (e.clientY < 10) {
       if (!topTimeout.current) {
         topTimeout.current = window.setTimeout(() => {
-          updateFullScreenPromptState(true);
+          setFullScreenPrompt(true);
         }, FULL_SCREEN_PROMPT_TIMEOUT);
       }
     } else {
@@ -76,7 +81,7 @@ const AppHeader = ({
         topTimeout.current = null;
       }
       if (fullScreenPrompt) {
-        updateFullScreenPromptState(false);
+        setFullScreenPrompt(false);
       }
     }
     onMove(delta);
@@ -94,7 +99,7 @@ const AppHeader = ({
       topTimeout.current = null;
     }
     if (fullScreenPrompt) {
-      updateFullScreenPromptState(false);
+      setFullScreenPrompt(false);
       onFullScreen();
     } else if (onDragEnd) {
       onDragEnd(e);

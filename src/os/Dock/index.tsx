@@ -2,11 +2,14 @@ import React, {useMemo} from 'react';
 import {Flex, Separator} from '@chakra-ui/react';
 import AppLauncher from '@/os/Dock/AppLauncher';
 import AppShortcut from '@/os/Dock/AppShortcut';
-import {useWindowAppContext} from '@/contexts/WindowAppProvider';
 import {DockContainer} from '@/os/Dock/components/DockContainer';
+import {useApplicationsStore} from '@/store';
 
 const Dock = () => {
-  const {applications, focusApplication} = useWindowAppContext();
+  const applications = useApplicationsStore(state => state.applications);
+  const focusApplication = useApplicationsStore(
+    state => state.focusApplication
+  );
   const ids = useMemo(() => {
     return Object.values(applications).map(a => a.id);
   }, [applications]);

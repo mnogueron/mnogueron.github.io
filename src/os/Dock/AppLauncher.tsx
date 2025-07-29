@@ -9,7 +9,7 @@ import {
   PopoverRoot,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import {useWindowAppContext} from '@/contexts/WindowAppProvider';
+import {useApplicationsStore} from '@/store';
 
 type MenuItem = {
   id: string;
@@ -86,7 +86,7 @@ const AppMenuItem = ({item, onClick, ...rest}: AppMenuItemProps) => {
 };
 
 const AppLauncher = () => {
-  const {openApplication} = useWindowAppContext();
+  const openApplication = useApplicationsStore(state => state.openApplication);
   const [open, setOpen] = useState(false);
 
   const handleMenuClick = (item: MenuItem) => {

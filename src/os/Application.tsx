@@ -1,38 +1,52 @@
 import React, {useMemo} from 'react';
 import AppWindow from './AppWindow';
-import {useWindowAppContext} from '@/contexts/WindowAppProvider';
 import {ResizeDirection} from '@/os/AppWindow/types';
 import Applications from '@/applications';
+import {useApplicationsStore} from '@/store';
 
 type ApplicationProps = {
   id: string;
 };
 
 const Application = ({id}: ApplicationProps) => {
-  const {
-    applications,
-    closeApplication,
-    moveApplication,
-    resizeApplication,
-    focusApplication,
-    fullScreenApplication,
-    reduceApplication,
-    toggleFullScreenApplication,
-    startDragApplication,
-    endDragApplication,
-  } = useWindowAppContext();
+  const app = useApplicationsStore(state => state.applications[id]);
+  const closeApplication = useApplicationsStore(
+    state => state.closeApplication
+  );
+  const focusApplication = useApplicationsStore(
+    state => state.focusApplication
+  );
+  const toggleFullScreenApplication = useApplicationsStore(
+    state => state.toggleFullScreenApplication
+  );
+  const startDragApplication = useApplicationsStore(
+    state => state.startDragApplication
+  );
+  const endDragApplication = useApplicationsStore(
+    state => state.endDragApplication
+  );
+  const moveApplication = useApplicationsStore(state => state.moveApplication);
+  const resizeApplication = useApplicationsStore(
+    state => state.resizeApplication
+  );
+  const fullScreenApplication = useApplicationsStore(
+    state => state.fullScreenApplication
+  );
+  const reduceApplication = useApplicationsStore(
+    state => state.reduceApplication
+  );
 
   const data = useMemo(() => {
-    const application = applications[id];
-    if (!application) {
+    //const application = applications[id];
+    if (!app) {
       return;
     }
 
     return {
-      application,
-      AppComponent: Applications[application.appId],
+      application: app,
+      AppComponent: Applications[app.appId],
     };
-  }, [applications, id]);
+  }, [app]);
 
   const handleMove = (delta: {x: number; y: number}) => {
     moveApplication(id, delta);
