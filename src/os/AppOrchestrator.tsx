@@ -12,14 +12,11 @@ import {ApplicationId} from '@/applications/types';
 
 const AppOrchestrator = () => {
   const hydrating = useRef(true);
-  const applications = useApplicationsStore(state => state.applications);
-  const fullScreenPrompt = useApplicationsStore(
-    state => state.fullScreenPrompt
-  );
-  const openApplication = useApplicationsStore(state => state.openApplication);
-  const setContainerDimensions = useApplicationsStore(
-    state => state.setContainerDimensions
-  );
+  const applications = useApplicationsStore.use.applications();
+  const fullScreenPrompt = useApplicationsStore.use.fullScreenPrompt();
+  const openApplication = useApplicationsStore.use.openApplication();
+  const setContainerDimensions =
+    useApplicationsStore.use.setContainerDimensions();
   const [containerRef, {width: containerWidth, height: containerHeight}] =
     useMeasure();
 

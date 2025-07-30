@@ -6,10 +6,8 @@ import {DockContainer} from '@/os/Dock/components/DockContainer';
 import {useApplicationsStore} from '@/os/store';
 
 const Dock = () => {
-  const applications = useApplicationsStore(state => state.applications);
-  const focusApplication = useApplicationsStore(
-    state => state.focusApplication
-  );
+  const applications = useApplicationsStore.use.applications();
+  const focusApplication = useApplicationsStore.use.focusApplication();
   const ids = useMemo(() => {
     return Object.values(applications).map(a => a.id);
   }, [applications]);

@@ -86,7 +86,7 @@ const AppMenuItem = ({item, onClick, ...rest}: AppMenuItemProps) => {
 };
 
 const AppLauncher = () => {
-  const openApplication = useApplicationsStore(state => state.openApplication);
+  const openApplication = useApplicationsStore.use.openApplication();
   const [open, setOpen] = useState(false);
 
   const handleMenuClick = (item: MenuItem) => {

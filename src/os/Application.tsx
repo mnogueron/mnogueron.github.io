@@ -8,36 +8,21 @@ type ApplicationProps = {
   id: string;
 };
 
-const Application = ({id}: ApplicationProps) => {
+const Application = React.memo(({id}: ApplicationProps) => {
   const app = useApplicationsStore(state => state.applications[id]);
-  const closeApplication = useApplicationsStore(
-    state => state.closeApplication
-  );
-  const focusApplication = useApplicationsStore(
-    state => state.focusApplication
-  );
-  const toggleFullScreenApplication = useApplicationsStore(
-    state => state.toggleFullScreenApplication
-  );
-  const startDragApplication = useApplicationsStore(
-    state => state.startDragApplication
-  );
-  const endDragApplication = useApplicationsStore(
-    state => state.endDragApplication
-  );
-  const moveApplication = useApplicationsStore(state => state.moveApplication);
-  const resizeApplication = useApplicationsStore(
-    state => state.resizeApplication
-  );
-  const fullScreenApplication = useApplicationsStore(
-    state => state.fullScreenApplication
-  );
-  const reduceApplication = useApplicationsStore(
-    state => state.reduceApplication
-  );
+  const closeApplication = useApplicationsStore.use.closeApplication();
+  const focusApplication = useApplicationsStore.use.focusApplication();
+  const toggleFullScreenApplication =
+    useApplicationsStore.use.toggleFullScreenApplication();
+  const startDragApplication = useApplicationsStore.use.startDragApplication();
+  const endDragApplication = useApplicationsStore.use.endDragApplication();
+  const moveApplication = useApplicationsStore.use.moveApplication();
+  const resizeApplication = useApplicationsStore.use.resizeApplication();
+  const fullScreenApplication =
+    useApplicationsStore.use.fullScreenApplication();
+  const reduceApplication = useApplicationsStore.use.reduceApplication();
 
   const data = useMemo(() => {
-    //const application = applications[id];
     if (!app) {
       return;
     }
@@ -118,6 +103,8 @@ const Application = ({id}: ApplicationProps) => {
       <AppComponent />
     </AppWindow>
   );
-};
+});
+
+Application.displayName = 'Application';
 
 export default Application;

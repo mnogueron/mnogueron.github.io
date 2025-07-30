@@ -4,7 +4,7 @@ import Shuttle from '@/os/AppBackground/Shuttle';
 import {useApplicationsStore} from '@/os/store';
 
 const AppBackground = () => {
-  const openApplication = useApplicationsStore(state => state.openApplication);
+  const openApplication = useApplicationsStore.use.openApplication();
   return (
     <Box height="100%">
       <Flex alignItems="center" justifyContent="center" height="100%">

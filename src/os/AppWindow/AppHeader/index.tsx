@@ -34,12 +34,8 @@ const AppHeader = React.memo(
     disableMove,
     ...props
   }: AppHeaderProps) => {
-    const fullScreenPrompt = useApplicationsStore(
-      state => state.fullScreenPrompt
-    );
-    const setFullScreenPrompt = useApplicationsStore(
-      state => state.setFullScreenPrompt
-    );
+    const fullScreenPrompt = useApplicationsStore.use.fullScreenPrompt();
+    const setFullScreenPrompt = useApplicationsStore.use.setFullScreenPrompt();
     const topTimeout = useRef<number>(null);
     const dragStart = useRef<{x: number; y: number}>({x: 0, y: 0});
 
@@ -69,6 +65,11 @@ const AppHeader = React.memo(
         x: e.clientX - dragStart.current.x,
         y: e.clientY - dragStart.current.y,
       };
+
+      if (delta.x === 0 && delta.y === 0) {
+        return;
+      }
+
       dragStart.current = {x: e.clientX, y: e.clientY};
       if (e.clientY < 10) {
         if (!topTimeout.current) {
