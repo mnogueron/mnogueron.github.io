@@ -20,123 +20,127 @@ type AppHeaderProps = {
   disableMove?: boolean;
 } & FlexProps;
 
-const AppHeader = ({
-  title,
-  state,
-  onClose,
-  onMove,
-  onDragStart,
-  onDragEnd,
-  onFullScreen,
-  onFullScreenToggle,
-  onReduce,
-  disableMove,
-  ...props
-}: AppHeaderProps) => {
-  const fullScreenPrompt = useApplicationsStore(
-    state => state.fullScreenPrompt
-  );
-  const setFullScreenPrompt = useApplicationsStore(
-    state => state.setFullScreenPrompt
-  );
-  const topTimeout = useRef<number>(null);
-  const dragStart = useRef<{x: number; y: number}>({x: 0, y: 0});
+const AppHeader = React.memo(
+  ({
+    title,
+    state,
+    onClose,
+    onMove,
+    onDragStart,
+    onDragEnd,
+    onFullScreen,
+    onFullScreenToggle,
+    onReduce,
+    disableMove,
+    ...props
+  }: AppHeaderProps) => {
+    const fullScreenPrompt = useApplicationsStore(
+      state => state.fullScreenPrompt
+    );
+    const setFullScreenPrompt = useApplicationsStore(
+      state => state.setFullScreenPrompt
+    );
+    const topTimeout = useRef<number>(null);
+    const dragStart = useRef<{x: number; y: number}>({x: 0, y: 0});
 
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    if (disableMove) {
-      return;
-    }
-
-    dragStart.current = {x: e.clientX, y: e.clientY};
-    e.dataTransfer.effectAllowed = 'move';
-
-    // Disable drag visual effect
-    if (EMPTY_DRAG_IMAGE.complete) {
-      e.dataTransfer.setDragImage(EMPTY_DRAG_IMAGE, 0, 0);
-    }
-
-    if (onDragStart) {
-      onDragStart(e);
-    }
-  };
-
-  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
-    if (e.clientX === 0 && e.clientY === 0) {
-      return;
-    }
-    const delta = {
-      x: e.clientX - dragStart.current.x,
-      y: e.clientY - dragStart.current.y,
-    };
-    dragStart.current = {x: e.clientX, y: e.clientY};
-    if (e.clientY < 10) {
-      if (!topTimeout.current) {
-        topTimeout.current = window.setTimeout(() => {
-          setFullScreenPrompt(true);
-        }, FULL_SCREEN_PROMPT_TIMEOUT);
+    const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+      if (disableMove) {
+        return;
       }
-    } else {
+
+      dragStart.current = {x: e.clientX, y: e.clientY};
+      e.dataTransfer.effectAllowed = 'move';
+
+      // Disable drag visual effect
+      if (EMPTY_DRAG_IMAGE.complete) {
+        e.dataTransfer.setDragImage(EMPTY_DRAG_IMAGE, 0, 0);
+      }
+
+      if (onDragStart) {
+        onDragStart(e);
+      }
+    };
+
+    const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
+      if (e.clientX === 0 && e.clientY === 0) {
+        return;
+      }
+      const delta = {
+        x: e.clientX - dragStart.current.x,
+        y: e.clientY - dragStart.current.y,
+      };
+      dragStart.current = {x: e.clientX, y: e.clientY};
+      if (e.clientY < 10) {
+        if (!topTimeout.current) {
+          topTimeout.current = window.setTimeout(() => {
+            setFullScreenPrompt(true);
+          }, FULL_SCREEN_PROMPT_TIMEOUT);
+        }
+      } else {
+        if (topTimeout.current) {
+          window.clearTimeout(topTimeout.current);
+          topTimeout.current = null;
+        }
+        if (fullScreenPrompt) {
+          setFullScreenPrompt(false);
+        }
+      }
+      onMove(delta);
+    };
+
+    const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
+      const delta = {
+        x: e.clientX - dragStart.current.x,
+        y: e.clientY - dragStart.current.y,
+      };
+      dragStart.current = {x: e.clientX, y: e.clientY};
+      onMove(delta);
       if (topTimeout.current) {
         window.clearTimeout(topTimeout.current);
         topTimeout.current = null;
       }
       if (fullScreenPrompt) {
         setFullScreenPrompt(false);
+        onFullScreen();
+      } else if (onDragEnd) {
+        onDragEnd(e);
       }
-    }
-    onMove(delta);
-  };
-
-  const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
-    const delta = {
-      x: e.clientX - dragStart.current.x,
-      y: e.clientY - dragStart.current.y,
     };
-    dragStart.current = {x: e.clientX, y: e.clientY};
-    onMove(delta);
-    if (topTimeout.current) {
-      window.clearTimeout(topTimeout.current);
-      topTimeout.current = null;
-    }
-    if (fullScreenPrompt) {
-      setFullScreenPrompt(false);
-      onFullScreen();
-    } else if (onDragEnd) {
-      onDragEnd(e);
-    }
-  };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    // Prevent drag animation feedback
-    e.preventDefault();
-  };
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+      // Prevent drag animation feedback
+      e.preventDefault();
+    };
 
-  return (
-    <Flex
-      px={2}
-      py={1}
-      bg="#2e333f"
-      justifyContent="space-between"
-      alignItems="center"
-      minHeight="26px"
-      onDragStart={handleDragStart}
-      onDragOver={handleDragOver}
-      onDrag={handleDrag}
-      onDragEnd={handleDragEnd}
-      {...props}
-      className={JetBrainsMono.className}
-      direction="row"
-      draggable={disableMove ? undefined : 'true'}
-    >
-      <AppTitle title={title} />
-      <AppControls
-        state={state}
-        onFullScreenToggle={onFullScreenToggle}
-        onReduce={onReduce}
-        onClose={onClose}
-      />
-    </Flex>
-  );
-};
+    return (
+      <Flex
+        px={2}
+        py={1}
+        bg="#2e333f"
+        justifyContent="space-between"
+        alignItems="center"
+        minHeight="26px"
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDrag={handleDrag}
+        onDragEnd={handleDragEnd}
+        {...props}
+        className={JetBrainsMono.className}
+        direction="row"
+        draggable={disableMove ? undefined : 'true'}
+      >
+        <AppTitle title={title} />
+        <AppControls
+          state={state}
+          onFullScreenToggle={onFullScreenToggle}
+          onReduce={onReduce}
+          onClose={onClose}
+        />
+      </Flex>
+    );
+  }
+);
+
+AppHeader.displayName = 'AppHeader';
 
 export default AppHeader;

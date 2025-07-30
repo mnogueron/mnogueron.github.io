@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import AppWindow from './AppWindow';
 import {ResizeDirection} from '@/os/AppWindow/types';
 import Applications from '@/applications';
@@ -48,45 +48,47 @@ const Application = ({id}: ApplicationProps) => {
     };
   }, [app]);
 
-  const handleMove = (delta: {x: number; y: number}) => {
-    moveApplication(id, delta);
-  };
+  const handleMove = useCallback(
+    (delta: {x: number; y: number}) => {
+      moveApplication(id, delta);
+    },
+    [id, moveApplication]
+  );
 
-  const handleResize = (delta: {
-    x: number;
-    y: number;
-    dir: ResizeDirection;
-  }) => {
-    resizeApplication(id, delta);
-  };
+  const handleResize = useCallback(
+    (delta: {x: number; y: number; dir: ResizeDirection}) => {
+      resizeApplication(id, delta);
+    },
+    [id, resizeApplication]
+  );
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     closeApplication(id);
-  };
+  }, [closeApplication, id]);
 
-  const handleFocus = () => {
+  const handleFocus = useCallback(() => {
     focusApplication(id);
-  };
+  }, [focusApplication, id]);
 
-  const handleFullScreen = () => {
+  const handleFullScreen = useCallback(() => {
     fullScreenApplication(id);
-  };
+  }, [fullScreenApplication, id]);
 
-  const handleFullScreenToggle = () => {
+  const handleFullScreenToggle = useCallback(() => {
     toggleFullScreenApplication(id);
-  };
+  }, [id, toggleFullScreenApplication]);
 
-  const handleReduce = () => {
+  const handleReduce = useCallback(() => {
     reduceApplication(id);
-  };
+  }, [id, reduceApplication]);
 
-  const handleDragStart = () => {
+  const handleDragStart = useCallback(() => {
     startDragApplication(id);
-  };
+  }, [id, startDragApplication]);
 
-  const handleDragEnd = () => {
+  const handleDragEnd = useCallback(() => {
     endDragApplication(id);
-  };
+  }, [endDragApplication, id]);
 
   if (!data?.AppComponent) {
     return null;
