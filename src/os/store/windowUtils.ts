@@ -1,4 +1,4 @@
-import {Positions} from '@/contexts/types';
+import {Positions} from '@/os/store/types';
 import {AppConfig} from '@/applications/types';
 
 export const MIN_PADDING = 12;

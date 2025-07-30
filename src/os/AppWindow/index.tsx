@@ -3,7 +3,7 @@ import {Box, BoxProps, Flex} from '@chakra-ui/react';
 import {ResizeHandler} from '@/os/AppWindow/types';
 import ResizeHandlers from '@/os/AppWindow/ResizeHandlers';
 import AppHeader from './AppHeader';
-import {Positions, WindowState} from '@/contexts/types';
+import {Positions, WindowState} from '@/os/store/types';
 import useMeasure from 'react-use-measure';
 
 type WindowProps = {

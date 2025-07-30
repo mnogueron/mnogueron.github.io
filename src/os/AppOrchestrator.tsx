@@ -1,15 +1,38 @@
 'use client';
 
-import React from 'react';
+import React, {useLayoutEffect, useRef} from 'react';
 import {Box, VStack} from '@chakra-ui/react';
-import {useWindowAppContext} from '@/contexts/WindowAppProvider';
 import Application from '@/os/Application';
 import FullScreenPrompt from '@/os/components/FullScreenPrompt';
 import Dock from './Dock';
 import AppBackground from '@/os/AppBackground';
+import {useApplicationsStore} from '@/os/store';
+import useMeasure from 'react-use-measure';
+import {ApplicationId} from '@/applications/types';
 
 const AppOrchestrator = () => {
-  const {applications, containerRef, fullScreenPrompt} = useWindowAppContext();
+  const hydrating = useRef(true);
+  const applications = useApplicationsStore.use.applications();
+  const fullScreenPrompt = useApplicationsStore.use.fullScreenPrompt();
+  const openApplication = useApplicationsStore.use.openApplication();
+  const setContainerDimensions =
+    useApplicationsStore.use.setContainerDimensions();
+  const [containerRef, {width: containerWidth, height: containerHeight}] =
+    useMeasure();
+
+  useLayoutEffect(() => {
+    setContainerDimensions({width: containerWidth, height: containerHeight});
+
+    if (hydrating.current && containerHeight > 0 && containerWidth > 0) {
+      openApplication(ApplicationId.LANDING_TEXT_ANIMATOR);
+      hydrating.current = false;
+    }
+  }, [
+    containerHeight,
+    containerWidth,
+    openApplication,
+    setContainerDimensions,
+  ]);
 
   return (
     <VStack

@@ -3,7 +3,7 @@ import {HStack} from '@chakra-ui/react';
 import ToggleFullScreenButton from '@/os/AppWindow/AppHeader/AppControls/ToggleFullScreenButton';
 import ReduceButton from '@/os/AppWindow/AppHeader/AppControls/ReduceButton';
 import CloseButton from '@/os/AppWindow/AppHeader/AppControls/CloseButton';
-import {WindowState} from '@/contexts/types';
+import {WindowState} from '@/os/store/types';
 
 type AppControlsProps = {
   state: WindowState;
