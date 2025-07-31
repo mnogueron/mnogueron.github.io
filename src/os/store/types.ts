@@ -22,4 +22,4 @@ export type Application = {
   isReduced: boolean;
 };
 
-export type ApplicationRegistry = {[key: string]: Application};
+export type ApplicationRegistry = Record<string, Application>;;

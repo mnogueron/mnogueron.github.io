@@ -17,7 +17,7 @@ const MIN_WINDOW_WIDTH = 200;
 
 // TODO improve how to handle full screen to not rely on width 100%
 type State = {
-  applications: Record<string, Application>;
+  applications: ApplicationRegistry;
   container: {width: number; height: number};
   fullScreenPrompt: boolean;
 };
@@ -47,7 +47,9 @@ const useApplicationsStoreBase = create<State & Actions>()(
       applications: {},
       fullScreenPrompt: false,
       setFullScreenPrompt: (value: boolean) =>
-        set(state => (state.fullScreenPrompt = value)),
+        set(state => {
+          state.fullScreenPrompt = value;
+        }),
       container: {width: 0, height: 0},
       setContainerDimensions: (container: {width: number; height: number}) =>
         set(state => {
