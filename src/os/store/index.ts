@@ -23,7 +23,8 @@ type State = {
 };
 
 type Actions = {
-  setFullScreenPrompt: (value: boolean) => void;
+  hideFullScreenPrompt: () => void;
+  showFullScreenPrompt: () => void;
   setContainerDimensions: (container: {width: number; height: number}) => void;
   openApplication: (appId: ApplicationId, state?: WindowState) => void;
   closeApplication: (id: string) => void;
@@ -46,9 +47,17 @@ const useApplicationsStoreBase = create<State & Actions>()(
     immer(set => ({
       applications: {},
       fullScreenPrompt: false,
-      setFullScreenPrompt: (value: boolean) =>
+      hideFullScreenPrompt: () =>
         set(state => {
-          state.fullScreenPrompt = value;
+          if (state.fullScreenPrompt) {
+            state.fullScreenPrompt = false;
+          }
+        }),
+      showFullScreenPrompt: () =>
+        set(state => {
+          if (!state.fullScreenPrompt) {
+            state.fullScreenPrompt = true;
+          }
         }),
       container: {width: 0, height: 0},
       setContainerDimensions: (container: {width: number; height: number}) =>
@@ -199,13 +208,13 @@ const useApplicationsStoreBase = create<State & Actions>()(
       },
       fullScreenApplication: (id: string) => {
         set(state => {
-          state.fullScreenPrompt = false;
+          state.hideFullScreenPrompt();
           state.applications[id].state = WindowState.FULL_SCREEN;
         });
       },
       reduceApplication: (id: string) => {
         set(state => {
-          state.fullScreenPrompt = false;
+          state.hideFullScreenPrompt();
           state.applications[id].isReduced = true;
         });
       },

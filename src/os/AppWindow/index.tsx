@@ -1,10 +1,11 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {Box, BoxProps, Flex} from '@chakra-ui/react';
 import {ResizeHandler} from '@/os/AppWindow/types';
 import ResizeHandlers from '@/os/AppWindow/ResizeHandlers';
 import AppHeader from './AppHeader';
 import {Positions, WindowState} from '@/os/store/types';
 import useMeasure from 'react-use-measure';
+import AppWindowContainer from '@/os/AppWindow/AppWindowContainer';
 
 type WindowProps = {
   children: React.ReactNode;
@@ -22,7 +23,7 @@ type WindowProps = {
   isReduced: boolean;
   disableResize?: boolean;
   disableMove?: boolean;
-} & Omit<BoxProps, 'onResize'>;
+} & Omit<BoxProps, 'onResize'>; // TODO simplify state to only have onDragStart, onDragEnd, probably rename
 
 type WindowContainerProps = {
   children: React.ReactNode;
@@ -66,46 +67,14 @@ const AppWindow = ({
   disableMove,
   onDragStart,
   onDragEnd,
-  ...props
 }: WindowProps) => {
-  const {top, left, width, height} = useMemo(() => {
-    if (state === WindowState.FULL_SCREEN) {
-      return {
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-      };
-    }
-    return {
-      top: `${positions.top}px`,
-      left: `${positions.left}px`,
-      width: `${positions.width}px`,
-      height: `${positions.height}px`,
-    };
-  }, [positions.height, positions.left, positions.top, positions.width, state]);
-
-  // TODO handle reduced state and animation
-  if (isReduced) {
-    return null;
-  }
-
   return (
-    <Box
-      {...props}
-      position="absolute"
+    <AppWindowContainer
       onMouseDownCapture={onFocus}
-      zIndex={priority}
-      bg="#404552"
-      borderRadius={8}
-      boxShadow="xs"
-      border="2px solid #2e333f"
-      style={{
-        top,
-        left,
-        width,
-        height,
-      }}
+      state={state}
+      positions={positions}
+      priority={priority}
+      isReduced={isReduced}
     >
       <Box position="relative" height="100%" width="100%">
         <Flex direction="column" height="100%" width="100%">
@@ -127,7 +96,7 @@ const AppWindow = ({
           <ResizeHandlers onResize={onResize} />
         )}
       </Box>
-    </Box>
+    </AppWindowContainer>
   );
 };
 
