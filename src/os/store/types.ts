@@ -2,7 +2,7 @@ import {ApplicationId} from '@/applications/types';
 
 export enum WindowState {
   FULL_SCREEN = 'full_screen',
-  DEFAULT = 'default',
+  WINDOWED = 'windowed',
 }
 
 export type Positions = {

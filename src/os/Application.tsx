@@ -1,7 +1,7 @@
 import React, {useCallback, useMemo} from 'react';
 import AppWindow from './AppWindow';
 import {ResizeDirection} from '@/os/AppWindow/types';
-import Applications from '@/applications';
+import Applications, {ApplicationContainer} from '@/applications';
 import {useApplicationsStore} from '@/os/store';
 
 type ApplicationProps = {
@@ -22,6 +22,7 @@ const Application = React.memo(({id}: ApplicationProps) => {
     useApplicationsStore.use.fullScreenApplication();
   const reduceApplication = useApplicationsStore.use.reduceApplication();
 
+  // TODO get config without getting the component
   const data = useMemo(() => {
     if (!app) {
       return;
@@ -100,7 +101,7 @@ const Application = React.memo(({id}: ApplicationProps) => {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <AppComponent />
+      <ApplicationContainer appId={app.appId} />
     </AppWindow>
   );
 });

@@ -35,6 +35,8 @@ type Actions = {
   ) => void;
   focusApplication: (id: string) => void;
   fullScreenApplication: (id: string) => void;
+  windowedApplication: (id: string) => void;
+  setWindowMode: (id: string, windowState: WindowState) => void;
   reduceApplication: (id: string) => void;
   toggleFullScreenApplication: (id: string) => void;
   startDragApplication: (id: string) => void;
@@ -44,7 +46,7 @@ type Actions = {
 
 const useApplicationsStoreBase = create<State & Actions>()(
   persist(
-    immer(set => ({
+    immer((set, get) => ({
       applications: {},
       fullScreenPrompt: false,
       hideFullScreenPrompt: () =>
@@ -88,7 +90,7 @@ const useApplicationsStoreBase = create<State & Actions>()(
       },
       openApplication: (
         appId: ApplicationId,
-        windowState = WindowState.DEFAULT
+        windowState = WindowState.WINDOWED
       ) => {
         set(state => {
           console.log('Opening', appId);
@@ -208,9 +210,42 @@ const useApplicationsStoreBase = create<State & Actions>()(
       },
       fullScreenApplication: (id: string) => {
         set(state => {
+          const app = state.applications[id];
           state.hideFullScreenPrompt();
+          state.applications[id].trackedPositions = app.positions;
+          state.applications[id].positions = {
+            left: 0,
+            top: 0,
+            width: state.container.width,
+            height: state.container.height,
+          };
           state.applications[id].state = WindowState.FULL_SCREEN;
         });
+      },
+      windowedApplication: (id: string) => {
+        set(state => {
+          const app = state.applications[id];
+          state.hideFullScreenPrompt();
+          state.applications[id].positions =
+            app.trackedPositions || app.positions;
+          state.applications[id].trackedPositions = undefined;
+          state.applications[id].state = WindowState.WINDOWED;
+        });
+      },
+      setWindowMode: (id: string, windowState: WindowState) => {
+        const state = get();
+        if (state.applications[id].state === windowState) {
+          return;
+        }
+
+        switch (windowState) {
+          case WindowState.FULL_SCREEN:
+            state.fullScreenApplication(id);
+            break;
+          case WindowState.WINDOWED:
+            state.windowedApplication(id);
+            break;
+        }
       },
       reduceApplication: (id: string) => {
         set(state => {
@@ -219,18 +254,13 @@ const useApplicationsStoreBase = create<State & Actions>()(
         });
       },
       toggleFullScreenApplication: (id: string) => {
-        set(state => {
-          const app = state.applications[id];
-
-          if (app.state === WindowState.FULL_SCREEN) {
-            state.applications[id].positions =
-              app.trackedPositions || app.positions;
-            state.applications[id].trackedPositions = undefined;
-            state.applications[id].state = WindowState.DEFAULT;
-          } else {
-            state.applications[id].state = WindowState.FULL_SCREEN;
-          }
-        });
+        const state = get();
+        state.setWindowMode(
+          id,
+          state.applications[id].state === WindowState.FULL_SCREEN
+            ? WindowState.WINDOWED
+            : WindowState.FULL_SCREEN
+        );
       },
       startDragApplication: (id: string) => {
         set(state => {

@@ -31,6 +31,8 @@ type WindowContainerProps = {
 
 const WindowContainer = ({children}: WindowContainerProps) => {
   const [containerRef, {height, width}] = useMeasure();
+
+  // TODO prevent window container to change if the window is being reduced
   return (
     <Box
       ref={containerRef}
@@ -70,8 +72,8 @@ const AppWindow = ({
 }: WindowProps) => {
   return (
     <AppWindowContainer
-      onMouseDownCapture={onFocus}
-      state={state}
+      onFocus={onFocus}
+      windowState={state}
       positions={positions}
       priority={priority}
       isReduced={isReduced}
