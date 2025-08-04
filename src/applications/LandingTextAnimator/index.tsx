@@ -131,9 +131,9 @@ const LandingTextAnimator: AppComponent = ({
 LandingTextAnimator.config = {
   appTitle: '',
 
-  disableMove: true,
+  disableMove: false,
   // TODO enable disabling screen resize
-  disableResize: true,
+  disableResize: false,
 
   // TODO handle strict window size
   preferredRatio: 0.8,
