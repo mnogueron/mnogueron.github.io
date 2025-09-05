@@ -6,9 +6,11 @@ import AppHeader from './AppHeader';
 import {Positions, WindowState} from '@/os/store/types';
 import useMeasure from 'react-use-measure';
 import AppWindowContainer from '@/os/AppWindow/AppWindowContainer';
+import {ApplicationContainer} from '@/applications';
+import {ApplicationId} from '@/applications/types';
 
 type WindowProps = {
-  children: React.ReactNode;
+  appId: ApplicationId;
   title?: string;
   onClose?: () => void;
   onResize: ResizeHandler;
@@ -26,13 +28,13 @@ type WindowProps = {
 } & Omit<BoxProps, 'onResize'>; // TODO simplify state to only have onDragStart, onDragEnd, probably rename
 
 type WindowContainerProps = {
-  children: React.ReactNode;
+  appId: ApplicationId;
 };
 
-const WindowContainer = ({children}: WindowContainerProps) => {
-  const [containerRef, {height, width}] = useMeasure();
+const WindowContainer = React.memo(({appId}: WindowContainerProps) => {
+  // Offset option is used to ignore scale transform
+  const [containerRef, {height, width}] = useMeasure({offsetSize: true});
 
-  // TODO prevent window container to change if the window is being reduced
   return (
     <Box
       ref={containerRef}
@@ -46,14 +48,15 @@ const WindowContainer = ({children}: WindowContainerProps) => {
         '--containerHeight': `${height}px`,
       }}
     >
-      {children}
+      <ApplicationContainer appId={appId} />
     </Box>
   );
-};
+});
+
+WindowContainer.displayName = 'WindowContainer';
 
 const AppWindow = ({
   title,
-  children,
   onClose,
   onResize,
   onMove,
@@ -69,6 +72,7 @@ const AppWindow = ({
   disableMove,
   onDragStart,
   onDragEnd,
+  appId,
 }: WindowProps) => {
   return (
     <AppWindowContainer
@@ -93,7 +97,7 @@ const AppWindow = ({
             onDragEnd={onDragEnd}
             disableMove={state === WindowState.FULL_SCREEN || disableMove}
           />
-          <WindowContainer>{children}</WindowContainer>
+          <WindowContainer appId={appId} />
         </Flex>
         {!(state === WindowState.FULL_SCREEN || disableResize) && (
           <ResizeHandlers onResize={onResize} />

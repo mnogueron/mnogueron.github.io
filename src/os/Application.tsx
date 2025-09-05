@@ -1,7 +1,7 @@
 import React, {useCallback, useMemo} from 'react';
 import AppWindow from './AppWindow';
 import {ResizeDirection} from '@/os/AppWindow/types';
-import Applications, {ApplicationContainer} from '@/applications';
+import Applications from '@/applications';
 import {useApplicationsStore} from '@/os/store';
 
 type ApplicationProps = {
@@ -84,6 +84,7 @@ const Application = React.memo(({id}: ApplicationProps) => {
 
   return (
     <AppWindow
+      appId={app.appId}
       state={application.state}
       positions={application.positions}
       isReduced={application.isReduced}
@@ -100,9 +101,7 @@ const Application = React.memo(({id}: ApplicationProps) => {
       disableMove={AppComponent.config.disableMove}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-    >
-      <ApplicationContainer appId={app.appId} />
-    </AppWindow>
+    />
   );
 });
 
