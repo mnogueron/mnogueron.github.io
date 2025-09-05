@@ -4,19 +4,52 @@ import {ResizeDirection, ResizeHandler} from '@/os/AppWindow/types';
 
 type ResizeHandlersProps = {
   onResize: ResizeHandler;
+  onStartResize?: () => void;
 };
 
-const ResizeHandlers = ({onResize}: ResizeHandlersProps) => {
+const ResizeHandlers = ({onResize, onStartResize}: ResizeHandlersProps) => {
   return (
     <>
-      <ResizeHandle direction={ResizeDirection.E} onResize={onResize} />
-      <ResizeHandle direction={ResizeDirection.W} onResize={onResize} />
-      <ResizeHandle direction={ResizeDirection.N} onResize={onResize} />
-      <ResizeHandle direction={ResizeDirection.S} onResize={onResize} />
-      <ResizeHandle direction={ResizeDirection.NE} onResize={onResize} />
-      <ResizeHandle direction={ResizeDirection.NW} onResize={onResize} />
-      <ResizeHandle direction={ResizeDirection.SE} onResize={onResize} />
-      <ResizeHandle direction={ResizeDirection.SW} onResize={onResize} />
+      <ResizeHandle
+        direction={ResizeDirection.E}
+        onResize={onResize}
+        onStartResize={onStartResize}
+      />
+      <ResizeHandle
+        direction={ResizeDirection.W}
+        onResize={onResize}
+        onStartResize={onStartResize}
+      />
+      <ResizeHandle
+        direction={ResizeDirection.N}
+        onResize={onResize}
+        onStartResize={onStartResize}
+      />
+      <ResizeHandle
+        direction={ResizeDirection.S}
+        onResize={onResize}
+        onStartResize={onStartResize}
+      />
+      <ResizeHandle
+        direction={ResizeDirection.NE}
+        onResize={onResize}
+        onStartResize={onStartResize}
+      />
+      <ResizeHandle
+        direction={ResizeDirection.NW}
+        onResize={onResize}
+        onStartResize={onStartResize}
+      />
+      <ResizeHandle
+        direction={ResizeDirection.SE}
+        onResize={onResize}
+        onStartResize={onStartResize}
+      />
+      <ResizeHandle
+        direction={ResizeDirection.SW}
+        onResize={onResize}
+        onStartResize={onStartResize}
+      />
     </>
   );
 };

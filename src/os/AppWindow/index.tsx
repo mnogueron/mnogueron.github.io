@@ -27,6 +27,7 @@ type WindowProps = {
   disableMove?: boolean;
   onWindowDragStart?: () => void;
   onWindowDragEnd?: () => void;
+  onStartResize?: () => void;
 };
 
 type WindowContainerProps = {
@@ -74,6 +75,7 @@ const AppWindow = ({
   disableMove,
   onWindowDragStart,
   onWindowDragEnd,
+  onStartResize,
   appId,
 }: WindowProps) => {
   return (
@@ -102,7 +104,7 @@ const AppWindow = ({
           <WindowContainer appId={appId} />
         </Flex>
         {!(state === WindowState.FULL_SCREEN || disableResize) && (
-          <ResizeHandlers onResize={onResize} />
+          <ResizeHandlers onResize={onResize} onStartResize={onStartResize} />
         )}
       </Box>
     </AppWindowContainer>

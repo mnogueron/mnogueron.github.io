@@ -6,9 +6,14 @@ import {getClientXY} from '@/os/AppWindow/dragUtils';
 type ResizeHandleProps = {
   direction: ResizeDirection;
   onResize: ResizeHandler;
+  onStartResize?: () => void;
 };
 
-const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
+const ResizeHandle = ({
+  direction,
+  onResize,
+  onStartResize,
+}: ResizeHandleProps) => {
   const dragStart = useRef<{x: number; y: number}>({x: 0, y: 0});
   const [isDragging, setIsDragging] = useState(false);
 
@@ -35,6 +40,9 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
     dragStart.current = getClientXY(e);
 
     setIsDragging(true);
+    if (onStartResize) {
+      onStartResize();
+    }
     document.body.style.userSelect = 'none';
   };
 

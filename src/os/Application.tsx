@@ -21,6 +21,7 @@ const Application = React.memo(({id}: ApplicationProps) => {
   const fullScreenApplication =
     useApplicationsStore.use.fullScreenApplication();
   const reduceApplication = useApplicationsStore.use.reduceApplication();
+  const startResizeApplication = useApplicationsStore.use.startResizeApplication();
 
   // TODO get config without getting the component
   const data = useMemo(() => {
@@ -76,6 +77,10 @@ const Application = React.memo(({id}: ApplicationProps) => {
     endDragApplication(id);
   }, [endDragApplication, id]);
 
+  const handleStartResize = useCallback(() => {
+    startResizeApplication(id);
+  }, [startResizeApplication, id]);
+
   if (!data?.AppComponent) {
     return null;
   }
@@ -101,6 +106,7 @@ const Application = React.memo(({id}: ApplicationProps) => {
       disableMove={AppComponent.config.disableMove}
       onWindowDragStart={handleDragStart}
       onWindowDragEnd={handleDragEnd}
+      onStartResize={handleStartResize}
     />
   );
 });

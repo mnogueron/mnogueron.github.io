@@ -29,6 +29,7 @@ type Actions = {
   openApplication: (appId: ApplicationId, state?: WindowState) => void;
   closeApplication: (id: string) => void;
   moveApplication: (id: string, delta: {x: number; y: number}) => void;
+  startResizeApplication: (id: string) => void;
   resizeApplication: (
     id: string,
     delta: {x: number; y: number; dir: ResizeDirection}
@@ -68,9 +69,13 @@ const useApplicationsStoreBase = create<State & Actions>()(
           state.resizeContainer();
         }),
       focusApplication: (id: string) => {
-        console.log('focus', id);
         set(state => {
           const appPriority = state.applications[id].priority;
+          if (appPriority === Object.values(state.applications).length + 1) {
+            return;
+          }
+
+          console.log('focus', id);
           state.applications = Object.entries(
             state.applications
           ).reduce<ApplicationRegistry>((acc, [key, app]) => {
@@ -138,7 +143,11 @@ const useApplicationsStoreBase = create<State & Actions>()(
           state.applications[id].positions.left = left;
         });
       },
-      // TODO Constrain to top of window
+      startResizeApplication: (id: string) => {
+        set(state => {
+          state.focusApplication(id);
+        });
+      },
       resizeApplication: (
         id: string,
         delta: {x: number; y: number; dir: ResizeDirection}
@@ -149,6 +158,7 @@ const useApplicationsStoreBase = create<State & Actions>()(
           const positions = {...app.positions};
           switch (dir) {
             case ResizeDirection.N:
+              // Constrain to top of window
               if (positions.top + y < 0) {
                 if (positions.top > 0) {
                   positions.height += positions.top;
@@ -197,19 +207,18 @@ const useApplicationsStoreBase = create<State & Actions>()(
 
           let width = Math.max(positions.width, minWidth);
           let height = Math.max(positions.height, minHeight);
-          const top = Math.max(positions.top, 0);
 
           // Constrain resizable window to the document border
           if (width + positions.left > state.container.width) {
             width = state.container.width - positions.left;
           }
 
-          if (height + top > state.container.height) {
-            height = state.container.height - top;
+          if (height + positions.top > state.container.height) {
+            height = state.container.height - positions.top;
           }
 
           state.applications[id].positions = {
-            top: height === MIN_WINDOW_HEIGHT ? app.positions.top : top,
+            top: height === MIN_WINDOW_HEIGHT ? app.positions.top : positions.top,
             left:
               width === MIN_WINDOW_WIDTH ? app.positions.left : positions.left,
             width,
@@ -273,6 +282,7 @@ const useApplicationsStoreBase = create<State & Actions>()(
       },
       startDragApplication: (id: string) => {
         set(state => {
+          state.focusApplication(id);
           state.applications[id].trackedPositions =
             state.applications[id].positions;
         });
