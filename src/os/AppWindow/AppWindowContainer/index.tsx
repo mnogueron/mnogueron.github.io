@@ -4,6 +4,7 @@ import {Positions, WindowState} from '@/os/store/types';
 import {useAnimatedWindowStyle} from '@/os/AppWindow/AppWindowContainer/useAnimatedWindowStyle';
 
 type AppWindowContainerProps = {
+  id: string;
   children: React.ReactNode;
   windowState: WindowState;
   positions: Positions;
@@ -13,6 +14,7 @@ type AppWindowContainerProps = {
 };
 
 const AppWindowContainer = ({
+  id,
   children,
   windowState,
   positions,
@@ -20,7 +22,7 @@ const AppWindowContainer = ({
   onFocus,
   isReduced,
 }: AppWindowContainerProps) => {
-  const style = useAnimatedWindowStyle(positions, windowState, isReduced);
+  const style = useAnimatedWindowStyle(positions, windowState, isReduced, id);
   return (
     <Animated.Box
       position="absolute"

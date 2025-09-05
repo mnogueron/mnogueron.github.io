@@ -1,12 +1,13 @@
 import {Positions, WindowState} from '@/os/store/types';
 import {useEffect, useMemo, useRef, useState} from 'react';
-import {SpringProps, useSpringValue} from '@react-spring/web';
+import {SpringProps, to, useSpringValue} from '@react-spring/web';
 import {useApplicationsStore} from '@/os/store';
 
 export const useAnimatedWindowStyle = (
   positions: Positions,
   windowState: WindowState,
-  isReduced: boolean
+  isReduced: boolean,
+  id: string
 ) => {
   const previousWindowState = useRef(windowState);
   const previousIsReduced = useRef(isReduced);
@@ -26,10 +27,11 @@ export const useAnimatedWindowStyle = (
   const heightSpring = useSpringValue(0, animationEvents);
   const scaleSpring = useSpringValue(1);
 
-  const {top, left, width, height} = useMemo(
+  const {transform, width, height} = useMemo(
     () => ({
-      top: `${positions.top}px`,
-      left: `${positions.left}px`,
+      /*top: `${positions.top}px`,
+      left: `${positions.left}px`,*/
+      transform: `translate3d(${positions.left}px, ${positions.top}px, 0)`,
       width: `${positions.width}px`,
       height: `${positions.height}px`,
     }),
@@ -46,10 +48,10 @@ export const useAnimatedWindowStyle = (
       widthSpring.start(positions.width);
       heightSpring.start(positions.height);
     } else {
-      topSpring.start(positions.top, {immediate: true});
-      leftSpring.start(positions.left, {immediate: true});
-      widthSpring.start(positions.width, {immediate: true});
-      heightSpring.start(positions.height, {immediate: true});
+      topSpring.set(positions.top);
+      leftSpring.set(positions.left);
+      widthSpring.set(positions.width);
+      heightSpring.set(positions.height);
     }
     previousWindowState.current = windowState;
   }, [
@@ -71,7 +73,7 @@ export const useAnimatedWindowStyle = (
       console.log('Change reduce state', isReduced);
       setIsAnimated(true);
       if (isReduced) {
-        topSpring.start(container.height - 200, {
+        topSpring.start(container.height * 0.9, {
           onRest: () => {
             console.log('Set display none');
             setDisplay('none');
@@ -82,10 +84,10 @@ export const useAnimatedWindowStyle = (
         /*widthSpring.start(200);
         heightSpring.start(200);*/
       } else {
+        setDisplay(undefined);
         topSpring.start(positions.top, {
           onStart: () => {
             console.log('Set display undefined');
-            setDisplay(undefined);
           },
         });
         leftSpring.start(positions.left);
@@ -110,23 +112,25 @@ export const useAnimatedWindowStyle = (
     container.width,
   ]);
 
-  return isAnimated
-    ? {
-        top: topSpring,
-        left: leftSpring,
-        width: widthSpring,
-        height: heightSpring,
-        display,
-        scale: scaleSpring,
-        transformOrigin: 'bottom center',
-      }
-    : {
-        top,
-        left,
-        width,
-        height,
-        display,
-        scale: scaleSpring,
-        transformOrigin: 'bottom center',
-      };
+  const styles = {
+    /*top: isAnimated ? topSpring : top,
+    left: isAnimated ? leftSpring : left,*/
+    top: 0,
+    left: 0,
+    width: isAnimated ? widthSpring : width,
+    height: isAnimated ? heightSpring : height,
+    transform: isAnimated
+      ? to(
+          [topSpring, leftSpring],
+          (top, left) => `translate3d(${left}px, ${top}px, 0)`
+        )
+      : transform,
+    display,
+    scale: scaleSpring,
+    transformOrigin: 'bottom center',
+  };
+
+  //console.log(id, styles);
+
+  return styles;
 };

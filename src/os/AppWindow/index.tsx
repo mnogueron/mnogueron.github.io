@@ -72,6 +72,7 @@ const AppWindow = ({
 }: WindowProps) => {
   return (
     <AppWindowContainer
+      id={title || ''}
       onFocus={onFocus}
       windowState={state}
       positions={positions}

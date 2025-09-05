@@ -68,6 +68,7 @@ const useApplicationsStoreBase = create<State & Actions>()(
           state.resizeContainer();
         }),
       focusApplication: (id: string) => {
+        console.log('focus', id);
         set(state => {
           const appPriority = state.applications[id].priority;
           state.applications = Object.entries(
