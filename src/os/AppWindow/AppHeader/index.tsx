@@ -1,11 +1,11 @@
-import React, {useRef} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Flex, FlexProps} from '@chakra-ui/react';
 import {JetBrainsMono} from '@/theme/fonts';
-import {EMPTY_DRAG_IMAGE} from '@/os/AppWindow/dragUtils';
 import AppControls from '@/os/AppWindow/AppHeader/AppControls';
 import {WindowState} from '@/os/store/types';
 import AppTitle from '@/os/AppWindow/AppHeader/AppTitle';
 import {useApplicationsStore} from '@/os/store';
+import {getClientXY} from '@/os/AppWindow/dragUtils';
 
 const FULL_SCREEN_PROMPT_TIMEOUT = 750;
 
@@ -18,6 +18,8 @@ type AppHeaderProps = {
   onFullScreenToggle: () => void;
   onReduce: () => void;
   disableMove?: boolean;
+  onWindowDragStart?: () => void;
+  onWindowDragEnd?: () => void;
 } & FlexProps;
 
 const AppHeader = React.memo(
@@ -26,12 +28,12 @@ const AppHeader = React.memo(
     state,
     onClose,
     onMove,
-    onDragStart,
-    onDragEnd,
     onFullScreen,
     onFullScreenToggle,
     onReduce,
     disableMove,
+    onWindowDragStart,
+    onWindowDragEnd,
     ...props
   }: AppHeaderProps) => {
     const fullScreenPrompt = useApplicationsStore.use.fullScreenPrompt();
@@ -41,64 +43,61 @@ const AppHeader = React.memo(
       useApplicationsStore.use.hideFullScreenPrompt();
     const topTimeout = useRef<number>(null);
     const dragStart = useRef<{x: number; y: number}>({x: 0, y: 0});
+    const [isDragging, setIsDragging] = useState(false);
 
-    const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-      if (disableMove) {
+    const handleDragStart = (
+      e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+    ) => {
+      if (disableMove || isDragging) {
         return;
       }
 
-      dragStart.current = {x: e.clientX, y: e.clientY};
-      e.dataTransfer.effectAllowed = 'move';
+      dragStart.current = getClientXY(e);
 
-      // Disable drag visual effect
-      if (EMPTY_DRAG_IMAGE.complete) {
-        e.dataTransfer.setDragImage(EMPTY_DRAG_IMAGE, 0, 0);
+      if (onWindowDragStart) {
+        onWindowDragStart();
       }
 
-      if (onDragStart) {
-        onDragStart(e);
-      }
+      setIsDragging(true);
     };
 
-    const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
-      if (e.clientX === 0 && e.clientY === 0) {
-        return;
-      }
-      const delta = {
-        x: e.clientX - dragStart.current.x,
-        y: e.clientY - dragStart.current.y,
-      };
-
-      if (delta.x === 0 && delta.y === 0) {
-        return;
-      }
-
-      dragStart.current = {x: e.clientX, y: e.clientY};
-      if (e.clientY < 10) {
-        if (!topTimeout.current) {
-          topTimeout.current = window.setTimeout(() => {
-            showFullScreenPrompt();
-          }, FULL_SCREEN_PROMPT_TIMEOUT);
+    const handleDrag = useCallback(
+      (e: MouseEvent | TouchEvent) => {
+        const client = getClientXY(e);
+        if (client.x === 0 && client.y === 0) {
+          return;
         }
-      } else {
-        if (topTimeout.current) {
-          window.clearTimeout(topTimeout.current);
-          topTimeout.current = null;
-        }
-        if (fullScreenPrompt) {
-          hideFullScreenPrompt();
-        }
-      }
-      onMove(delta);
-    };
+        const delta = {
+          x: client.x - dragStart.current.x,
+          y: client.y - dragStart.current.y,
+        };
 
-    const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
-      const delta = {
-        x: e.clientX - dragStart.current.x,
-        y: e.clientY - dragStart.current.y,
-      };
-      dragStart.current = {x: e.clientX, y: e.clientY};
-      onMove(delta);
+        if (delta.x === 0 && delta.y === 0) {
+          return;
+        }
+
+        dragStart.current = client;
+        if (client.y < 10) {
+          if (!topTimeout.current) {
+            topTimeout.current = window.setTimeout(() => {
+              showFullScreenPrompt();
+            }, FULL_SCREEN_PROMPT_TIMEOUT);
+          }
+        } else {
+          if (topTimeout.current) {
+            window.clearTimeout(topTimeout.current);
+            topTimeout.current = null;
+          }
+          if (fullScreenPrompt) {
+            hideFullScreenPrompt();
+          }
+        }
+        onMove(delta);
+      },
+      [fullScreenPrompt, hideFullScreenPrompt, onMove, showFullScreenPrompt]
+    );
+
+    const handleDragEnd = useCallback(() => {
       if (topTimeout.current) {
         window.clearTimeout(topTimeout.current);
         topTimeout.current = null;
@@ -106,15 +105,27 @@ const AppHeader = React.memo(
       if (fullScreenPrompt) {
         hideFullScreenPrompt();
         onFullScreen();
-      } else if (onDragEnd) {
-        onDragEnd(e);
+      } else if (onWindowDragEnd) {
+        onWindowDragEnd();
       }
-    };
 
-    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-      // Prevent drag animation feedback
-      e.preventDefault();
-    };
+      setIsDragging(false);
+    }, [fullScreenPrompt, hideFullScreenPrompt, onWindowDragEnd, onFullScreen]);
+
+    useEffect(() => {
+      if (isDragging) {
+        document.addEventListener('mousemove', handleDrag);
+        document.addEventListener('touchmove', handleDrag);
+        document.addEventListener('mouseup', handleDragEnd);
+        document.addEventListener('touchend', handleDragEnd);
+        return () => {
+          document.removeEventListener('mousemove', handleDrag);
+          document.removeEventListener('touchmove', handleDrag);
+          document.removeEventListener('mouseup', handleDragEnd);
+          document.removeEventListener('touchend', handleDragEnd);
+        };
+      }
+    }, [handleDrag, handleDragEnd, isDragging]);
 
     return (
       <Flex
@@ -124,14 +135,11 @@ const AppHeader = React.memo(
         justifyContent="space-between"
         alignItems="center"
         minHeight="26px"
-        onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
-        onDrag={handleDrag}
-        onDragEnd={handleDragEnd}
+        onMouseDown={handleDragStart}
+        onTouchStart={handleDragStart}
         {...props}
         className={JetBrainsMono.className}
         direction="row"
-        draggable={disableMove ? undefined : 'true'}
       >
         <AppTitle title={title} />
         <AppControls

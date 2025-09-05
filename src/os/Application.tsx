@@ -99,8 +99,8 @@ const Application = React.memo(({id}: ApplicationProps) => {
       title={AppComponent.config.appTitle}
       disableResize={AppComponent.config.disableResize}
       disableMove={AppComponent.config.disableMove}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
+      onWindowDragStart={handleDragStart}
+      onWindowDragEnd={handleDragEnd}
     />
   );
 });

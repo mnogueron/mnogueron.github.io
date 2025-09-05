@@ -9,6 +9,7 @@ const customConfig = defineConfig({
     'html, body': {
       maxW: '100vw',
       overflowX: 'hidden',
+      overscrollBehaviorY: 'contain',
     },
     body: {
       fontFamily: 'Arial, Helvetica, sans-serif',

@@ -1,7 +1,7 @@
-import React, {useMemo, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Box} from '@chakra-ui/react';
 import {ResizeDirection, ResizeHandler} from './types';
-import {EMPTY_DRAG_IMAGE} from '@/os/AppWindow/dragUtils';
+import {getClientXY} from '@/os/AppWindow/dragUtils';
 
 type ResizeHandleProps = {
   direction: ResizeDirection;
@@ -10,6 +10,7 @@ type ResizeHandleProps = {
 
 const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
   const dragStart = useRef<{x: number; y: number}>({x: 0, y: 0});
+  const [isDragging, setIsDragging] = useState(false);
 
   const cursor = useMemo(() => {
     switch (direction) {
@@ -28,48 +29,44 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
     }
   }, [direction]);
 
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    dragStart.current = {x: e.clientX, y: e.clientY};
+  const handleDragStart = (
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+  ) => {
+    dragStart.current = getClientXY(e);
 
-    e.dataTransfer.effectAllowed = 'move';
-    document.body.style.cursor = cursor;
-
-    // Disable drag visual effect
-    if (EMPTY_DRAG_IMAGE.complete) {
-      e.dataTransfer.setDragImage(EMPTY_DRAG_IMAGE, 0, 0);
-    }
+    setIsDragging(true);
+    document.body.style.userSelect = 'none';
   };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    // Prevent drag animation feedback
-    e.preventDefault();
-  };
+  const handleDrag = useCallback(
+    (e: MouseEvent | TouchEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const client = getClientXY(e);
+      if (client.x === 0 && client.y === 0) {
+        return;
+      }
+      const delta = {
+        x: client.x - dragStart.current.x,
+        y: client.y - dragStart.current.y,
+        dir: direction,
+      };
+      dragStart.current = client;
+      onResize(delta);
+    },
+    [direction, onResize]
+  );
 
-  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
-    if (e.clientX === 0 && e.clientY === 0) {
-      return;
-    }
-    const delta = {
-      x: e.clientX - dragStart.current.x,
-      y: e.clientY - dragStart.current.y,
-      dir: direction,
-    };
-    dragStart.current = {x: e.clientX, y: e.clientY};
-    onResize(delta);
-  };
-
-  const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
-    const delta = {
-      x: e.clientX - dragStart.current.x,
-      y: e.clientY - dragStart.current.y,
-      dir: direction,
-    };
-    dragStart.current = {x: e.clientX, y: e.clientY};
-    onResize(delta);
-    document.body.style.cursor = 'initial';
-  };
+  const handleDragEnd = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    document.body.style.userSelect = null;
+    setIsDragging(false);
+  }, []);
 
   const positionProps = useMemo(() => {
+    const sideSize = {base: '24px', md: '4px'};
+    const cornerSize = {base: '30px', md: '16px'};
     switch (direction) {
       case ResizeDirection.N:
         return {
@@ -82,64 +79,76 @@ const ResizeHandle = ({direction, onResize}: ResizeHandleProps) => {
         return {
           left: 0,
           right: 0,
-          height: '4px',
+          height: sideSize,
           bottom: 0,
         };
       case ResizeDirection.E:
         return {
           top: 0,
           bottom: 0,
-          width: '4px',
+          width: sideSize,
           right: 0,
         };
       case ResizeDirection.W:
         return {
           top: 0,
           bottom: 0,
-          width: '4px',
+          width: sideSize,
           left: 0,
         };
       case ResizeDirection.NW:
         return {
           top: 0,
           left: 0,
-          width: '16px',
-          height: '16px',
+          width: cornerSize,
+          height: cornerSize,
         };
       case ResizeDirection.NE:
         return {
           top: 0,
           right: 0,
-          width: '16px',
-          height: '16px',
+          width: cornerSize,
+          height: cornerSize,
         };
       case ResizeDirection.SW:
         return {
           bottom: 0,
           left: 0,
-          width: '16px',
-          height: '16px',
+          width: cornerSize,
+          height: cornerSize,
         };
       case ResizeDirection.SE:
         return {
           bottom: 0,
           right: 0,
-          width: '16px',
-          height: '16px',
+          width: cornerSize,
+          height: cornerSize,
         };
     }
   }, [direction]);
+
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleDrag);
+      document.addEventListener('touchmove', handleDrag);
+      document.addEventListener('mouseup', handleDragEnd);
+      document.addEventListener('touchend', handleDragEnd);
+      return () => {
+        document.removeEventListener('mousemove', handleDrag);
+        document.removeEventListener('touchmove', handleDrag);
+        document.removeEventListener('mouseup', handleDragEnd);
+        document.removeEventListener('touchend', handleDragEnd);
+      };
+    }
+  }, [handleDrag, handleDragEnd, isDragging]);
 
   return (
     <Box
       position="absolute"
       {...positionProps}
       cursor={cursor}
-      draggable="true"
-      onDragStart={handleDragStart}
-      onDragOver={handleDragOver}
-      onDrag={handleDrag}
-      onDragEnd={handleDragEnd}
+      onMouseDown={handleDragStart}
+      onTouchStart={handleDragStart}
     />
   );
 };

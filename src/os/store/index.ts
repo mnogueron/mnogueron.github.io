@@ -138,6 +138,7 @@ const useApplicationsStoreBase = create<State & Actions>()(
           state.applications[id].positions.left = left;
         });
       },
+      // TODO Constrain to top of window
       resizeApplication: (
         id: string,
         delta: {x: number; y: number; dir: ResizeDirection}
@@ -148,8 +149,15 @@ const useApplicationsStoreBase = create<State & Actions>()(
           const positions = {...app.positions};
           switch (dir) {
             case ResizeDirection.N:
-              positions.top += y;
-              positions.height -= y;
+              if (positions.top + y < 0) {
+                if (positions.top > 0) {
+                  positions.height += positions.top;
+                }
+                positions.top = 0;
+              } else {
+                positions.top += y;
+                positions.height -= y;
+              }
               break;
             case ResizeDirection.S:
               positions.height += y;
@@ -189,19 +197,19 @@ const useApplicationsStoreBase = create<State & Actions>()(
 
           let width = Math.max(positions.width, minWidth);
           let height = Math.max(positions.height, minHeight);
+          const top = Math.max(positions.top, 0);
 
           // Constrain resizable window to the document border
           if (width + positions.left > state.container.width) {
             width = state.container.width - positions.left;
           }
 
-          if (height + positions.top > state.container.height) {
-            height = state.container.height - positions.top;
+          if (height + top > state.container.height) {
+            height = state.container.height - top;
           }
 
           state.applications[id].positions = {
-            top:
-              height === MIN_WINDOW_HEIGHT ? app.positions.top : positions.top,
+            top: height === MIN_WINDOW_HEIGHT ? app.positions.top : top,
             left:
               width === MIN_WINDOW_WIDTH ? app.positions.left : positions.left,
             width,

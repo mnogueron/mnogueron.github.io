@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, BoxProps, Flex} from '@chakra-ui/react';
+import {Box, Flex} from '@chakra-ui/react';
 import {ResizeHandler} from '@/os/AppWindow/types';
 import ResizeHandlers from '@/os/AppWindow/ResizeHandlers';
 import AppHeader from './AppHeader';
@@ -25,7 +25,9 @@ type WindowProps = {
   isReduced: boolean;
   disableResize?: boolean;
   disableMove?: boolean;
-} & Omit<BoxProps, 'onResize'>; // TODO simplify state to only have onDragStart, onDragEnd, probably rename
+  onWindowDragStart?: () => void;
+  onWindowDragEnd?: () => void;
+};
 
 type WindowContainerProps = {
   appId: ApplicationId;
@@ -70,8 +72,8 @@ const AppWindow = ({
   isReduced,
   disableResize,
   disableMove,
-  onDragStart,
-  onDragEnd,
+  onWindowDragStart,
+  onWindowDragEnd,
   appId,
 }: WindowProps) => {
   return (
@@ -93,8 +95,8 @@ const AppWindow = ({
             onFullScreen={onFullScreen}
             onFullScreenToggle={onFullScreenToggle}
             onReduce={onReduce}
-            onDragStart={onDragStart}
-            onDragEnd={onDragEnd}
+            onWindowDragStart={onWindowDragStart}
+            onWindowDragEnd={onWindowDragEnd}
             disableMove={state === WindowState.FULL_SCREEN || disableMove}
           />
           <WindowContainer appId={appId} />
