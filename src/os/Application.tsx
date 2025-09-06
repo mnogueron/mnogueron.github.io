@@ -21,7 +21,8 @@ const Application = React.memo(({id}: ApplicationProps) => {
   const fullScreenApplication =
     useApplicationsStore.use.fullScreenApplication();
   const reduceApplication = useApplicationsStore.use.reduceApplication();
-  const startResizeApplication = useApplicationsStore.use.startResizeApplication();
+  const startResizeApplication =
+    useApplicationsStore.use.startResizeApplication();
 
   // TODO get config without getting the component
   const data = useMemo(() => {

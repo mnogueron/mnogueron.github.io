@@ -1,7 +1,7 @@
 import {create} from 'zustand';
 import {immer} from 'zustand/middleware/immer';
 import {persist} from 'zustand/middleware';
-import {Application, ApplicationRegistry, WindowState} from '@/os/store/types';
+import {ApplicationRegistry, WindowState} from '@/os/store/types';
 import {ApplicationId} from '@/applications/types';
 import {ResizeDirection} from '@/os/AppWindow/types';
 import Applications from '@/applications';
@@ -15,7 +15,6 @@ import {createSelectors} from '@/os/store/createSelectors';
 const MIN_WINDOW_HEIGHT = 70;
 const MIN_WINDOW_WIDTH = 200;
 
-// TODO improve how to handle full screen to not rely on width 100%
 type State = {
   applications: ApplicationRegistry;
   container: {width: number; height: number};
@@ -63,56 +62,53 @@ const useApplicationsStoreBase = create<State & Actions>()(
           }
         }),
       container: {width: 0, height: 0},
-      setContainerDimensions: (container: {width: number; height: number}) =>
+      setContainerDimensions: (container: {width: number; height: number}) => {
         set(state => {
           state.container = container;
-          state.resizeContainer();
-        }),
+        });
+        get().resizeContainer();
+      },
       focusApplication: (id: string) => {
-        set(state => {
-          const appPriority = state.applications[id].priority;
-          if (appPriority === Object.values(state.applications).length + 1) {
-            return;
-          }
+        const state = get();
+        const appPriority = state.applications[id].priority;
 
-          console.log('focus', id);
-          state.applications = Object.entries(
-            state.applications
-          ).reduce<ApplicationRegistry>((acc, [key, app]) => {
-            let priority = app.priority;
+        // Prevent updating store when the app is already focused
+        if (appPriority === Object.values(state.applications).length) {
+          return;
+        }
+
+        set(state => {
+          console.log('Focusing', id);
+          Object.values(state.applications).forEach(app => {
             if (app.id === id) {
-              priority = Object.values(state.applications).length + 1;
-            } else if (priority > appPriority) {
-              priority--;
+              app.priority = Object.values(state.applications).length;
+              app.isReduced = false;
+            } else if (app.priority >= appPriority) {
+              app.priority--;
             }
-            acc[key] = {
-              ...app,
-              priority,
-              isReduced: app.id === id ? false : app.isReduced,
-            };
-            return acc;
-          }, {});
+          });
         });
       },
       openApplication: (
         appId: ApplicationId,
         windowState = WindowState.WINDOWED
       ) => {
+        const state = get();
+        const app = state.applications[appId];
+
+        // If app is already open, focus it
+        if (app) {
+          state.focusApplication(appId);
+          return;
+        }
+
+        const Application = Applications[appId];
+        if (!Application) {
+          return;
+        }
+
         set(state => {
           console.log('Opening', appId);
-          const app = state.applications[appId];
-
-          // If app is already open, focus it
-          if (app) {
-            state.focusApplication(appId);
-            return;
-          }
-
-          const Application = Applications[appId];
-          if (!Application) {
-            return;
-          }
-
           state.applications[appId] = {
             id: appId,
             appId,
@@ -144,9 +140,7 @@ const useApplicationsStoreBase = create<State & Actions>()(
         });
       },
       startResizeApplication: (id: string) => {
-        set(state => {
-          state.focusApplication(id);
-        });
+        get().focusApplication(id);
       },
       resizeApplication: (
         id: string,
@@ -218,7 +212,8 @@ const useApplicationsStoreBase = create<State & Actions>()(
           }
 
           state.applications[id].positions = {
-            top: height === MIN_WINDOW_HEIGHT ? app.positions.top : positions.top,
+            top:
+              height === MIN_WINDOW_HEIGHT ? app.positions.top : positions.top,
             left:
               width === MIN_WINDOW_WIDTH ? app.positions.left : positions.left,
             width,
@@ -227,9 +222,10 @@ const useApplicationsStoreBase = create<State & Actions>()(
         });
       },
       fullScreenApplication: (id: string) => {
+        const state = get();
+        const app = state.applications[id];
+        state.hideFullScreenPrompt();
         set(state => {
-          const app = state.applications[id];
-          state.hideFullScreenPrompt();
           state.applications[id].trackedPositions = app.positions;
           state.applications[id].positions = {
             left: 0,
@@ -241,9 +237,10 @@ const useApplicationsStoreBase = create<State & Actions>()(
         });
       },
       windowedApplication: (id: string) => {
+        const state = get();
+        const app = state.applications[id];
+        state.hideFullScreenPrompt();
         set(state => {
-          const app = state.applications[id];
-          state.hideFullScreenPrompt();
           state.applications[id].positions =
             app.trackedPositions || app.positions;
           state.applications[id].trackedPositions = undefined;
@@ -266,8 +263,8 @@ const useApplicationsStoreBase = create<State & Actions>()(
         }
       },
       reduceApplication: (id: string) => {
+        get().hideFullScreenPrompt();
         set(state => {
-          state.hideFullScreenPrompt();
           state.applications[id].isReduced = true;
         });
       },
@@ -281,8 +278,8 @@ const useApplicationsStoreBase = create<State & Actions>()(
         );
       },
       startDragApplication: (id: string) => {
+        get().focusApplication(id);
         set(state => {
-          state.focusApplication(id);
           state.applications[id].trackedPositions =
             state.applications[id].positions;
         });
@@ -294,33 +291,28 @@ const useApplicationsStoreBase = create<State & Actions>()(
       },
       resizeContainer: () => {
         set(state => {
+          console.log('Resize container');
           const {container} = state;
-          state.applications = Object.entries(state.applications).reduce<{
-            [key: string]: Application;
-          }>((acc, [key, app]) => {
-            const positions = {...app.positions};
 
+          for (const key in state.applications) {
+            const app = state.applications[key];
             if (app.state === WindowState.FULL_SCREEN) {
-              positions.height = container.height;
-              positions.width = container.width;
+              state.applications[key].positions.height = container.height;
+              state.applications[key].positions.width = container.width;
             } else {
-              if (positions.height > container.height - 2 * MIN_PADDING) {
-                positions.top = MIN_PADDING;
-                positions.height = container.height - 2 * MIN_PADDING;
+              if (app.positions.height > container.height - 2 * MIN_PADDING) {
+                state.applications[key].positions.top = MIN_PADDING;
+                state.applications[key].positions.height =
+                  container.height - 2 * MIN_PADDING;
               }
 
-              if (positions.width > container.width - 2 * MIN_PADDING) {
-                positions.left = MIN_PADDING;
-                positions.width = container.width - 2 * MIN_PADDING;
+              if (app.positions.width > container.width - 2 * MIN_PADDING) {
+                state.applications[key].positions.left = MIN_PADDING;
+                state.applications[key].positions.width =
+                  container.width - 2 * MIN_PADDING;
               }
             }
-
-            acc[key] = {
-              ...app,
-              positions,
-            };
-            return acc;
-          }, {});
+          }
         });
       },
     })),
